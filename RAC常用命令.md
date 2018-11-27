@@ -1,0 +1,1071 @@
+Oracle Clusterware的命令集可以分为4种：
+节点层：osnodes
+网络层：oifcfg
+集群层：crsctl, ocrcheck,ocrdump,ocrconfig
+应用层：srvctl,onsctl,crs_stat
+下面分别来介绍这些命令。
+
+1.  节点层：
+只有一个命令：　osnodes，这个命令用来显示集群点列表 
+
+./olsnodes -n -p -i
+
+2.  网络层
+只有一个命令：oifcfg.
+     oifcfg 命令用来定义和修改Oracle集群需要的网卡属性，这些属性包括网卡的网段地址，子网掩码，接口类型等。要想正确的使用这个命令，必须先知道Oracle 是如何定义网络接口的，Oracle的每个网络接口包括名称，网段地址，接口类型3个属性。
+oifcfg 命令的格式如下：interface_name/subnet:interface_type
+    这些属性中没有IP地址，但接口类型有两种，public和private，前者说明接口用于外部通信，用于Oracle Net和VIP 地址，而后者说明接口用于Interconnect。
+    接口的配置方式分为两类：global 和node-specific。 前者说明集群所有节点的配置信息相同，也就是说所有节点的配置是对称的；而后者意味着这个节点的配置和其他节点配置不同，是非对称的。
+
+Iflist：显示网口列表
+Getif: 获得单个网口信息
+Setif：配置单个网口
+Delif：删除网口
+
+例如：
+
+ ./oifcfg iflist
+
+3.  集群层
+集群层是指由Clusterware组成的核心集群，这一层负责维护集群内的共享设备，并为应用集群提供完整的集群状态视图，应用集群依据这个视图进行调整。这一层共有4个命令：crsctl, ocrcheck,ocrdump,ocrconfig. 后三个是针对OCR 磁盘的。
+
+4.  配置CRS 栈是否自启动
+crsctl disable crs
+
+crsctl enable crs
+
+5.  启动CRS
+CRS没有启动在使用crs_stat命令查看状态的时候
+
+会收到如下的报错信息
+
+CRS-0184:Cannot communicate with the CRSdaemon
+
+启动命令如下：
+
+crsctl start crs
+
+停止CRS命令为：“crsctlstop crs”。
+
+6.  查看CRS资源状态
+crs_stat –t
+
+ 
+
+7.  关闭特定集群资源
+查找资源名字
+
+crs_stat | grep -i name= | cut -d '=' -f2
+
+找到资源名字后关闭
+
+crs_stop ora.RACDB.RACDB1.inst
+
+确定资源开启
+
+crs_start ora.RACDB.RACDB1.inst
+
+8.  所有集群资源
+关闭所有集群资源
+
+crs_stop -all
+
+启动所有集群资源
+
+crs_start -all
+
+9.  当前节点所有CRS资源
+crsctl start resources
+
+10.   srvctl停止和启动节点应用
+关闭节点应用
+
+srvctl stop nodeapps -n rac1
+
+srvctl start nodeapps -n rac1
+
+11.   对CRS后台进程做健康检查
+crsctl check crs
+
+12.   检查OCR
+ocrcheck
+
+13.   检查表决磁盘
+crsctl query css votedisk
+
+14.   应用层
+应用层就是指RAC数据库了，这一层有若干资源组成，每个资源都是一个进程或者一组进程组成的完整服务，这一层的管理和维护都是围绕这些资源进行的。有如下命令: srvctl,onsctl, crs_stat 三个命令。
+
+Crs_stat 这个命令用于查看CRS维护的所有资源的运行状态
+
+onsctl命令用于管理配置ONS(Oracle Notification Service). ONS 是Oracle Clusterware 实现FAN EventPush模型的基础。
+
+srvctl是RAC维护中最常用，也是最复杂的。可以操作下面的几种资源：Database，Instance，ASM，Service，Listener 和Node Application，其中Node application又包括GSD，ONS，VIP。资源除了使用srvctl工具统一管理外，某些资源还有自己独立的管理工具，比如ONS可以使用onsctl命令进行管理；Listener 可以通过lsnrctl 管理。
+
+配置数据库随CRS的启动而自动启动
+srvctl enable database -d raw
+
+srvctl disable database -d raw
+
+关闭某个实例的自动启动
+srvctl disable instance -d raw -i raw1
+
+启动，停止对象与查看对象
+在RAC 环境下启动，关闭数据库虽然仍然可以使用SQL/PLUS方法，但是更推荐使用srvctl命令来做这些工作，这可以保证即使更新CRS中运行信息，可以使用start/stop 命令启动，停止对象，然后使用status 命令查看对象状态。
+
+ 指定启动状态
+
+srvctl start database -d raw -i raw1 -o mount
+
+关闭对象，并指定关闭方式
+
+srvctl stop instance -d raw -i raw1 -o immediate
+
+停止 Oracle RAC 10g 环境
+$ srvctl stop instance -d orcl -i orcl1
+$ srvctl stop asm -n rac1
+$ srvctl stop nodeapps –n rac1
+
+启动 Oracle RAC 10g 环境
+$ srvctl start nodeapps -n rac1
+$ srvctl start asm -n rac1
+$ srvctl start instance -d orcl -i orcl1
+使用 SRVCTL 启动/停止所有实例
+
+启动/停止所有实例及其启用的服务。
+
+$ srvctl start database -d orcl
+$ srvctl stop database -d orcl
+
+
+
+* * * * *
+1.检查集群状态
+
+
+[sql] view plain copy
+[grid@rac1 ~]$ crsctl check cluster  
+CRS-4537: Cluster Ready Services is online  
+CRS-4529: Cluster Synchronization Services is online  
+CRS-4533: Event Manager is online  
+2.检查所有实例状态
+
+[sql] view plain copy
+[grid@rac1 ~]$ srvctl status database -d orcl  
+Instance orcl1 is running on node rac1  
+Instance orcl2 is running on node rac2  
+3.节点应用程序状态
+
+[sql] view plain copy
+[grid@rac1 ~]$ srvctl status nodeapps  
+VIP rac1-vip is enabled  
+VIP rac1-vip is running on node: rac1  
+VIP rac2-vip is enabled  
+VIP rac2-vip is running on node: rac2  
+Network is enabled  
+Network is running on node: rac1  
+Network is running on node: rac2  
+GSD is disabled  
+GSD is not running on node: rac1  
+GSD is not running on node: rac2  
+ONS is enabled  
+ONS daemon is running on node: rac1  
+ONS daemon is running on node: rac2  
+4.数据库配置
+
+[sql] view plain copy
+[grid@rac1 ~]$ srvctl config database -d orcl -a  
+Database unique name: orcl  
+Database name: orcl  
+Oracle home: /u01/app/oracle/product/11.2.0/db_1  
+Oracle user: oracle  
+Spfile: +DATADG/orcl/spfileorcl.ora  
+Domain:  
+Start options: open  
+Stop options: immediate  
+Database role: PRIMARY  
+Management policy: AUTOMATIC  
+Server pools: orcl  
+Database instances: orcl1,orcl2  
+Disk Groups: DATADG,SYSTEMDG  
+Mount point paths:  
+Services:  
+Type: RAC  
+Database is enabled  
+Database is administrator managed  
+5.ASM状态及配置
+
+[sql] view plain copy
+[grid@rac1 ~]$ srvctl status asm  
+ASM is running on rac2,rac1  
+[sql] view plain copy
+[grid@rac1 ~]$ srvctl config asm -a  
+ASM home: /u01/app/11.2.0/grid  
+ASM listener: LISTENER  
+ASM is enabled.  
+6.TNS监听状态及配置
+
+[sql] view plain copy
+[grid@rac1 ~]$ srvctl status listener  
+Listener LISTENER is enabled  
+Listener LISTENER is running on node(s): rac2,rac1  
+[sql] view plain copy
+[grid@rac1 ~]$ srvctl config listener -a  
+Name: LISTENER  
+Network: 1, Owner: grid  
+Home: <CRS home>  
+  /u01/app/11.2.0/grid on node(s) rac1,rac2  
+End points: TCP:1521  
+7.SCAN状态及配置
+
+[sql] view plain copy
+[grid@rac1 ~]$ srvctl status scan  
+SCAN VIP scan1 is enabled  
+SCAN VIP scan1 is running on node rac1  
+[sql] view plain copy
+[grid@rac1 ~]$ srvctl config scan  
+SCAN name: rac-cluster-scan, Network: 1/192.168.8.0/255.255.255.0/eth0  
+SCAN VIP name: scan1, IP: /rac-cluster-scan/192.168.8.225  
+8.VIP各个节点的状态及配置
+
+[sql] view plain copy
+[grid@rac1 ~]$ srvctl status vip -n rac1  
+VIP rac1-vip is enabled  
+VIP rac1-vip is running on node: rac1  
+[grid@rac1 ~]$ srvctl status vip -n rac2  
+VIP rac2-vip is enabled  
+VIP rac2-vip is running on node: rac2  
+[grid@rac1 ~]$ srvctl config vip -n rac1  
+VIP exists: /rac1-vip/192.168.8.222/192.168.8.0/255.255.255.0/eth0, hosting node rac1  
+[grid@rac1 ~]$ srvctl config vip -n rac2  
+VIP exists: /rac2-vip/192.168.8.224/192.168.8.0/255.255.255.0/eth0, hosting node rac2  
+10.验证所有集群节点间的时钟同步
+[sql] view plain copy
+[grid@rac1 ~]$ cluvfy comp clocksync -verbose  
+  
+Verifying Clock Synchronization across the cluster nodes  
+  
+Checking if Clusterware is installed on all nodes...  
+Check of Clusterware install passed  
+  
+Checking if CTSS Resource is running on all nodes...  
+Check: CTSS Resource running on all nodes  
+  Node Name                             Status  
+  ------------------------------------  ------------------------  
+  rac1                                  passed  
+Result: CTSS resource check passed  
+  
+  
+Querying CTSS for time offset on all nodes...  
+Result: Query of CTSS for time offset passed  
+  
+Check CTSS state started...  
+Check: CTSS state  
+  Node Name                             State  
+  ------------------------------------  ------------------------  
+  rac1                                  Active  
+CTSS is in Active state. Proceeding with check of clock time offsets on all nodes...  
+Reference Time Offset Limit: 1000.0 msecs  
+Check: Reference Time Offset  
+  Node Name     Time Offset               Status  
+  ------------  ------------------------  ------------------------  
+  rac1          0.0                       passed  
+  
+Time offset is within the specified limits on the following set of nodes:  
+"[rac1]"  
+Result: Check of clock time offsets passed  
+  
+  
+Oracle Cluster Time Synchronization Services check passed  
+  
+Verification of Clock Synchronization across the cluster nodes was successful.  
+
+
+
+
+* * * * *
+在Oracle 11g环境中，Oracle的关闭和启动顺序如下： 
+ 
+  
+ 
+关闭顺序： 
+ 
+1、关闭数据库,oracl用户执行srvctl命令： 
+ 
+ [oracle@rac1 ~]$ srvctl stop database -d ORCL ---停止所有节点上的实例 
+ 
+或者每个节点登录数据库后执行SQL>shutdown immediate 
+ 
+2，停止HAS(High Availability Services)，必须以root用户 
+ 
+[root@rac1 oracle]# cd /u01/grid/11.2.0/grid/bin 
+ 
+[root@rac1 bin]# ./crsctl stop has –f 
+ 
+  
+ 
+3，停止集群服务，必须以root用户： 
+ 
+[root@rac1 oracle]# cd /u01/grid/11.2.0/grid/bin 
+ 
+ [root@rac1 bin]# ./crsctl stop cluster -all  ----停止所有节点服务 
+ 
+或[root@rac1 bin]# ./crsctl stop cluster       ----停止本节点集群服务，每个节点分别执行  
+ 
+也可以如下控制所停节点： 
+ 
+[root@rac1 bin]#  ./crsctl stop cluster -n rac1 rac2 
+ 
+如果在一个节点停止其他所有节点的，而不一一执行命令，则也可以采用： 
+ 
+[root@rac1 bin]# ./crsctl stop cluster –all 
+ 
+  
+ 
+启动顺序： 
+ 
+11g R2的RAC默认开机会自启动，当然如果需要手工启动。手工启动按照cluster, HAS, database的顺序启动即可，具体命令如下： 
+ 
+1、启动集群（cluster） 
+ 
+[root@rac1 ~]# ./crsctl start cluster -all  --所有节点同时启动 
+ 
+或者只启动指定节点的 
+ 
+[root@rac1 ~]# ./crsctl start cluster -n rac1 rac2  --两个节点同时启动 
+ 
+  
+ 
+2、启动HAS(High Availability Services)，必须以root用户 
+ 
+[root@rac1 bin]# ./crsctl start has  
+ 
+以上has启动命令需要在每个节点分别执行 
+ 
+  
+ 
+3、启动数据库,oracl用户执行srvctl命令（假设数据库名为ORCL）： 
+ 
+ [oracle@rac1 ~]$ srvctl start database -d ORCL ---停止所有节点上的实例 
+ 
+或者每个节点登录数据库后执行SQL>startup  
+ 
+  
+ 
+使用crs_stat命令来进程验证。 
+ 
+[grid@oracle1 ~]$ crs_stat -t -v
+
+
+
+* * * * *
+1、检查 CRS 状态
+[grid@racnode1 ~]$ crsctl check crs
+CRS-4638: Oracle High Availability Services is online
+CRS-4537: Cluster Ready Services is online
+CRS-4529: Cluster Synchronization Services is online
+CRS-4533: Event Manager is online
+2、检查集群的运行状况 —（集群化命令）
+[grid@racnode1 ~]$ crsctl check cluster
+CRS-4537: Cluster Ready Services is online
+CRS-4529: Cluster Synchronization Services is online
+CRS-4533: Event Manager is onlin
+
+3、查看各资源状态(nodeapps节点应用程序，ASM实例，数据库实例等)
+[root@racnode1 ~]# su - grid
+[grid@racnode1 ~]$ crs_stat -t -v
+Name           Type           R/RA   F/FT   Target    State     Host        
+----------------------------------------------------------------------
+ora.CRS.dg     ora....up.type 0/5    0/     ONLINE    ONLINE    racnode1    
+ora.FRA.dg     ora....up.type 0/5    0/     ONLINE    ONLINE    racnode1    
+ora....ER.lsnr ora....er.type 0/5    0/     ONLINE    ONLINE    racnode1    
+ora....N1.lsnr ora....er.type 0/5    0/0    ONLINE    ONLINE    racnode2    
+ora....DATA.dg ora....up.type 0/5    0/     ONLINE    ONLINE    racnode1    
+ora.asm        ora.asm.type   0/5    0/     ONLINE    ONLINE    racnode1    
+ora.eons       ora.eons.type  0/3    0/     ONLINE    ONLINE    racnode1    
+ora.gsd        ora.gsd.type   0/5    0/     OFFLINE   OFFLINE               
+ora....network ora....rk.type 0/5    0/     ONLINE    ONLINE    racnode1    
+ora.oc4j       ora.oc4j.type  0/5    0/0    OFFLINE   OFFLINE               
+ora.ons        ora.ons.type   0/3    0/     ONLINE    ONLINE    racnode1    
+ora.racdb.db   ora....se.type 0/2    0/1    ONLINE    ONLINE    racnode1    
+ora....SM1.asm application    0/5    0/0    ONLINE    ONLINE    racnode1    
+ora....E1.lsnr application    0/5    0/0    ONLINE    ONLINE    racnode1    
+ora....de1.gsd application    0/5    0/0    OFFLINE   OFFLINE               
+ora....de1.ons application    0/3    0/0    ONLINE    ONLINE    racnode1    
+ora....de1.vip ora....t1.type 0/0    0/0    ONLINE    ONLINE    racnode1    
+ora....SM2.asm application    0/5    0/0    ONLINE    ONLINE    racnode2    
+ora....E2.lsnr application    0/5    0/0    ONLINE    ONLINE    racnode2    
+ora....de2.gsd application    0/5    0/0    OFFLINE   OFFLINE               
+ora....de2.ons application    0/3    0/0    ONLINE    ONLINE    racnode2    
+ora....de2.vip ora....t1.type 0/0    0/0    ONLINE    ONLINE    racnode2    
+ora.scan1.vip  ora....ip.type 0/0    0/0    ONLINE    ONLINE    racnode2  
+4、11g RAC 常用的是下面的命令 查看各资源状态(nodeapps节点应用程序，ASM实例，数据库实例等)
+[grid@racnode1 ~]$ crsctl stat  resource  -t
+--------------------------------------------------------------------------------
+NAME           TARGET  STATE        SERVER                   STATE_DETAILS       
+--------------------------------------------------------------------------------
+Local Resources
+--------------------------------------------------------------------------------
+ora.CRS.dg
+               ONLINE  ONLINE       racnode1                                     
+               ONLINE  ONLINE       racnode2                                     
+ora.FRA.dg
+               ONLINE  ONLINE       racnode1                                     
+               ONLINE  ONLINE       racnode2                                     
+ora.LISTENER.lsnr
+               ONLINE  ONLINE       racnode1                                     
+               ONLINE  ONLINE       racnode2                                     
+ora.RACDB_DATA.dg
+               ONLINE  ONLINE       racnode1                                     
+               ONLINE  ONLINE       racnode2                                     
+ora.asm
+               ONLINE  ONLINE       racnode1                 Started             
+               ONLINE  ONLINE       racnode2                                     
+ora.eons
+               ONLINE  ONLINE       racnode1                                     
+               ONLINE  ONLINE       racnode2                                     
+ora.gsd
+               OFFLINE OFFLINE      racnode1                                     
+               OFFLINE OFFLINE      racnode2                                     
+ora.net1.network
+               ONLINE  ONLINE       racnode1                                     
+               ONLINE  ONLINE       racnode2                                     
+ora.ons
+               ONLINE  ONLINE       racnode1                                     
+               ONLINE  ONLINE       racnode2                                     
+--------------------------------------------------------------------------------
+Cluster Resources
+--------------------------------------------------------------------------------
+ora.LISTENER_SCAN1.lsnr
+      1        ONLINE  ONLINE       racnode2                                     
+ora.oc4j
+      1        OFFLINE OFFLINE                                                   
+ora.racdb.db
+      1        ONLINE  ONLINE       racnode1                 Open                
+      2        ONLINE  ONLINE       racnode2                 Instance Shutdown   
+ora.racnode1.vip
+      1        ONLINE  ONLINE       racnode1                                     
+ora.racnode2.vip
+      1        ONLINE  ONLINE       racnode2                                     
+ora.scan1.vip
+      1        ONLINE  ONLINE       racnode2
+
+5、所有 Oracle 实例 —（数据库状态）:
+[grid@racnode1 ~]$ srvctl status database -d racdb
+实例 racdb1 正在节点 racnode1 上运行
+实例 racdb2 正在节点 racnode2 上运行
+6、检查单个实例状态：
+[grid@racnode1 ~]$ srvctl status instance -d racdb -i racdb1
+实例 racdb1 正在节点 racnode1 上运行
+7、节点应用程序状态：
+[grid@racnode1 ~]$ srvctl status instance -d racdb -i racdb1
+实例 racdb1 正在节点 racnode1 上运行
+[grid@racnode1 ~]$ srvctl status nodeapps
+VIP racnode1-vip 已启用
+VIP racnode1-vip 正在节点上运行: racnode1
+VIP racnode2-vip 已启用
+VIP racnode2-vip 正在节点上运行: racnode2
+网络已启用
+网络正在节点上运行: racnode1
+网络正在节点上运行: racnode2
+GSD 已禁用
+GSD 没有运行的节点: racnode1
+GSD 没有运行的节点: racnode2
+ONS 已启用
+ONS 守护程序正在节点上运行:racnode1
+ONS 守护程序正在节点上运行:racnode2
+eONS 已启用
+eONS 守护程序正在节点上运行:racnode1
+eONS 守护程序正在节点上运行:racnode2
+8、列出所有的配置数据库：
+[grid@racnode1 ~]$ srvctl config database
+racdb
+9、数据库配置：
+[grid@racnode1 ~]$ srvctl config database -d racdb -a
+数据库唯一名称: racdb
+数据库名: racdb
+Oracle 主目录: /u01/app/oracle/product/11.2.0/dbhome_1
+Oracle 用户: oracle
+Spfile: +RACDB_DATA/racdb/spfileracdb.ora
+域: path_finder.info
+启动选项: open
+停止选项: immediate
+数据库角色: PRIMARY
+管理策略: AUTOMATIC
+服务器池: racdb
+数据库实例: racdb1,racdb2
+磁盘组: RACDB_DATA,FRA
+服务: 
+数据库已启用
+数据库是管理员管理的
+10、ASM状态以及ASM配置：
+[grid@racnode1 ~]$ srvctl status asm
+ASM 正在 racnode1,racnode2 上运行
+[grid@racnode1 ~]$ srvctl status asm -a
+ASM 正在 racnode1,racnode2 上运行
+ASM 已启用。
+[grid@racnode1 ~]$ srvctl config asm -a
+ASM 主目录: /u01/app/11.2.0/grid
+ASM 监听程序: LISTENER
+ASM 已启用。
+11、检查 Oracle 集群注册表 (OCR)
+[grid@racnode1 ~]$ ocrcheck
+Status of Oracle Cluster Registry is as follows :
+Version                  :          3
+Total space (kbytes)     :     262120
+Used space (kbytes)      :       2568
+Available space (kbytes) :     259552
+ID                       : 1884152943
+Device/File Name         :       +CRS
+                                    Device/File integrity check succeeded
+                                    Device/File not configured
+                                    Device/File not configured
+                                    Device/File not configured
+                                    Device/File not configured
+Cluster registry integrity check succeeded
+Logical corruption check bypassed due to non-privileged user
+12、查看表决磁盘
+[grid@racnode1 ~]$ crsctl query css votedisk
+##  STATE    File Universal Id                File Name Disk group
+--  -----    -----------------                --------- ---------
+ 1. ONLINE   2aae1495c66a4f50bf63a503076ef792 (ORCL:CRSVOL1) [CRS]
+Located 1 voting disk(s).
+
+13、TNS监听器状态以及配置：
+[grid@racnode1 ~]$ srvctl status listener
+监听程序 LISTENER 已启用
+监听程序 LISTENER 正在节点上运行: racnode1,racnode2
+[grid@racnode1 ~]$ srvctl config listener -a
+名称: LISTENER
+网络: 1, 所有者: grid
+主目录: <CRS home>
+  节点 racnode2,racnode1 上的 /u01/app/11.2.0/grid
+端点: TCP:1521
+14、SCAN状态以及配置：
+[grid@racnode1 ~]$ srvctl status scan
+SCAN VIP scan1 已启用
+SCAN VIP scan1 正在节点 racnode2 上运行
+[grid@racnode1 ~]$ srvctl config scan
+SCAN 名称: racnode-cluster-scan, 网络: 1/10.236.101.0/255.255.255.0/eth0
+SCAN VIP 名称: scan1, IP: /racnode-cluster-scan/10.236.101.234
+15、VIP各个节点的状态以及配置：
+[grid@racnode1 ~]$ srvctl status vip -n racnode1
+VIP racnode1-vip 已启用
+VIP racnode1-vip 正在节点上运行: racnode1
+[grid@racnode1 ~]$ srvctl status vip -n racnode2
+VIP racnode2-vip 已启用
+VIP racnode2-vip 正在节点上运行: racnode2
+[grid@racnode1 ~]$ srvctl config vip -n racnode1
+VIP 已存在。:racnode1
+VIP 已存在。: /racnode1-vip/10.236.101.232/255.255.255.0/eth0
+[grid@racnode1 ~]$ srvctl config vip -n racnode2
+VIP 已存在。:racnode2
+VIP 已存在。: /racnode2-vip/10.236.101.233/255.255.255.0/eth0
+16、验证所有集群节点间的时钟同步:
+[grid@racnode1 ~]$ cluvfy comp clocksync -verbose
+验证 各集群节点上的时钟同步 
+正在检查是否在所有节点上安装了集群件...
+集群件的安装检查通过
+正在检查 CTSS 资源是否在所有节点上运行...
+检查: CTSS 资源是否正在所有节点上运行
+  节点名                                   状态                      
+  ------------------------------------  ------------------------
+  racnode1                              通过                      
+结果:CTSS 资源检查通过
+
+正在查询所有节点上时间偏移量的 CTSS...
+结果:时间偏移量的 CTSS 查询通过
+检查 CTSS 状态已启动...
+检查: CTSS 状态
+  节点名                                   状态                      
+  ------------------------------------  ------------------------
+  racnode1                              活动                      
+CTSS 处于活动状态。正在继续检查所有节点上的时钟时间偏移量...
+引用时间偏移量限制: 1000.0 毫秒
+检查: 引用时间偏移量
+  节点名           时间偏移量                     状态                      
+  ------------  ------------------------  ------------------------
+  racnode1      0.0                       通过                      
+以下节点集的时间偏移量在指定的限制之内: 
+"[racnode1]" 
+结果:时钟时间偏移量检查通过
+
+Oracle 集群时间同步服务检查已通过
+各集群节点上的时钟同步 的验证成功。
+17、集群中所有正在运行的实例 — (SQL):
+SELECT inst_id , instance_number inst_no , instance_name inst_name , parallel , status ,database_status db_status , active_state state , host_name host FROM gv$instance ORDER BY inst_id;
+SQL> SELECT inst_id , instance_number inst_no , instance_name inst_name , parallel , status ,database_status db_status , active_state state , host_name host FROM gv$instance ORDER BY inst_id;
+   INST_ID    INST_NO INST_NAME        PAR STATUS
+DB_STATUS
+---------- ---------- ---------------- --- ------------ -----------------
+STATE  HOST
+--------- ----------------------------------------------------------------
+1
+   1 racdb1       YES OPEN 
+ACTIVE
+NORMAL  racnode1
+2
+   2 racdb2       YES OPEN 
+ACTIVE
+NORMAL  racnode2
+
+18、所有数据库文件及它们所在的 ASM 磁盘组 — (SQL):
+select name from v$datafile union select member from v$logfile union select name from v$controlfile union select name from v$tempfile;
+SQL> select name from v$datafile union select member from v$logfile union select name from v$controlfile union select name from v$tempfile;
+NAME
+--------------------------------------------------------------------------------
++FRA/racdb/controlfile/current.256.949053765
++FRA/racdb/onlinelog/group_1.257.949053775
++FRA/racdb/onlinelog/group_2.258.949053785
++FRA/racdb/onlinelog/group_3.259.949064369
++FRA/racdb/onlinelog/group_4.260.949064379
++RACDB_DATA/racdb/controlfile/current.256.949053757
++RACDB_DATA/racdb/datafile/rac_data1.dbf
++RACDB_DATA/racdb/datafile/rac_data2.dbf
++RACDB_DATA/racdb/datafile/sysaux.260.949053881
++RACDB_DATA/racdb/datafile/system.259.949053795
++RACDB_DATA/racdb/datafile/undotbs1.261.949053941
+NAME
+--------------------------------------------------------------------------------
++RACDB_DATA/racdb/datafile/undotbs2.263.949054029
++RACDB_DATA/racdb/datafile/users.264.949054051
++RACDB_DATA/racdb/onlinelog/group_1.257.949053771
++RACDB_DATA/racdb/onlinelog/group_2.258.949053781
++RACDB_DATA/racdb/onlinelog/group_3.265.949064363
++RACDB_DATA/racdb/onlinelog/group_4.266.949064373
++RACDB_DATA/racdb/tempfile/rac_temp1.dbf
++RACDB_DATA/racdb/tempfile/temp.262.949053963
+19 rows selected.
+19、ASM 磁盘卷: — (SQL)
+SELECT path FROM   v$asm_disk; 
+SQL> SELECT path FROM   v$asm_disk; 
+PATH
+--------------------------------------------------------------------------------
+ORCL:CRSVOL1
+ORCL:DATAVOL1
+ORCL:FRAVOL1
+
+20、启动和停止集群：以下操作需用root用户执行。
+[root@racnode1 ~]# /u01/app/11.2.0/grid/bin/crsctl stop cluster
+CRS-2673: 尝试停止 'ora.crsd' (在 'racnode1' 上)
+CRS-2790: 正在启动关闭 'racnode1' 上集群就绪服务管理的资源的操作
+CRS-2673: 尝试停止 'ora.LISTENER.lsnr' (在 'racnode1' 上)
+CRS-2673: 尝试停止 'ora.LISTENER_SCAN1.lsnr' (在 'racnode1' 上)
+CRS-2679: 尝试清除 'ora.racdb.db' (在 'racnode1' 上)
+CRS-2673: 尝试停止 'ora.CRS.dg' (在 'racnode1' 上)
+CRS-2673: 尝试停止 'ora.FRA.dg' (在 'racnode1' 上)
+CRS-2673: 尝试停止 'ora.RACDB_DATA.dg' (在 'racnode1' 上)
+CRS-2677: 成功停止 'ora.LISTENER_SCAN1.lsnr' (在 'racnode1' 上)
+CRS-2673: 尝试停止 'ora.scan1.vip' (在 'racnode1' 上)
+CRS-2677: 成功停止 'ora.LISTENER.lsnr' (在 'racnode1' 上)
+CRS-2673: 尝试停止 'ora.racnode1.vip' (在 'racnode1' 上)
+CRS-2677: 成功停止 'ora.racnode1.vip' (在 'racnode1' 上)
+CRS-2672: 尝试启动 'ora.racnode1.vip' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.scan1.vip' (在 'racnode1' 上)
+CRS-2672: 尝试启动 'ora.scan1.vip' (在 'racnode2' 上)
+CRS-2676: 成功启动 'ora.scan1.vip' (在 'racnode2' 上)
+CRS-2676: 成功启动 'ora.racnode1.vip' (在 'racnode2' 上)
+CRS-2672: 尝试启动 'ora.LISTENER_SCAN1.lsnr' (在 'racnode2' 上)
+CRS-2676: 成功启动 'ora.LISTENER_SCAN1.lsnr' (在 'racnode2' 上)
+CRS-2681: 成功清除 'ora.racdb.db' (在 'racnode1' 上)
+CRS-2677: 成功停止 'ora.CRS.dg' (在 'racnode1' 上)
+CRS-2677: 成功停止 'ora.RACDB_DATA.dg' (在 'racnode1' 上)
+CRS-2677: 成功停止 'ora.FRA.dg' (在 'racnode1' 上)
+CRS-2673: 尝试停止 'ora.asm' (在 'racnode1' 上)
+CRS-2677: 成功停止 'ora.asm' (在 'racnode1' 上)
+CRS-2673: 尝试停止 'ora.eons' (在 'racnode1' 上)
+CRS-2673: 尝试停止 'ora.ons' (在 'racnode1' 上)
+CRS-2677: 成功停止 'ora.ons' (在 'racnode1' 上)
+CRS-2673: 尝试停止 'ora.net1.network' (在 'racnode1' 上)
+CRS-2677: 成功停止 'ora.net1.network' (在 'racnode1' 上)
+CRS-2677: 成功停止 'ora.eons' (在 'racnode1' 上)
+CRS-2792: 关闭 'racnode1' 上集群就绪服务管理的资源的操作已完成
+CRS-2677: 成功停止 'ora.crsd' (在 'racnode1' 上)
+CRS-2673: 尝试停止 'ora.cssdmonitor' (在 'racnode1' 上)
+CRS-2673: 尝试停止 'ora.ctssd' (在 'racnode1' 上)
+CRS-2673: 尝试停止 'ora.evmd' (在 'racnode1' 上)
+CRS-2673: 尝试停止 'ora.asm' (在 'racnode1' 上)
+CRS-2677: 成功停止 'ora.cssdmonitor' (在 'racnode1' 上)
+CRS-2677: 成功停止 'ora.evmd' (在 'racnode1' 上)
+CRS-2677: 成功停止 'ora.ctssd' (在 'racnode1' 上)
+CRS-2677: 成功停止 'ora.asm' (在 'racnode1' 上)
+CRS-2673: 尝试停止 'ora.cssd' (在 'racnode1' 上)
+CRS-2677: 成功停止 'ora.cssd' (在 'racnode1' 上)
+CRS-2673: 尝试停止 'ora.diskmon' (在 'racnode1' 上)
+CRS-2677: 成功停止 'ora.diskmon' (在 'racnode1' 上)
+[root@racnode1 ~]# /u01/app/11.2.0/grid/bin/crsctl start cluster
+CRS-2672: 尝试启动 'ora.cssdmonitor' (在 'racnode1' 上)
+CRS-2676: 成功启动 'ora.cssdmonitor' (在 'racnode1' 上)
+CRS-2672: 尝试启动 'ora.cssd' (在 'racnode1' 上)
+CRS-2672: 尝试启动 'ora.diskmon' (在 'racnode1' 上)
+CRS-2676: 成功启动 'ora.diskmon' (在 'racnode1' 上)
+CRS-2676: 成功启动 'ora.cssd' (在 'racnode1' 上)
+CRS-2672: 尝试启动 'ora.ctssd' (在 'racnode1' 上)
+CRS-2676: 成功启动 'ora.ctssd' (在 'racnode1' 上)
+CRS-2672: 尝试启动 'ora.evmd' (在 'racnode1' 上)
+CRS-2672: 尝试启动 'ora.asm' (在 'racnode1' 上)
+CRS-2676: 成功启动 'ora.evmd' (在 'racnode1' 上)
+CRS-2676: 成功启动 'ora.asm' (在 'racnode1' 上)
+CRS-2672: 尝试启动 'ora.crsd' (在 'racnode1' 上)
+CRS-2676: 成功启动 'ora.crsd' (在 'racnode1' 上)
+注：在运行“ crsctl stop cluster”命令之后，如果 Oracle Clusterware 管理的资源中有任何一个还在运行，则整个命令失败。使用 -f 选项无条件地停止所有资源并停止 Oracle Clusterware 系统。
+另请注意，可通过指定 -all 选项在集群中所有服务器上停止 Oracle Clusterware 系统。以下命令将在 racnode1 和 racnode2 上停止 Oracle Clusterware 系统：
+[root@racnode1 ~]# /u01/app/11.2.0/grid/bin/crsctl stop cluster -all
+还可以通过列出服务器（各服务器之间以空格分隔）在集群中一个或多个指定的服务器上启动 Oracle Clusterware 系统：
+[root@racnode1 ~]# /u01/app/11.2.0/grid/bin/crsctl start cluster -n racnode1 racnode2
+使用 SRVCTL 启动/停止所有实例
+最后，可使用以下命令来启动/停止所有实例及相关服务：
+[oracle@racnode1 ~]$ srvctl stop database -d racdb  
+[oracle@racnode1 ~]$ srvctl start database -d racdb
+
+21、启动和停止CRS：以下操作需用root用户执行。
+[root@racnode2 ~]# cd /u01/app/11.2.0/grid/bin/
+[root@racnode2 bin]# ls crs*
+crsctl      crsd      crsdiag.pl   crs_getperm.bin  crs_profile.bin  crs_register.bin  crs_relocate.bin  crs_setperm.bin  crs_start.bin  crs_stat.bin  crs_stop.bin  crs_unregister      crswrapexece.pl
+crsctl.bin  crsd.bin  crs_getperm  crs_profile      crs_register     crs_relocate      crs_setperm       crs_start        crs_stat       crs_stop      crstmpl.scr   crs_unregister.bin
+
+[root@racnode2 bin]#  /u01/app/11.2.0/grid/bin/crsctl stop crs
+CRS-2791: 正在启动用于关闭 'racnode2' 上 Oracle High Availability Services 管理的资源的操作
+CRS-2673: 尝试停止 'ora.crsd' (在 'racnode2' 上)
+CRS-2790: 正在启动关闭 'racnode2' 上集群就绪服务管理的资源的操作
+CRS-2673: 尝试停止 'ora.CRS.dg' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.racdb.db' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.LISTENER.lsnr' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.LISTENER_SCAN1.lsnr' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.LISTENER.lsnr' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.racnode2.vip' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.LISTENER_SCAN1.lsnr' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.scan1.vip' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.racnode2.vip' (在 'racnode2' 上)
+CRS-2672: 尝试启动 'ora.racnode2.vip' (在 'racnode1' 上)
+CRS-2677: 成功停止 'ora.scan1.vip' (在 'racnode2' 上)
+CRS-2672: 尝试启动 'ora.scan1.vip' (在 'racnode1' 上)
+CRS-2676: 成功启动 'ora.scan1.vip' (在 'racnode1' 上)
+CRS-2676: 成功启动 'ora.racnode2.vip' (在 'racnode1' 上)
+CRS-2672: 尝试启动 'ora.LISTENER_SCAN1.lsnr' (在 'racnode1' 上)
+CRS-2676: 成功启动 'ora.LISTENER_SCAN1.lsnr' (在 'racnode1' 上)
+CRS-2677: 成功停止 'ora.CRS.dg' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.racdb.db' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.FRA.dg' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.RACDB_DATA.dg' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.FRA.dg' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.RACDB_DATA.dg' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.asm' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.asm' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.eons' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.ons' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.ons' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.net1.network' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.net1.network' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.eons' (在 'racnode2' 上)
+CRS-2792: 关闭 'racnode2' 上集群就绪服务管理的资源的操作已完成
+CRS-2677: 成功停止 'ora.crsd' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.mdnsd' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.cssdmonitor' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.ctssd' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.evmd' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.asm' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.cssdmonitor' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.evmd' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.mdnsd' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.ctssd' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.asm' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.cssd' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.cssd' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.gpnpd' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.diskmon' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.gpnpd' (在 'racnode2' 上)
+CRS-2673: 尝试停止 'ora.gipcd' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.gipcd' (在 'racnode2' 上)
+CRS-2677: 成功停止 'ora.diskmon' (在 'racnode2' 上)
+CRS-2793: 关闭 'racnode2' 上 Oracle High Availability Services 管理的资源的操作已完成
+CRS-4133: Oracle High Availability Services has been stopped.
+[root@racnode2 bin]#  /u01/app/11.2.0/grid/bin/crsctl start crs
+CRS-4123: Oracle High Availability Services has been started.
+
+22、查看11g 数据库实例的alert log及trace ：
+[oracle@racnode1 ~]$ cd /u01/app/oracle/diag/rdbms/racdb/racdb1/trace
+[oracle@racnode1 trace]$ ll |more
+总计 96872
+-rw-r----- 1 oracle asmadmin 7492353 08-07 11:53 alert_racdb1.log
+drwxr-xr-x 2 oracle asmadmin   12288 07-11 23:02 cdmp_20170711230209/
+drwxr-xr-x 2 oracle asmadmin   12288 07-13 01:02 cdmp_20170713010207/
+drwxr-xr-x 2 oracle asmadmin   12288 07-13 01:13 cdmp_20170713011307/
+drwxr-xr-x 2 oracle asmadmin    4096 07-15 15:56 cdmp_20170715155646/
+-rw-r----- 1 oracle asmadmin    3154 07-26 23:51 racdb1_arc0_19234.trc
+-rw-r----- 1 oracle asmadmin     220 07-26 23:51 racdb1_arc0_19234.trm
+-rw-r----- 1 oracle asmadmin    1265 08-07 03:15 racdb1_arc0_20853.trc
+-rw-r----- 1 oracle asmadmin      93 08-07 03:15 racdb1_arc0_20853.trm
+-rw-r----- 1 oracle asmadmin    4202 08-05 11:26 racdb1_arc0_25473.trc
+-rw-r----- 1 oracle asmadmin     387 08-05 11:26 racdb1_arc0_25473.trm
+-rw-r----- 1 oracle asmadmin    3347 07-25 05:31 racdb1_arc0_30811.trc
+-rw-r----- 1 oracle asmadmin     308 07-25 05:31 racdb1_arc0_30811.trm
+-rw-r----- 1 oracle asmadmin    1258 07-14 01:40 racdb1_arc0_5942.trc
+-rw-r----- 1 oracle asmadmin      84 07-14 01:40 racdb1_arc0_5942.trm
+-rw-r----- 1 oracle asmadmin    1503 07-13 10:13 racdb1_arc0_6092.trc
+-rw-r----- 1 oracle asmadmin     109 07-13 10:13 racdb1_arc0_6092.trm
+-rw-r----- 1 oracle asmadmin     915 07-27 14:36 racdb1_arc0_6301.trc
+-rw-r----- 1 oracle asmadmin      78 07-27 14:36 racdb1_arc0_6301.trm
+-rw-r----- 1 oracle asmadmin    3980 07-25 18:10 racdb1_arc0_6598.trc
+-rw-r----- 1 oracle asmadmin     238 07-25 18:10 racdb1_arc0_6598.trm
+-rw-r----- 1 oracle asmadmin    1258 07-15 06:00 racdb1_arc0_9037.trc
+-rw-r----- 1 oracle asmadmin      83 07-15 06:00 racdb1_arc0_9037.trm
+-rw-r----- 1 oracle asmadmin    4205 08-05 14:00 racdb1_arc1_25477.trc
+-rw-r----- 1 oracle asmadmin     395 08-05 14:00 racdb1_arc1_25477.trm
+-rw-r----- 1 oracle asmadmin    3140 07-25 12:07 racdb1_arc1_30834.trc
+-rw-r----- 1 oracle asmadmin     285 07-25 12:07 racdb1_arc1_30834.trm
+-rw-r----- 1 oracle asmadmin    1312 07-13 10:13 racdb1_arc1_6094.trc
+-rw-r----- 1 oracle asmadmin     103 07-13 10:13 racdb1_arc1_6094.trm
+-rw-r----- 1 oracle asmadmin    1049 07-15 11:00 racdb1_arc1_9039.trc
+-rw-r----- 1 oracle asmadmin      70 07-15 11:00 racdb1_arc1_9039.trm
+-rw-r----- 1 oracle asmadmin    3349 07-26 23:51 racdb1_arc2_19238.trc
+-rw-r----- 1 oracle asmadmin     233 07-26 23:51 racdb1_arc2_19238.trm
+-rw-r----- 1 oracle asmadmin    1266 08-06 22:00 racdb1_arc2_20857.trc
+-rw-r----- 1 oracle asmadmin      85 08-06 22:00 racdb1_arc2_20857.trm
+-rw-r----- 1 oracle asmadmin     914 07-13 10:13 racdb1_arc2_6096.trc
+
+[oracle@racnode1 trace]$ cat alert_racdb1.log |more
+Tue Jul 11 10:00:00 2017
+Starting ORACLE instance (normal)
+Tue Jul 11 10:00:25 2017
+LICENSE_MAX_SESSION = 0
+LICENSE_SESSIONS_WARNING = 0
+Tue Jul 11 10:00:36 2017
+Interface type 1 eth1 10.236.23.0 configured from GPnP Profile for use as a cluster interconnect
+Interface type 1 eth0 10.236.101.0 configured from GPnP Profile for use as a public interface
+Shared memory segment for instance monitoring created
+Picked latch-free SCN scheme 3
+Using LOG_ARCHIVE_DEST_1 parameter default value as USE_DB_RECOVERY_FILE_DEST
+Autotune of undo retention is turned on. 
+IMODE=BR
+ILAT =27
+LICENSE_MAX_USERS = 0
+SYS auditing is disabled
+Tue Jul 11 10:00:47 2017
+Starting up:
+Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production
+With the Partitioning, Real Application Clusters, OLAP, Data Mining
+and Real Application Testing options.
+Using parameter settings in client-side pfile /u01/app/oracle/admin/racdb/pfile/init.ora on machine racnode1
+System parameters with non-default values:
+  processes                = 150
+  nls_language             = "SIMPLIFIED CHINESE"
+  nls_territory            = "CHINA"
+  memory_target            = 800M
+  db_block_size            = 8192
+  compatible               = "11.2.0.0.0"
+  db_create_file_dest      = "+RACDB_DATA"
+  db_recovery_file_dest    = "+FRA"
+  db_recovery_file_dest_size= 130G
+  undo_tablespace          = "UNDOTBS1"
+  instance_number          = 1
+  remote_login_passwordfile= "EXCLUSIVE"
+  db_domain                = "path_finder.info"
+  dispatchers              = "(PROTOCOL=TCP) (SERVICE=racdbXDB)"
+23、查看RAC 11g 集群log及trace：
+[grid@racnode1 ~]$ cd /u01/app/11.2.0/grid/log/racnode1
+[grid@racnode1 racnode1]$ ls
+admin/ agent/
+alertracnode1.log  client/  crsd/  cssd/  ctssd/  diskmon/  evmd/  gipcd/  gnsd/  gpnpd/  mdnsd/  ohasd/  racg/  srvm/
+[grid@racnode1 racnode1]$ cd crsd
+[grid@racnode1 crsd]$ ls
+crsd.l01  crsd.l02  crsd.l03  crsd.l04
+crsd.log  crsdOUT.log  crsd.trc
+[grid@racnode1 crsd]$ cat crsd.log |more
+Oracle Database 11g Clusterware Release 11.2.0.1.0 - Production Copyright 1996, 2009 Oracle. All rights reserved.
+2017-08-07 10:10:08.735: [UiServer][1516341568] Sending message to PE. ctx= 0x2aaaac09be60
+2017-08-07 10:10:08.736: [  CRSCCL][1484839232]clscsend completed:msgTag= 0xcccccccc version= 0 msgType= 0 msgId= 595 msglen = 1160 clschdr.size_clscmsgh= 1248 src= (1, 805586624) dest= (2, 4294883590)
+2017-08-07 10:10:08.742: [  CRSCCL][1474349376]clscreceive:msgTag= 0xcccccccc version= 0 msgType= 0 msgId= 603 msglen = 828 clschdr.size_clscmsgh= 916 src= (2, 4294883590) dest= (1, 805586624)
+2017-08-07 10:10:08.743: [UiServer][1516341568] Done for ctx=0x2aaaac09be60
+2017-08-07 10:10:08.982: [  OCRUTL][1285531968]u_freem: mem passed is null
+2017-08-07 10:10:51.772: [UiServer][1518442816] S(0x2aaaac057740): set Properties ( grid,0x3f2dc40)
+2017-08-07 10:10:51.783: [UiServer][1516341568] processMessage called 
+2017-08-07 10:10:51.783: [UiServer][1516341568] Sending message to PE. ctx= 0x2aaaac06bf20
+2017-08-07 10:10:51.786: [  CRSCCL][1484839232]clscsend completed:msgTag= 0xcccccccc version= 0 msgType= 0 msgId= 596 msglen = 1116 clschdr.size_clscmsgh= 1204 src= (1, 805586624) dest= (2, 4294883590)
+2017-08-07 10:10:51.791: [  CRSCCL][1474349376]clscreceive:msgTag= 0xcccccccc version= 0 msgType= 0 msgId= 604 msglen = 825 clschdr.size_clscmsgh= 913 src= (2, 4294883590) dest= (1, 805586624)
+2017-08-07 10:10:51.793: [UiServer][1516341568] Done for ctx=0x2aaaac06bf20
+2017-08-07 10:10:51.809: [UiServer][1518442816] S(0x2aaaac050f30): set Properties ( grid,0x3f2dc40)
+2017-08-07 10:10:51.820: [UiServer][1516341568] processMessage called 
+2017-08-07 10:10:51.820: [UiServer][1516341568] Sending message to PE. ctx= 0x2aaaac06cce0
+2017-08-07 10:10:51.831: [  CRSCCL][1484839232]clscsend completed:msgTag= 0xcccccccc version= 0 msgType= 0 msgId= 597 msglen = 1127 clschdr.size_clscmsgh= 1215 src= (1, 805586624) dest= (2, 4294883590)
+2017-08-07 10:10:51.836: [  CRSCCL][1474349376]clscreceive:msgTag= 0xcccccccc version= 0 msgType= 0 msgId= 605 msglen = 828 clschdr.size_clscmsgh= 916 src= (2, 4294883590) dest= (1, 805586624)
+2017-08-07 10:10:51.837: [UiServer][1516341568] Done for ctx=0x2aaaac06cce0
+2017-08-07 10:10:51.853: [UiServer][1518442816] S(0x2aaaac0572e0): set Properties ( grid,0x3f1ff20)
+2017-08-07 10:10:51.881: [UiServer][1516341568] processMessage called 
+2017-08-07 10:10:51.881: [UiServer][1516341568] Sending message to PE. ctx= 0x2aaaac086eb0
+2017-08-07 10:10:51.885: [  CRSCCL][1484839232]clscsend completed:msgTag= 0xcccccccc version= 0 msgType= 0 msgId= 598 msglen = 1116 clschdr.size_clscmsgh= 1204 src= (1, 805586624) dest= (2, 4294883590)
+2017-08-07 10:10:51.890: [  CRSCCL][1474349376]clscreceive:msgTag= 0xcccccccc version= 0 msgType= 0 msgId= 606 msglen = 825 clschdr.size_clscmsgh= 913 src= (2, 4294883590) dest= (1, 805586624)
+2017-08-07 10:10:51.891: [UiServer][1516341568] Done for ctx=0x2aaaac086eb0
+2017-08-07 10:10:51.906: [UiServer][1518442816] S(0x2aaaac050ad0): set Properties ( grid,0x3f2dc40)
+2017-08-07 10:10:51.918: [UiServer][1516341568] processMessage called 
+2017-08-07 10:10:51.919: [UiServer][1516341568] Sending message to PE. ctx= 0x2aaaac09be30
+2017-08-07 10:10:51.971: [  CRSCCL][1484839232]clscsend completed:msgTag= 0xcccccccc version= 0 msgType= 0 msgId= 599 msglen = 1118 clschdr.size_clscmsgh= 1206 src= (1, 805586624) dest= (2, 4294883590)
+2017-08-07 10:10:51.976: [  CRSCCL][1474349376]clscreceive:msgTag= 0xcccccccc version= 0 msgType= 0 msgId= 607 msglen = 848 clschdr.size_clscmsgh= 936 src= (2, 4294883590) dest= (1, 805586624)
+2017-08-07 10:10:51.977: [UiServer][1516341568] Done for ctx=0x2aaaac09be30
+2017-08-07 10:10:52.012: [UiServer][1518442816] S(0x2aaaac064030): set Properties ( grid,0x3f2dc40)
+2017-08-07 10:10:52.024: [UiServer][1516341568] processMessage called 
+2017-08-07 10:10:52.024: [UiServer][1516341568] Sending message to PE. ctx= 0x2aaaac06bf40
+2017-08-07 10:10:52.031: [  CRSCCL][1484839232]clscsend completed:msgTag= 0xcccccccc version= 0 msgType= 0 msgId= 600 msglen = 1125 clschdr.size_clscmsgh= 1213 src= (1, 805586624) dest= (2, 4294883590)
+2017-08-07 10:10:52.091: [  CRSCCL][1474349376]clscreceive:msgTag= 0xcccccccc version= 0 msgType= 0 msgId= 608 msglen = 830 clschdr.size_clscmsgh= 918 src= (2, 4294883590) dest= (1, 805586624)
+2017-08-07 10:10:52.092: [UiServer][1516341568] Done for ctx=0x2aaaac06bf40
+2017-08-07 10:10:52.254: [UiServer][1518442816] S(0x2aaaac068cf0): set Properties ( grid,0x3f2dc40)
+
+[grid@racnode1 ~]$ cd /u01/app/11.2.0/grid/log/diag/tnslsnr/racnode1/listener_scan1/trace
+[grid@racnode1 trace]$ ls
+listener_scan1.log
+[grid@racnode1 trace]$ cat listener_scan1.log|more
+Tue Jul 11 08:56:49 2017
+Create Relation ADR_CONTROL
+Create Relation ADR_INVALIDATION
+Create Relation INC_METER_IMPT_DEF
+Create Relation INC_METER_PK_IMPTS
+系统参数文件为/u01/app/11.2.0/grid/network/admin/listener.ora
+写入/u01/app/11.2.0/grid/log/diag/tnslsnr/racnode1/listener_scan1/alert/log.xml的日志信息
+写入/u01/app/11.2.0/grid/log/diag/tnslsnr/racnode1/listener_scan1/trace/ora_5279_47079032759072.trc的跟踪信息
+跟踪级别当前为0
+以 pid=5279 开始
+监听: (DESCRIPTION=(ADDRESS=(PROTOCOL=ipc)(KEY=LISTENER_SCAN1)))
+Listener completed notification to CRS on start
+TIMESTAMP * CONNECT DATA [* PROTOCOL INFO] * EVENT [* SID] * RETURN CODE
+11-7月 -2017 08:56:53 * (CONNECT_DATA=(CID=(PROGRAM=)(HOST=racnode1)(USER=grid))(COMMAND=status)(ARGUMENTS=64)(SERVICE=LISTENER_SCAN1)(VERSION=186646784)) * status * 0
+11-7月 -2017 08:56:54 * version * 0
+监听: (DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=10.236.101.234)(PORT=1521)))
+11-7月 -2017 08:56:54 * service_register * LsnrAgt * 0
+11-7月 -2017 08:56:54 * (CONNECT_DATA=(CID=(PROGRAM=)(HOST=racnode1)(USER=grid))(COMMAND=status)(ARGUMENTS=64)(SERVICE=LISTENER_SCAN1)(VERSION=186646784)) * status * 0
+Tue Jul 11 08:57:54 2017
+11-7月 -2017 08:57:54 * (CONNECT_DATA=(CID=(PROGRAM=)(HOST=racnode1)(USER=grid))(COMMAND=status)(ARGUMENTS=64)(SERVICE=LISTENER_SCAN1)(VERSION=186646784)) * status * 0
+Tue Jul 11 08:58:54 2017
+11-7月 -2017 08:58:54 * (CONNECT_DATA=(CID=(PROGRAM=)(HOST=racnode1)(USER=grid))(COMMAND=status)(ARGUMENTS=64)(SERVICE=LISTENER_SCAN1)(VERSION=186646784)) * status * 0
+Tue Jul 11 08:59:54 2017
+11-7月 -2017 08:59:54 * (CONNECT_DATA=(CID=(PROGRAM=)(HOST=racnode1)(USER=grid))(COMMAND=status)(ARGUMENTS=64)(SERVICE=LISTENER_SCAN1)(VERSION=186646784)) * status * 0
+Tue Jul 11 09:00:54 2017
+11-7月 -2017 09:00:54 * (CONNECT_DATA=(CID=(PROGRAM=)(HOST=racnode1)(USER=grid))(COMMAND=status)(ARGUMENTS=64)(SERVICE=LISTENER_SCAN1)(VERSION=186646784)) * status * 0
+Tue Jul 11 09:01:54 2017
+11-7月 -2017 09:01:54 * (CONNECT_DATA=(CID=(PROGRAM=)(HOST=racnode1)(USER=grid))(COMMAND=status)(ARGUMENTS=64)(SERVICE=LISTENER_SCAN1)(VERSION=186646784)) * status * 0
+Tue Jul 11 09:02:54 2017
+11-7月 -2017 09:02:54 * (CONNECT_DATA=(CID=(PROGRAM=)(HOST=racnode1)(USER=grid))(COMMAND=status)(ARGUMENTS=64)(SERVICE=LISTENER_SCAN1)(VERSION=186646784)) * status * 0
+Tue Jul 11 09:03:54 2017
+11-7月 -2017 09:03:54 * (CONNECT_DATA=(CID=(PROGRAM=)(HOST=racnode1)(USER=grid))(COMMAND=status)(ARGUMENTS=64)(SERVICE=LISTENER_SCAN1)(VERSION=186646784)) * status * 0
+Tue Jul 11 09:04:54 2017
+11-7月 -2017 09:04:54 * (CONNECT_DATA=(CID=(PROGRAM=)(HOST=racnode1)(USER=grid))(COMMAND=status)(ARGUMENTS=64)(SERVICE=LISTENER_SCAN1)(VERSION=186646784)) * status * 0
+Tue Jul 11 09:05:54 2017
+11-7月 -2017 09:05:54 * (CONNECT_DATA=(CID=(PROGRAM=)(HOST=racnode1)(USER=grid))(COMMAND=status)(ARGUMENTS=64)(SERVICE=LISTENER_SCAN1)(VERSION=186646784)) * status * 0
+Tue Jul 11 09:06:54 2017
+11-7月 -2017 09:06:54 * (CONNECT_DATA=(CID=(PROGRAM=)(HOST=racnode1)(USER=grid))(COMMAND=status)(ARGUMENTS=64)(SERVICE=LISTENER_SCAN1)(VERSION=186646784)) * status * 0
+Tue Jul 11 09:07:54 2017
+11-7月 -2017 09:07:54 * (CONNECT_DATA=(CID=(PROGRAM=)(HOST=racnode1)(USER=grid))(COMMAND=status)(ARGUMENTS=64)(SERVICE=LISTENER_SCAN1)(VERSION=186646784)) * status * 0
+
+24、创建表空间及增加数据文件
+SQL> select tablespace_name from dba_tablespaces;
+TABLESPACE_NAME
+------------------------------
+SYSTEM
+SYSAUX
+UNDOTBS1
+TEMP
+UNDOTBS2
+USERS
+RAC_DATA
+RAC_TEMP
+8 rows selected.
+SQL> select name from v$datafile union select member from v$logfile union select name from v$controlfile union select name from v$tempfile;
+NAME
+--------------------------------------------------------------------------------
++FRA/racdb/controlfile/current.256.949053765
++FRA/racdb/onlinelog/group_1.257.949053775
++FRA/racdb/onlinelog/group_2.258.949053785
++FRA/racdb/onlinelog/group_3.259.949064369
++FRA/racdb/onlinelog/group_4.260.949064379
++RACDB_DATA/racdb/controlfile/current.256.949053757
++RACDB_DATA/racdb/datafile/rac_data1.dbf
++RACDB_DATA/racdb/datafile/rac_data2.dbf
++RACDB_DATA/racdb/datafile/sysaux.260.949053881
++RACDB_DATA/racdb/datafile/system.259.949053795
++RACDB_DATA/racdb/datafile/undotbs1.261.949053941
+NAME
+--------------------------------------------------------------------------------
++RACDB_DATA/racdb/datafile/undotbs2.263.949054029
++RACDB_DATA/racdb/datafile/users.264.949054051
++RACDB_DATA/racdb/onlinelog/group_1.257.949053771
++RACDB_DATA/racdb/onlinelog/group_2.258.949053781
++RACDB_DATA/racdb/onlinelog/group_3.265.949064363
++RACDB_DATA/racdb/onlinelog/group_4.266.949064373
++RACDB_DATA/racdb/tempfile/rac_temp1.dbf
++RACDB_DATA/racdb/tempfile/temp.262.949053963
+19 rows selected.
+[grid@racnode1 ]$ asmcmd
+ASMCMD> pwd
++
+ASMCMD> ls
+CRS/
+FRA/
+RACDB_DATA/
+ASMCMD> cd +RACDB_DATA/racdb/datafile/
+ASMCMD> pwd
++RACDB_DATA/racdb/datafile
+ASMCMD> ls
+RAC_DATA.268.950270625
+RAC_DATA.269.950274149
+SYSAUX.260.949053881
+SYSTEM.259.949053795
+UNDOTBS1.261.949053941
+UNDOTBS2.263.949054029
+USERS.264.949054051
+rac_data1.dbf
+rac_data2.dbf
+ASMCMD> 
+ASMCMD> ls -ls
+Type      Redund  Striped  Time             Sys  Block_Size   Blocks        Bytes        Space  Name
+DATAFILE  UNPROT  COARSE   AUG 07 11:00:00  Y          8192  2621441  21474844672  21476933632  RAC_DATA.268.950270625
+DATAFILE  UNPROT  COARSE   AUG 07 11:00:00  Y          8192  2621441  21474844672  21476933632  RAC_DATA.269.950274149
+DATAFILE  UNPROT  COARSE   AUG 07 11:00:00  Y          8192   147201   1205870592   1207959552  SYSAUX.260.949053881
+DATAFILE  UNPROT  COARSE   AUG 07 11:00:00  Y          8192    90881    744497152    746586112  SYSTEM.259.949053795
+DATAFILE  UNPROT  COARSE   AUG 07 11:00:00  Y          8192    41601    340795392    342884352  UNDOTBS1.261.949053941
+DATAFILE  UNPROT  COARSE   AUG 07 11:00:00  Y          8192    25601    209723392    211812352  UNDOTBS2.263.949054029
+DATAFILE  UNPROT  COARSE   AUG 07 11:00:00  Y          8192      641      5251072      6291456  USERS.264.949054051
+                                            N                                                   rac_data1.dbf => +RACDB_DATA/RACDB/DATAFILE/RAC_DATA.268.950270625
+                                            N                                                   rac_data2.dbf => +RACDB_DATA/RACDB/DATAFILE/RAC_DATA.269.950274149
+ASMCMD> exit
+[oracle@racnode1 ~]$ sqlplus / as sysdba
+SQL*Plus: Release 11.2.0.1.0 Production on Mon Aug 7 17:27:46 2017
+Copyright (c) 1982, 2009, Oracle.  All rights reserved.
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production
+With the Partitioning, Real Application Clusters, Automatic Storage Management, OLAP,
+Data Mining and Real Application Testing options
+SQL> alter tablespace RAC_DATA  add datafile  '+RACDB_DATA/racdb/datafile/rac_data3.dbf' size 20G ;
+Tablespace altered.
+[grid@racnode1 trace]$ asmcmd
+ASMCMD> pwd
++
+ASMCMD> cd +RACDB_DATA/racdb/datafile/
+ASMCMD> ls -ls
+Type      Redund  Striped  Time             Sys  Block_Size   Blocks        Bytes        Space  Name
+DATAFILE  UNPROT  COARSE   AUG 07 11:00:00  Y          8192  2621441  21474844672  21476933632  RAC_DATA.268.950270625
+DATAFILE  UNPROT  COARSE   AUG 07 11:00:00  Y          8192  2621441  21474844672  21476933632  RAC_DATA.269.950274149
+DATAFILE  UNPROT  COARSE   AUG 07 17:00:00  Y          8192  2621441  21474844672  21476933632  RAC_DATA.271.951411029
+DATAFILE  UNPROT  COARSE   AUG 07 11:00:00  Y          8192   147201   1205870592   1207959552  SYSAUX.260.949053881
+DATAFILE  UNPROT  COARSE   AUG 07 11:00:00  Y          8192    90881    744497152    746586112  SYSTEM.259.949053795
+DATAFILE  UNPROT  COARSE   AUG 07 11:00:00  Y          8192    41601    340795392    342884352  UNDOTBS1.261.949053941
+DATAFILE  UNPROT  COARSE   AUG 07 11:00:00  Y          8192    25601    209723392    211812352  UNDOTBS2.263.949054029
+DATAFILE  UNPROT  COARSE   AUG 07 11:00:00  Y          8192      641      5251072      6291456  USERS.264.949054051
+                                            N                                                   rac_data1.dbf => +RACDB_DATA/RACDB/DATAFILE/RAC_DATA.268.950270625
+                                            N                                                   rac_data2.dbf => +RACDB_DATA/RACDB/DATAFILE/RAC_DATA.269.950274149
+                                            N                                                   rac_data3.dbf => +RACDB_DATA/RACDB/DATAFILE/RAC_DATA.271.951411029
+ASMCMD> ls
+RAC_DATA.268.950270625
+RAC_DATA.269.950274149
+RAC_DATA.271.951411029
+SYSAUX.260.949053881
+SYSTEM.259.949053795
+UNDOTBS1.261.949053941
+UNDOTBS2.263.949054029
+USERS.264.949054051
+rac_data1.dbf
+rac_data2.dbf
+rac_data3.dbf
+ASMCMD> 
+
+SQL> create tablespace RAC_DATA  datafile '+RACDB_DATA/racdb/datafile/rac_data1.dbf'  size 20G ;
+

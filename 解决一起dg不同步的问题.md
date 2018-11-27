@@ -1,0 +1,222 @@
+接到同事电话，说公司的mis系统好像从库查询和主库的数据有点不一致。Ok，很明显应该是主从不同步的问题，在处理过程中以为和往常一样很简单，哪儿晓得遇到了好几个坑，特此记录一下。
+
+> 数据库版本：11.2.0.4 单实例
+## 一、照往常一样查看dataguard的日志同步三板斧
+
+### 第一板斧：查看主从库的日志的最大号以及是否存在lag
+#### 1.Primary/stndby：查询主库的最大日志 
+```
+SQL> select max(sequence#) from v$archived_log;
+SQL> select max(sequence#) from v$archived_log where applied='YES'; 
+```
+
+
+#### 2.查看是够有lag
+```
+用以下命令查看
+set lines 200
+col ctime format a20
+col value format a20
+select inst_id,to_char(sysdate,'yyyymmdd hh24:mi:ss') ctime,name,value,datum_time from gv$dataguard_stats where name like '%lag';
+```
+### 第二板斧：查看查询主库日志与备库是否一致
+#### 1.查看查询主库日志与备库是否一致
+```
+SQL> select sequence# from v$archived_log  where recid = (select max(recid) from v$archived_log) and applied = 'YES';
+SQL> select sequence#  from v$archived_log where recid = (select max(recid) from v$archived_log);
+```
+
+#### 2.备库接收到的日志和应用的日志是否一致
+```
+select max(lh.SEQUENCE#) ,max(al.SEQUENCE#)  fromv$log_history lh,v$archived_log al;
+```
+
+### 第三板斧：查看有没有MRP进程
+```
+SQL> select process,status from v$managed_standby;
+
+PROCESS STATUS
+------- ------------
+ARCH CONNECTED
+ARCH CONNECTED
+MRP0 WAIT_FOR_LOG
+RFS RECEIVING
+```
+
+没有MRP进程，说明备库没有处于恢复状态。可以使用
+```
+alter database recover managed standby database disconnect from session ；
+```
+打开standby的同步。
+
+
+## 二、启动了mrp进程后发现有ora-600的错误 
+原本以为就搞定了，结果查看了一下alert日志，发现报错：
+```
+ORA-00600: internal error code, arguments: [2619], [81304], [], [], [], [], [], [], [], [], [], []
+MRP0: Background Media Recovery process shutdown (amldb)
+```
+
+查了下metalink，发现这个600错误是备库在执行恢复的过程中，发现81304这个归档日志有问题或者找不到。
+根据提示查了下主库，这个81304号的归档日志已经早删除了。。（如果没有删的话，可以直接传一份到备库重新应用即可）
+
+
+为了让主备库的数据一致，在不重建备库的情况下，可以采用通过主库增量备份的方式来完成重新同步了。
+
+### 重新同步的步骤：
+
+#### 1.在备库上取消日志应用
+```
+alter database recover managedstandby database cancel;
+```
+
+
+#### 2.查看备库scn
+```
+select current_scn from v$database;
+```
+
+
+#### 3.根据scn，在主库上进行rman增量备份
+
+获取增量数据
+```
+backup incremental from scn xxxx database format '/u01/archivelog/temp/20180705_%U.bak' tag 'forstandby';
+```
+
+
+备份控制文件
+```
+backup current controlfile forstandby format '/u01/archivelog/temp/controlfile.bak';
+```
+
+
+#### 4.将增量备份传到备库
+
+#### 5.将备库启动到mount状态
+```
+shutdown immediate
+startup nomount
+alter database mount standby database;
+```
+
+
+#### 6.用rman进行恢复增量备份
+```
+rman target / nocatalog
+
+RMAN> catalog start with '/u01/archivelog/temp/';
+
+RMAN> recover database noredo;
+```
+
+
+#### 7.用rman恢复控制文件
+```
+RMAN> shutdown;
+
+RMAN> startup nomount;
+
+RMAN> restore standby controlfile from '/u01/archivelog/temp/controlfile.bak';
+```
+
+#### 8.启动备库到mount状态
+```
+RMAN> shutdown
+
+SQL> startup nomount;
+
+SQL> alter database mount standby database;
+```
+
+
+#### 9.因为恢复了控制文件，所以需要重新添加新的standby redo log file
+```
+alter database add standby logfile group 11('/u01/app/oracle/sid/oradata/stdbyredo01.log') size 100m; 
+
+...
+
+alter database add standby logfile group 17('/u01/app/oracle/sid/oradata/stdbyredo07.log') size 100m; 
+```
+
+
+#### 10.启动备库同步
+```
+SQL> alter database open read only;
+
+SQL> alter database recover managed standby database disconnect from session using current logfile;
+```
+
+
+#### 11.查看归档日志应用
+```
+select max(lh.SEQUENCE#) ,max(al.SEQUENCE#)  fromv$log_history lh,v$archived_log al;
+```
+
+
+
+## 三、备库报错ORA-00313、ORA-00312、ORA-27037
+原本以为搞定了，然后查看alert日志，发现又报错了。。日了狗了！
+这次报的错是DG备库报错ORA-00313、ORA-00312、ORA-27037
+
+意思说redo日志不存在。去相对应的目录看，果然备库的redo不存在。
+
+肿么办呢？只有用clear的方式把redo清除了
+
+### 只有用clear的方式把redo清除了的步骤：
+
+#### 1.在备库上取消日志应用
+```
+alter database recover managed standby database cancel; 
+```
+
+
+#### 2.执行如下命令重建备库上所有的日志组
+```
+SQL> select group#,sequence#,archived,status from v$log;
+
+    GROUP#  SEQUENCE# ARCHIVED STATUS 
+---------- ---------- -------- ---------------- 
+         1          1 YES      INACTIVE 
+         2          2 YES      INACTIVE 
+         3          3 NO       CURRENT 
+```
+
+> 对于已经归档和状态为inactive的组可以用下面的命令来重建
+> 对于状态为active的日志组则需要先做一下日志的切换才行，而做日志的切换又需要先把数据库open，切完后再startup到mount状态
+```
+alter database clear logfile group X;
+
+
+redo:
+alter database drop logfile group X;
+alter database add logfile group X ('路径') size 100m;
+
+standby redo:
+alter database drop standby logfile group X;
+alter database add standby logfile group X ('路径') size 100m;
+```
+
+#### 3.在clear的过程又遇到一个报错：ORA-19527和ORA-00312
+这个和备库的LOG_FILE_NAME_CONVERT有关，需要设置这个spfile的参数才行，修改完后重启数据库，执行clear成功。
+
+
+#### 4.启动备库并检查
+
+做完以上后:
+```
+shutdown immediate
+
+startup mount  #查看alert日志没有错误后再执行下面的
+
+alter database open read only
+
+alter database recover managedstandby database disconnect from session using current logfile;
+
+select max(lh.SEQUENCE#) ,max(al.SEQUENCE#)  fromv$log_history lh,v$archived_log al;
+```
+
+
+> 参考：
+> (1) 官方文档：Database Backup and Recovery Advanced User's Guide
+> (2) 1138913.1： ORA-600[2619] During Physical Standby Recovery

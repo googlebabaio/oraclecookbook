@@ -1,0 +1,896 @@
+### 10gRAC的三大服务：CSS, CRS, EVM 
+
+#### CSS
+CSS (clustersynchronization service）自动节点重启
+CSS 服务的进程：ocssd、oprocd, oclsomon 这三个进程都具有重启系统的功能
+若ocssd 被kill 系统就会重启  oclsomon 负责监控ocssd 的状态
+
+#### CRS
+CRS的主进程是crsd 负责启动、关闭、监控资源状态
+
+#### EVM
+EVM 进程evmd
+
+
+* * * * *
+
+
+### 11gRAC的改进
+grid 11.2 把原来的CRS拆分成两份 分别叫CRSD栈和OHASD栈 
+前者负责高级别的资源，如数据库实例，后者负责下层级别进程，因此有upper stack 和 lower 
+
+stack  CRS的配置信息OCR被分成OLR和OCR
+其中 OHASD 管理OLR，CRSD管理OCR   
+
+##### ohasd
+OHASD是整个 oracle 进程堆栈的基础据/etc/oracle/scls_scr/<hostname>目录的控制文件内容决定其他堆栈成员的状态  OHASD栈的启动顺序记录在GPnp profile ,也依赖于OLR中的信息
+
+##### crsd
+CRSD专注于 上层（应用层）资源的管理维护 先与CRSD关闭的那些资源是上层资源，CRSD之后关闭的资源就是OHASD的资源了
+
+clusteware 利用 os 的init 脚本启动的
+```
+# Run xdm in runlevel 5
+x:5:respawn:/etc/X11/prefdm -nodaemon
+htfa:35:respawn:/etc/init.d/init.tfa run >/dev/null 2>&1 </dev/null
+
+
+h1:35:respawn:/etc/init.d/init.ohasd run >/dev/null 2>&1 </dev/null
+```
+
+
+
+[grid@rac1 ~]$ olsnodes -n 
+rac1    1
+rac2    2
+
+
+
+
+[grid@rac1 ~]$ crsctl check crs
+CRS-4638: Oracle High Availability Services is online
+CRS-4537: Cluster Ready Services is online
+CRS-4529: Cluster Synchronization Services is online
+CRS-4533: Event Manager is online
+
+
+
+
+
+
+[grid@rac2 ~]$ crsctl check cluster -all
+**************************************************************
+rac1:
+CRS-4537: Cluster Ready Services is online
+CRS-4529: Cluster Synchronization Services is online
+CRS-4533: Event Manager is online
+**************************************************************
+rac2:
+CRS-4537: Cluster Ready Services is online
+CRS-4529: Cluster Synchronization Services is online
+CRS-4533: Event Manager is online
+**************************************************************
+
+
+
+
+
+
+
+
+[grid@rac1 ~]$ crsctl status res -t
+--------------------------------------------------------------------------------
+NAME           TARGET  STATE        SERVER                   STATE_DETAILS 
+                   目标状态 当前状态    跑在哪个机器
+--------------------------------------------------------------------------------
+Local Resources
+--------------------------------------------------------------------------------
+ora.DATA.dg
+               ONLINE  ONLINE       rac1                                         
+               ONLINE  ONLINE       rac2                                         
+ora.LISTENER.lsnr
+               ONLINE  ONLINE       rac1                                         
+               ONLINE  ONLINE       rac2                                         
+ora.OCRVT.dg
+               ONLINE  ONLINE       rac1                                         
+               ONLINE  ONLINE       rac2                                         
+ora.asm
+               ONLINE  ONLINE       rac1                     Started             
+               ONLINE  ONLINE       rac2                     Started    
+         
+ora.gsd  这是一个向前兼容（9i rac ）相互兼容的一个服务，管理9i的接口而已，没有9i环境等于无，是正确的
+               OFFLINE OFFLINE      rac1                                         
+               OFFLINE OFFLINE      rac2                                         
+ora.net1.network
+               ONLINE  ONLINE       rac1                                         
+               ONLINE  ONLINE       rac2                                         
+ora.ons
+               ONLINE  ONLINE       rac1                                         
+               ONLINE  ONLINE       rac2                                         
+ora.registry.acfs
+               ONLINE  ONLINE       rac1                                         
+               ONLINE  ONLINE       rac2                                         
+--------------------------------------------------------------------------------
+Cluster Resources
+--------------------------------------------------------------------------------
+ora.LISTENER_SCAN1.lsnr
+      1        ONLINE  ONLINE       rac1                                         
+ora.cvu
+      1        ONLINE  ONLINE       rac1                                         
+ora.oc4j
+      1        ONLINE  ONLINE       rac1                                         
+ora.rac1.vip
+      1        ONLINE  ONLINE       rac1                                         
+ora.rac2.vip
+      1        ONLINE  ONLINE       rac2                                         
+ora.racjiqun.db
+      1        ONLINE  OFFLINE                               Instance Shutdown,S 
+                                                             TARTING             
+      2        ONLINE  OFFLINE                               Instance Shutdown,S 
+                                                             TARTING             
+ora.scan1.vip
+      1        ONLINE  ONLINE       rac1    
+                                     
+
+
+
+
+                                   
+[grid@rac1 ~]$ crsctl status res -t
+--------------------------------------------------------------------------------
+NAME           TARGET  STATE        SERVER                   STATE_DETAILS       
+--------------------------------------------------------------------------------
+Local Resources
+--------------------------------------------------------------------------------
+ora.DATA.dg
+               ONLINE  ONLINE       rac1                                         
+               ONLINE  ONLINE       rac2                                         
+ora.LISTENER.lsnr
+               ONLINE  ONLINE       rac1                                         
+               ONLINE  ONLINE       rac2                                         
+ora.OCRVT.dg
+               ONLINE  ONLINE       rac1                                         
+               ONLINE  ONLINE       rac2                                         
+ora.asm
+               ONLINE  ONLINE       rac1                     Started             
+               ONLINE  ONLINE       rac2                     Started             
+ora.gsd
+               OFFLINE OFFLINE      rac1                                         
+               OFFLINE OFFLINE      rac2                                         
+ora.net1.network
+               ONLINE  ONLINE       rac1                                         
+               ONLINE  ONLINE       rac2                                         
+ora.ons
+               ONLINE  ONLINE       rac1                                         
+               ONLINE  ONLINE       rac2                                         
+ora.registry.acfs
+               ONLINE  ONLINE       rac1                                         
+               ONLINE  ONLINE       rac2                                         
+--------------------------------------------------------------------------------
+Cluster Resources
+--------------------------------------------------------------------------------
+ora.LISTENER_SCAN1.lsnr
+      1        ONLINE  ONLINE       rac1                                         
+ora.cvu
+      1        ONLINE  ONLINE       rac1                                         
+ora.oc4j
+      1        ONLINE  ONLINE       rac1                                         
+ora.rac1.vip
+      1        ONLINE  ONLINE       rac1                                         
+ora.rac2.vip
+      1        ONLINE  ONLINE       rac2                                         
+ora.racjiqun.db
+      1        ONLINE  ONLINE       rac1                     Open                
+      2        ONLINE  ONLINE       rac2                     Open                
+ora.scan1.vip
+      1        ONLINE  ONLINE       rac1                              
+
+
+
+
+
+
+[grid@rac1 ~]$ srvctl status nodeapps
+VIP rac1-vip is enabled
+VIP rac1-vip is running on node: rac1
+VIP rac2-vip is enabled
+VIP rac2-vip is running on node: rac2
+Network is enabled
+Network is running on node: rac1
+Network is running on node: rac2
+GSD is disabled
+GSD is not running on node: rac1
+GSD is not running on node: rac2
+ONS is enabled
+ONS daemon is running on node: rac1
+ONS daemon is running on node: rac2
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+关闭集群要在root 模式下 
+
+
+[root@rac1 ~]# cd /home/grid/
+[root@rac1 grid]# ls
+Desktop  oradiag_grid
+[root@rac1 grid]# source .bash_profile 
+[root@rac1 grid]# crsctl stop cluster   关闭1节点的cluster
+
+
+CRS-2673: Attempting to stop 'ora.crsd' on 'rac1'
+CRS-2790: Starting shutdown of Cluster Ready Services-managed resources on 'rac1'
+CRS-2673: Attempting to stop 'ora.rac1.vip' on 'rac1'
+CRS-2673: Attempting to stop 'ora.OCRVT.dg' on 'rac1'
+CRS-2673: Attempting to stop 'ora.racjiqun.db' on 'rac1'
+CRS-2673: Attempting to stop 'ora.registry.acfs' on 'rac1'
+CRS-2677: Stop of 'ora.racjiqun.db' on 'rac1' succeeded
+CRS-2673: Attempting to stop 'ora.DATA.dg' on 'rac1'
+CRS-2677: Stop of 'ora.rac1.vip' on 'rac1' succeeded
+CRS-2672: Attempting to start 'ora.rac1.vip' on 'rac2'
+CRS-2677: Stop of 'ora.DATA.dg' on 'rac1' succeeded
+CRS-2677: Stop of 'ora.registry.acfs' on 'rac1' succeeded
+CRS-2676: Start of 'ora.rac1.vip' on 'rac2' succeeded
+CRS-2677: Stop of 'ora.OCRVT.dg' on 'rac1' succeeded
+CRS-2673: Attempting to stop 'ora.asm' on 'rac1'
+CRS-2677: Stop of 'ora.asm' on 'rac1' succeeded
+CRS-2673: Attempting to stop 'ora.ons' on 'rac1'
+CRS-2677: Stop of 'ora.ons' on 'rac1' succeeded
+CRS-2673: Attempting to stop 'ora.net1.network' on 'rac1'
+CRS-2677: Stop of 'ora.net1.network' on 'rac1' succeeded
+CRS-2792: Shutdown of Cluster Ready Services-managed resources on 'rac1' has completed
+CRS-2677: Stop of 'ora.crsd' on 'rac1' succeeded
+CRS-2673: Attempting to stop 'ora.ctssd' on 'rac1'
+CRS-2673: Attempting to stop 'ora.evmd' on 'rac1'
+CRS-2673: Attempting to stop 'ora.asm' on 'rac1'
+CRS-2677: Stop of 'ora.evmd' on 'rac1' succeeded
+CRS-2677: Stop of 'ora.asm' on 'rac1' succeeded
+CRS-2673: Attempting to stop 'ora.cluster_interconnect.haip' on 'rac1'
+CRS-2677: Stop of 'ora.cluster_interconnect.haip' on 'rac1' succeeded
+CRS-2677: Stop of 'ora.ctssd' on 'rac1' succeeded
+CRS-2673: Attempting to stop 'ora.cssd' on 'rac1'
+CRS-2677: Stop of 'ora.cssd' on 'rac1' succeeded
+
+
+关闭cluster 后查看状态
+
+
+[grid@rac1 ~]$ crsctl check cluster -all
+**************************************************************
+rac1:
+CRS-4535: Cannot communicate with Cluster Ready Services
+CRS-4530: Communications failure contacting Cluster Synchronization Services daemon
+CRS-4534: Cannot communicate with Event Manager
+**************************************************************
+rac2:
+CRS-4537: Cluster Ready Services is online
+CRS-4529: Cluster Synchronization Services is online
+CRS-4533: Event Manager is online
+**************************************************************
+
+
+
+
+[root@rac2 ~]# cd /home/grid/
+[root@rac2 grid]# source .bash_profile 
+[root@rac2 grid]# crsctl stop cluster  关闭2节点的cluster
+CRS-2673: Attempting to stop 'ora.crsd' on 'rac2'
+CRS-2790: Starting shutdown of Cluster Ready Services-managed resources on 'rac2'
+CRS-2673: Attempting to stop 'ora.rac1.vip' on 'rac2'
+CRS-2673: Attempting to stop 'ora.OCRVT.dg' on 'rac2'
+CRS-2673: Attempting to stop 'ora.racjiqun.db' on 'rac2'
+CRS-2673: Attempting to stop 'ora.registry.acfs' on 'rac2'
+CRS-2673: Attempting to stop 'ora.cvu' on 'rac2'
+CRS-2673: Attempting to stop 'ora.oc4j' on 'rac2'
+CRS-2673: Attempting to stop 'ora.LISTENER_SCAN1.lsnr' on 'rac2'
+CRS-2677: Stop of 'ora.LISTENER_SCAN1.lsnr' on 'rac2' succeeded
+CRS-2673: Attempting to stop 'ora.scan1.vip' on 'rac2'
+CRS-2677: Stop of 'ora.cvu' on 'rac2' succeeded
+CRS-2677: Stop of 'ora.rac1.vip' on 'rac2' succeeded
+CRS-2673: Attempting to stop 'ora.rac2.vip' on 'rac2'
+CRS-2677: Stop of 'ora.scan1.vip' on 'rac2' succeeded
+CRS-2677: Stop of 'ora.racjiqun.db' on 'rac2' succeeded
+CRS-2673: Attempting to stop 'ora.DATA.dg' on 'rac2'
+CRS-2677: Stop of 'ora.rac2.vip' on 'rac2' succeeded
+CRS-2677: Stop of 'ora.DATA.dg' on 'rac2' succeeded
+CRS-2677: Stop of 'ora.registry.acfs' on 'rac2' succeeded
+CRS-2677: Stop of 'ora.OCRVT.dg' on 'rac2' succeeded
+CRS-2673: Attempting to stop 'ora.asm' on 'rac2'
+CRS-2677: Stop of 'ora.asm' on 'rac2' succeeded
+CRS-2677: Stop of 'ora.oc4j' on 'rac2' succeeded
+CRS-2673: Attempting to stop 'ora.ons' on 'rac2'
+CRS-2677: Stop of 'ora.ons' on 'rac2' succeeded
+CRS-2673: Attempting to stop 'ora.net1.network' on 'rac2'
+CRS-2677: Stop of 'ora.net1.network' on 'rac2' succeeded
+CRS-2792: Shutdown of Cluster Ready Services-managed resources on 'rac2' has completed
+CRS-2677: Stop of 'ora.crsd' on 'rac2' succeeded
+CRS-2673: Attempting to stop 'ora.ctssd' on 'rac2'
+CRS-2673: Attempting to stop 'ora.evmd' on 'rac2'
+CRS-2673: Attempting to stop 'ora.asm' on 'rac2'
+CRS-2677: Stop of 'ora.evmd' on 'rac2' succeeded
+CRS-2677: Stop of 'ora.asm' on 'rac2' succeeded
+CRS-2673: Attempting to stop 'ora.cluster_interconnect.haip' on 'rac2'
+CRS-2677: Stop of 'ora.ctssd' on 'rac2' succeeded
+CRS-2677: Stop of 'ora.cluster_interconnect.haip' on 'rac2' succeeded
+CRS-2673: Attempting to stop 'ora.cssd' on 'rac2'
+CRS-2677: Stop of 'ora.cssd' on 'rac2' succeeded
+
+
+[grid@rac1 ~]$ crsctl check cluster -all
+**************************************************************
+rac1:
+CRS-4535: Cannot communicate with Cluster Ready Services
+CRS-4530: Communications failure contacting Cluster Synchronization Services daemon
+CRS-4534: Cannot communicate with Event Manager
+**************************************************************
+rac2:
+CRS-4535: Cannot communicate with Cluster Ready Services
+CRS-4530: Communications failure contacting Cluster Synchronization Services daemon
+CRS-4534: Cannot communicate with Event Manager
+**************************************************************
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+[root@rac1 grid]# crsctl start cluster -all
+
+
+CRS-2672: Attempting to start 'ora.cssdmonitor' on 'rac1'
+CRS-2672: Attempting to start 'ora.cssdmonitor' on 'rac2'
+CRS-2676: Start of 'ora.cssdmonitor' on 'rac1' succeeded
+CRS-2672: Attempting to start 'ora.cssd' on 'rac1'
+CRS-2672: Attempting to start 'ora.diskmon' on 'rac1'
+CRS-2676: Start of 'ora.cssdmonitor' on 'rac2' succeeded
+CRS-2672: Attempting to start 'ora.cssd' on 'rac2'
+CRS-2672: Attempting to start 'ora.diskmon' on 'rac2'
+CRS-2676: Start of 'ora.diskmon' on 'rac2' succeeded
+CRS-2676: Start of 'ora.diskmon' on 'rac1' succeeded
+CRS-2676: Start of 'ora.cssd' on 'rac2' succeeded
+CRS-2676: Start of 'ora.cssd' on 'rac1' succeeded
+CRS-2672: Attempting to start 'ora.ctssd' on 'rac2'
+CRS-2672: Attempting to start 'ora.ctssd' on 'rac1'
+CRS-2676: Start of 'ora.ctssd' on 'rac2' succeeded
+CRS-2672: Attempting to start 'ora.evmd' on 'rac2'
+CRS-2672: Attempting to start 'ora.cluster_interconnect.haip' on 'rac2'
+CRS-2676: Start of 'ora.ctssd' on 'rac1' succeeded
+CRS-2672: Attempting to start 'ora.evmd' on 'rac1'
+CRS-2672: Attempting to start 'ora.cluster_interconnect.haip' on 'rac1'
+CRS-2676: Start of 'ora.evmd' on 'rac2' succeeded
+CRS-2676: Start of 'ora.evmd' on 'rac1' succeeded
+CRS-2676: Start of 'ora.cluster_interconnect.haip' on 'rac1' succeeded
+CRS-2672: Attempting to start 'ora.asm' on 'rac1'
+CRS-2676: Start of 'ora.cluster_interconnect.haip' on 'rac2' succeeded
+CRS-2672: Attempting to start 'ora.asm' on 'rac2'
+CRS-2676: Start of 'ora.asm' on 'rac2' succeeded
+CRS-2672: Attempting to start 'ora.crsd' on 'rac2'
+CRS-2676: Start of 'ora.asm' on 'rac1' succeeded
+CRS-2672: Attempting to start 'ora.crsd' on 'rac1'
+CRS-2676: Start of 'ora.crsd' on 'rac2' succeeded
+CRS-2676: Start of 'ora.crsd' on 'rac1' succeeded
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[root@rac1 ~]# ps -ef|grep smon
+root      3151     1  0 16:32 ?        00:00:08 /oracle/gridjia/grid/bin/osysmond.bin
+grid      3950     1  0 16:34 ?        00:00:00 asm_smon_+ASM1
+oracle    8080     1  0 16:59 ?        00:00:00 ora_smon_racjiqun1
+root      9816  9561  0 17:13 pts/3    00:00:00 grep smon
+
+
+[root@rac2 ~]# ps -ef|grep smon
+root      3097     1  0 16:32 ?        00:00:05 /oracle/gridjia/grid/bin/osysmond.bin
+grid      3875     1  0 16:34 ?        00:00:00 asm_smon_+ASM2
+oracle    7301     1  0 16:55 ?        00:00:00 ora_smon_racjiqun2
+root      9976  9923  0 17:14 pts/2    00:00:00 grep smon
+
+
+
+
+
+
+[grid@rac1 ~]$ srvctl config database -d racjiqun
+Database unique name: racjiqun
+Database name: racjiqun
+Oracle home: /oracle/app/oracle/11.2.4/db_1
+Oracle user: oracle
+Spfile: +DATA/racjiqun/spfileracjiqun.ora
+Domain: 
+Start options: open
+Stop options: immediate
+Database role: PRIMARY
+Management policy: AUTOMATIC
+Server pools: racjiqun
+Database instances: racjiqun1,racjiqun2
+Disk Groups: DATA
+Mount point paths: 
+Services: 
+Type: RAC
+Database is administrator managed
+
+
+
+
+
+
+[grid@rac1 ~]$ srvctl status database -d racjiqun
+Instance racjiqun1 is running on node rac1
+Instance racjiqun2 is running on node rac2
+
+
+
+
+
+
+
+
+
+
+[grid@rac1 ~]$ srvctl stop database -d racjiqun  关闭数据库，实例，监听器
+[grid@rac1 ~]$ srvctl status database -d racjiqun
+Instance racjiqun1 is not running on node rac1
+Instance racjiqun2 is not running on node rac2
+
+
+
+
+
+
+[grid@rac2 ~]$ srvctl  stop instance -d racjiqun -i racjiqun1 -o immediate
+[grid@rac2 ~]$ srvctl status database -d racjiqun
+Instance racjiqun1 is not running on node rac1
+Instance racjiqun2 is running on node rac2
+
+
+
+
+
+
+
+
+[grid@rac2 ~]$ srvctl stop listener
+[grid@rac2 ~]$ srvctl status listener
+Listener LISTENER is enabled
+Listener LISTENER is not running
+
+
+
+
+[grid@rac1 ~]$ crs_stat ora.racjiqun.db
+NAME=ora.racjiqun.db
+TYPE=ora.database.type
+TARGET=ONLINE
+STATE=ONLINE on rac1
+
+
+
+
+
+
+
+
+[grid@rac1 ~]$ srvctl config scan
+SCAN name: rac-scan, Network: 1/192.168.10.0/255.255.255.0/eth0
+SCAN VIP name: scan1, IP: /rac-scan/192.168.10.200
+
+
+
+
+[grid@rac1 ~]$ srvctl status scan
+SCAN VIP scan1 is enabled
+SCAN VIP scan1 is running on node rac1
+
+
+
+
+
+
+[grid@rac1 ~]$ srvctl  status scan_listener
+SCAN Listener LISTENER_SCAN1 is enabled
+SCAN listener LISTENER_SCAN1 is running on node rac1
+
+
+
+
+
+
+[grid@rac1 ~]$ srvctl config vip -n rac1
+VIP exists: /rac1-vip/192.168.10.110/192.168.10.0/255.255.255.0/eth0, hosting node rac1
+
+
+
+
+
+
+
+
+[grid@rac1 ~]$ srvctl config vip -n rac1  
+VIP exists: /rac1-vip/192.168.10.110/192.168.10.0/255.255.255.0/eth0, hosting node rac1
+
+
+[grid@rac1 ~]$ srvctl config listener -a   本地监听
+Name: LISTENER
+Network: 1, Owner: grid
+Home: <CRS home>
+  /oracle/gridhome/grid on node(s) rac1,rac2
+End points: TCP:1521
+
+
+
+
+
+
+[grid@rac1 ~]$ srvctl status listener
+Listener LISTENER is enabled
+Listener LISTENER is running on node(s): rac2,rac1
+
+
+
+
+
+
+[grid@rac1 ~]$ srvctl status asm -a
+ASM is running on rac2,rac1
+ASM is enabled.
+
+
+
+
+
+
+
+
+[grid@rac1 ~]$  srvctl status diskgroup -g DATA
+Disk Group DATA is running on rac2,rac1
+
+
+
+
+
+
+
+
+SQL>  select instance_name from gv$instance;
+
+
+INSTANCE_NAME
+----------------
+racjiqun1
+racjiqun2
+
+
+
+
+
+
+
+
+Usage: srvctl <command> <object> [<options>]
+    commands: enable|disable|start|stop|relocate|status|add|remove|modify|getenv|setenv|unsetenv|config|convert|upgrade
+    objects: database|instance|service|nodeapps|vip|network|asm|diskgroup|listener|srvpool|server|scan|scan_listener|oc4j|home|filesystem|gns|cvu
+For detailed help on each command and object and its options use:
+  srvctl <command> -h or
+  srvctl <command> <object> -h
+
+
+
+
+
+
+
+
+
+
+
+
+[grid@rac1 ~]$ crsctl status res -t -init  重要的后台daemon
+--------------------------------------------------------------------------------
+NAME           TARGET  STATE        SERVER                   STATE_DETAILS       
+--------------------------------------------------------------------------------
+Cluster Resources
+--------------------------------------------------------------------------------
+ora.asm
+      1        ONLINE  ONLINE       rac1                     Started             
+ora.cluster_interconnect.haip
+      1        ONLINE  ONLINE       rac1                                         
+ora.crf
+      1        ONLINE  ONLINE       rac1                                         
+ora.crsd
+      1        ONLINE  ONLINE       rac1                                         
+ora.cssd
+      1        ONLINE  ONLINE       rac1                                         
+ora.cssdmonitor
+      1        ONLINE  ONLINE       rac1                                         
+ora.ctssd
+      1        ONLINE  ONLINE       rac1                     ACTIVE:0            
+ora.diskmon
+      1        OFFLINE OFFLINE                                                   
+ora.drivers.acfs
+      1        ONLINE  ONLINE       rac1                                         
+ora.evmd
+      1        ONLINE  ONLINE       rac1                                         
+ora.gipcd
+      1        ONLINE  ONLINE       rac1                                         
+ora.gpnpd
+      1        ONLINE  ONLINE       rac1                                         
+ora.mdnsd
+      1        ONLINE  ONLINE       rac1                                    
+
+
+
+
+
+
+
+
+[grid@rac1 ~]$ crs_stat -t -v
+
+
+Name           Type           R/RA   F/FT   Target    State     Host        
+----------------------------------------------------------------------
+ora.DATA.dg    ora....up.type 0/5    0/     ONLINE    ONLINE    rac1        
+ora....ER.lsnr ora....er.type 0/5    0/         ONLINE    ONLINE    rac1        
+ora....N1.lsnr ora....er.type 0/5    0/0       ONLINE    ONLINE    rac2        
+ora.OCRVT.dg   ora....up.type 0/5    0/     ONLINE    ONLINE    rac1        
+ora.asm        ora.asm.type   0/5    0/     ONLINE    ONLINE    rac1        
+ora.cvu        ora.cvu.type   0/5    0/0     ONLINE    ONLINE    rac2        
+ora.gsd        ora.gsd.type   0/5    0/      OFFLINE   OFFLINE               
+ora....network ora....rk.type 0/5    0/      ONLINE    ONLINE    rac1        
+ora.oc4j       ora.oc4j.type  0/1    0/2     ONLINE    ONLINE    rac2        
+ora.ons        ora.ons.type   0/3    0/      ONLINE    ONLINE    rac1        
+ora....SM1.asm application    0/5    0/0    ONLINE    ONLINE    rac1        
+ora....C1.lsnr application    0/5    0/0      ONLINE    ONLINE    rac1        
+ora.rac1.gsd   application    0/5    0/0    OFFLINE   OFFLINE               
+ora.rac1.ons   application    0/3    0/0    ONLINE    ONLINE    rac1        
+ora.rac1.vip   ora....t1.type 0/0    0/0     ONLINE    ONLINE    rac1        
+ora....SM2.asm application    0/5    0/0    ONLINE    ONLINE    rac2        
+ora....C2.lsnr application    0/5    0/0     ONLINE    ONLINE    rac2        
+ora.rac2.gsd   application    0/5    0/0    OFFLINE   OFFLINE               
+ora.rac2.ons   application    0/3    0/0    ONLINE    ONLINE    rac2        
+ora.rac2.vip   ora....t1.type 0/0    0/0    ONLINE    ONLINE    rac2        
+ora....iqun.db ora....se.type 0/2    0/1    ONLINE    ONLINE    rac1        
+ora....ry.acfs ora....fs.type 0/5    0/      ONLINE    ONLINE    rac1        
+ora.scan1.vip  ora....ip.type 0/0    0/0    ONLINE    ONLINE    rac2  
+
+
+
+
+
+
+[grid@rac1 ~]$ crs_stat
+NAME=ora.DATA.dg
+TYPE=ora.diskgroup.type
+TARGET=ONLINE
+STATE=ONLINE on rac1
+
+
+NAME=ora.LISTENER.lsnr
+TYPE=ora.listener.type
+TARGET=OFFLINE
+STATE=OFFLINE
+
+
+NAME=ora.LISTENER_SCAN1.lsnr
+TYPE=ora.scan_listener.type
+TARGET=ONLINE
+STATE=ONLINE on rac2
+
+
+NAME=ora.OCRVT.dg
+TYPE=ora.diskgroup.type
+TARGET=ONLINE
+STATE=ONLINE on rac1
+
+
+NAME=ora.asm
+TYPE=ora.asm.type
+TARGET=ONLINE
+STATE=ONLINE on rac1
+
+
+NAME=ora.cvu
+TYPE=ora.cvu.type
+TARGET=ONLINE
+STATE=ONLINE on rac2
+
+
+NAME=ora.gsd
+TYPE=ora.gsd.type
+TARGET=OFFLINE
+STATE=OFFLINE
+
+
+NAME=ora.net1.network
+TYPE=ora.network.type
+TARGET=ONLINE
+STATE=ONLINE on rac1
+
+
+NAME=ora.oc4j
+TYPE=ora.oc4j.type
+TARGET=ONLINE
+STATE=ONLINE on rac2
+
+
+NAME=ora.ons
+TYPE=ora.ons.type
+TARGET=ONLINE
+STATE=ONLINE on rac1
+
+
+NAME=ora.rac1.ASM1.asm
+TYPE=application
+TARGET=ONLINE
+STATE=ONLINE on rac1
+
+
+NAME=ora.rac1.LISTENER_RAC1.lsnr
+TYPE=application
+TARGET=OFFLINE
+STATE=OFFLINE
+
+
+NAME=ora.rac1.gsd
+TYPE=application
+TARGET=OFFLINE
+STATE=OFFLINE
+
+
+NAME=ora.rac1.ons
+TYPE=application
+TARGET=ONLINE
+STATE=ONLINE on rac1
+
+
+NAME=ora.rac1.vip
+TYPE=ora.cluster_vip_net1.type
+TARGET=ONLINE
+STATE=ONLINE on rac1
+
+
+NAME=ora.rac2.ASM2.asm
+TYPE=application
+TARGET=ONLINE
+STATE=ONLINE on rac2
+
+
+NAME=ora.rac2.LISTENER_RAC2.lsnr
+TYPE=application
+TARGET=OFFLINE
+STATE=OFFLINE
+
+
+NAME=ora.rac2.gsd
+TYPE=application
+TARGET=OFFLINE
+STATE=OFFLINE
+
+
+NAME=ora.rac2.ons
+TYPE=application
+TARGET=ONLINE
+STATE=ONLINE on rac2
+
+
+NAME=ora.rac2.vip
+TYPE=ora.cluster_vip_net1.type
+TARGET=ONLINE
+STATE=ONLINE on rac2
+
+
+NAME=ora.racjiqun.db
+TYPE=ora.database.type
+TARGET=ONLINE
+STATE=ONLINE on rac1
+
+
+NAME=ora.registry.acfs
+TYPE=ora.registry.acfs.type
+TARGET=ONLINE
+STATE=ONLINE on rac1
+
+
+NAME=ora.scan1.vip
+TYPE=ora.scan_vip.type
+TARGET=ONLINE
+STATE=ONLINE on rac2
+
+
+
+
+
+
+[grid@rac1 ~]$ crs_stat -v ora.racjiqun.db
+NAME=ora.racjiqun.db
+TYPE=ora.database.type
+GEN_START_OPTIONS@SERVERNAME(rac1)=open
+GEN_START_OPTIONS@SERVERNAME(rac2)=open
+GEN_USR_ORA_INST_NAME@SERVERNAME(rac1)=racjiqun1
+GEN_USR_ORA_INST_NAME@SERVERNAME(rac2)=racjiqun2
+RESTART_ATTEMPTS=2
+RESTART_COUNT=0
+USR_ORA_INST_NAME@SERVERNAME(rac1)=racjiqun1
+USR_ORA_INST_NAME@SERVERNAME(rac2)=racjiqun2
+FAILURE_THRESHOLD=1
+FAILURE_COUNT=0
+TARGET=ONLINE
+STATE=ONLINE on rac1
+
+
+
+
+
+
+
+
+[grid@rac1 ~]$ crs_stat -p ora.racjiqun.db
+NAME=ora.racjiqun.db
+TYPE=ora.database.type
+ACTION_SCRIPT=
+ACTIVE_PLACEMENT=1
+AUTO_START=restore
+CHECK_INTERVAL=1
+DESCRIPTION=Oracle Database resource
+FAILOVER_DELAY=0
+FAILURE_INTERVAL=60
+FAILURE_THRESHOLD=1
+GEN_START_OPTIONS@SERVERNAME(rac1)=open
+GEN_START_OPTIONS@SERVERNAME(rac2)=open
+GEN_USR_ORA_INST_NAME@SERVERNAME(rac1)=racjiqun1
+GEN_USR_ORA_INST_NAME@SERVERNAME(rac2)=racjiqun2
+HOSTING_MEMBERS=
+PLACEMENT=restricted
+RESTART_ATTEMPTS=2
+SCRIPT_TIMEOUT=60
+START_TIMEOUT=600
+STOP_TIMEOUT=600
+UPTIME_THRESHOLD=1h
+USR_ORA_INST_NAME@SERVERNAME(rac1)=racjiqun1
+USR_ORA_INST_NAME@SERVERNAME(rac2)=racjiqun2
+
+
+
+
+[grid@rac1 ~]$ crsctl status server
+NAME=rac1
+STATE=ONLINE
+
+
+NAME=rac2
+STATE=ONLINE
+
+
+
+
+[grid@rac1 ~]$ crsctl query crs activeversion
+Oracle Clusterware active version on the cluster is [11.2.0.4.0]
+
+
+
+
+[grid@rac1 ~]$ crsctl query crs releaseversion
+Oracle High Availability Services release version on the local node is [11.2.0.4.0]
+
+
+[grid@rac1 ~]$ crsctl query crs softwareversion
+Oracle Clusterware version on node [rac1] is [11.2.0.4.0]
