@@ -23,6 +23,7 @@
     * [Oracle索引的unusable、disable、enable](18-Oracle-index-unusable-disable-enable.md)
     * [ora-13516 Oracle无法收集AWR](19.ora-13516O-cannot-collect-awr.md)
     * [awr仓库的运维](20.awr-workhouse-intro.md)
+	* [处理一个error-1089问题](slove-error-1089.md)
 * [杂项篇](杂项篇.md)
     * [rzsz工具安装](21.install-rzsz.md)
     * [ssh-copy-id使用非22端口](22.ssh-copy-id-using-not22port.md)
