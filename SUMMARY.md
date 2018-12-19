@@ -28,6 +28,7 @@
     * [处理一个error-1089问题](24.slove-error-1089.md)
     * [设置Oracle开机自启动](23.oracle-startup-auto.md)
     * [日志的位置](25.where-is-alert.md)
+    * [用户管理](29.manage-user.md)
     * [给用户创建profile](28.create-user-profile.md)
 * [杂项篇](杂项篇.md)
     * [rzsz工具安装](21.install-rzsz.md)
