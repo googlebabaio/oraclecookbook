@@ -30,6 +30,7 @@
     * [日志的位置](25.where-is-alert.md)
     * [用户管理](29.manage-user.md)
     * [给用户创建profile](28.create-user-profile.md)
+    * [给用户创建profile](30.解决ora-16597.md)
 * [杂项篇](杂项篇.md)
     * [rzsz工具安装](21.install-rzsz.md)
     * [ssh-copy-id使用非22端口](22.ssh-copy-id-using-not22port.md)
