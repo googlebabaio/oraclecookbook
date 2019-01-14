@@ -35,6 +35,7 @@
     * [给用户创建profile](28.create-user-profile.md)
     * [解决ora-16597](30.解决ora-16597.md)
     * [解决ora-29780.md](33.解决ora-29780.md)
+    * [使用shrink-space对表进行碎片整理](37.shrink-space.md)
 * [杂项篇](杂项篇.md)
     * [rzsz工具安装](21.install-rzsz.md)
     * [ssh-copy-id使用非22端口](22.ssh-copy-id-using-not22port.md)
