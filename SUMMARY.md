@@ -24,6 +24,7 @@
     * [XXXPS的概念](15.intro-xxxps.md)
 * [运维篇](运维篇.md)
     * [DG不同步诊断](16.dg-nosync-troubleshooting.md)
+    * [ADG切换](39.dg-switchov-failover.md)
     * [解决一起较复杂dg不同步的问题](17.case-dg-nosync-troubleshooting.md)
     * [Oracle索引的unusable、disable、enable](18-Oracle-index-unusable-disable-enable.md)
     * [ora-13516 Oracle无法收集AWR](19.ora-13516O-cannot-collect-awr.md)
