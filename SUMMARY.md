@@ -9,6 +9,7 @@
   - [11gRAC安装](rac/5.11gRAC-intsall.md)
   * [11gRAC进程详解](rac/14.11gRAC-backend-process.md)
   * [11gR2 RAC各组件](rac/8.11gR2RAC-option-intro.md)
+  * [crs-has-cluster的关系](rac/crs-has-cluster.md)
   * [HAIP介绍](rac/35.HAIP介绍.md)
   * [RAC环境的日志体系](rac/12.RAC-log-infra.md)
   * [10gRAC命令](rac/10g-rac-command.md)
