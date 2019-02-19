@@ -51,7 +51,7 @@
 备库因为在安装cluster的过程中已经配置好监听local和scan的监听了，所以只需要配置一个临时的监听，用作主库连接备库用，即可。
 
 临时监听：
-```grid
+```
 su - grid
 
 LISTENER_TMP =
