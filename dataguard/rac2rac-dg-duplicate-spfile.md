@@ -296,7 +296,15 @@ spfile='+ORADATA/RACDG/spfile.ora'
 vi initracdg2.ora
 ```
 
-### 5.3 备库开始追日志
+### 5.3 停临时监听,启动local listener
+2个节点执行
+```
+su - grid
+lsnrctl stop listener_tmp
+lsnrctl start
+```
+
+### 5.4 启动备库到mount,并开始追日志
 ```
 $ sqlplus / as sysdba
 SQL> STARTUP MOUNT
@@ -313,7 +321,7 @@ SQL>  ALTER SYSTEM ARCHIVE LOG CURRENT;
 SQL>  ALTER SYSTEM ARCHIVE LOG CURRENT;
 ```
 
-### 5.4 查看主备库的alert日志以及相应视图
+### 5.5 查看主备库的alert日志以及相应视图
 查看相应的视图
 ```
 SQL> select * from v$archive_gap;
@@ -323,7 +331,7 @@ SQL> select error from v$archive_dest;
 这个地方出问题遇到的最多的就是当使用了非默认的1521端口后,local_listener没有配
 
 
-### 5.5 备库启动到active dataguard的模式
+### 5.6 备库启动到active dataguard的模式
 在追了一段时间archivelog后，切换到实时应用redo
 ```
 SQL> alter database recover managed standby database cancel;
@@ -352,19 +360,19 @@ ORA-01110: data file 1: '+DATA/tyqxdg/datafile/system.260.1000300965'
 select error from v$archive_dest;
 ```
 
-### 5.6 验证
+### 5.7 验证
 ```
 SQL> SELECT thread#,max(sequence#) from v$archived_log where applied='YES' GROUP BY THREAD#;
 SQL> select * from v$archive_gap;
 ```
 
-### 5.7 启动备库的另外一个节点
+### 5.8 启动备库的另外一个节点
 ```
 $ sqlplus / as sysdba
 SQL>  startup;
 ```
 
-### 5.8 将实例信息加入到grid中
+### 5.9 将实例信息加入到grid中
 ```
 $ srvctl add database -d racdg -o $ORACLE_HOME -p +ORADATA/racdg/spfile.ora -r physical_standby
 $ srvctl add instance -d racdg -n racdg1 -i racdg1

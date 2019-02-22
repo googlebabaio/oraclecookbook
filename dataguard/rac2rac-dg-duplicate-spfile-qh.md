@@ -154,6 +154,10 @@ alter system set LOG_ARCHIVE_DEST_2='SERVICE=tyqxdg LGWR ASYNC VALID_FOR=(ONLINE
 alter system set FAL_SERVER='tyqxdg' sid='*';
 alter system set STANDBY_FILE_MANAGEMENT=AUTO sid='*';
 alter system set LOG_ARCHIVE_DEST_STATE_2=defer sid='*';
+
+还有2个file_name_convert，是需要重启才生效的
+alter system set db_file_name_convert='+DATA/tyqxdg','+DATA/qhtyqx' sid='*' scope=spfile;
+alter system set log_file_name_convert='+DATA/tyqxdg','+DATA/qhtyqx','+FRA/tyqxdg','+FRA/qhtyqx'  sid='*' scope=spfile;
 ```
 
 ### 2.7 创建standby redo log
@@ -180,7 +184,7 @@ create pfile='/home/oracle/pfile.ora' from spfile;
 ## 3.备库配置
 ### 3.1 两个节点都要创建adump的目录
 ```
-mkdir -p /u01/app/oracle/admin/tyqxdg/adump
+mkdir -p /app/oracle/admin/tyqxdg/adump
 ```
 
 ### 3.2 从主库copy密码
@@ -200,14 +204,14 @@ control_files='+DATA/tyqxdg/controlfile/control01.ctl','+FRA/tyqxdg/controlfile/
 ### 3.4 用nomount+pfile的方式启动备库实例1，并验证
 经过验证这个地方，其实是需要使用临时监听的，不然只用scanip是连不上备库的实例1。
 ```
-sqlplus sys/Oracle123@qhtyqx as sysdba
-sqlplus sys/Oracle123@tyqxdg as sysdba
+sqlplus sys/Tyqx_2016@qhtyqx as sysdba
+sqlplus sys/Tyqx_2016@tyqxdg as sysdba
 ```
 
 ### 3.5 在备库执行duplicate的脚本
 vi create_sb.sh
 ```
-rman target sys/Oracle123@qhtyqx auxiliary sys/Oracle123@tyqxdg  <<EOF
+rman target sys/Tyqx_2016@qhtyqx auxiliary sys/Tyqx_2016@tyqxdg  <<EOF
 run
 {
 allocate channel ch001 type disk;
@@ -224,7 +228,7 @@ set db_file_name_convert='+DATA/qhtyqx','+DATA/tyqxdg'
 set log_file_name_convert='+DATA/qhtyqx','+DATA/tyqxdg','+FRA/qhtyqx','+FRA/tyqxdg'
 set db_unique_name='tyqxdg'
 set control_files='+DATA/tyqxdg/controlfile/control01.ctl','+FRA/tyqxdg/controlfile/control02.ctl'
-set audit_file_dest='/u01/app/oracle/admin/tyqxdg/adump'
+set audit_file_dest='/app/oracle/admin/tyqxdg/adump'
 set db_create_file_dest='+DATA'
 set remote_listener='tyqxdg-scan:11521'
 set thread='1'
@@ -285,7 +289,7 @@ startup pfile='/tmp/init.ora' nomount;
 create spfile='+DATA/tyqxdg/spfiletyqxdg.ora' from pfile='/tmp/init.ora';
 shutdown immediate;
 ```
-
+对/tmp/init.ora里面的参数做修改,删除不必要的参数,再重新启动数据库并创建spfile到diskgroup中
 ```
 cd $ORACLE_HOME/dbs
 
@@ -295,14 +299,22 @@ spfile='+DATA/tyqxdg/spfiletyqxdg.ora'
 
 在另外一个节点也要做：
 ```
-vi initntyqxdg2.ora
+vi inittyqxdg2.ora
 ```
 
-### 5.3 备库开始追日志
+### 5.3 停临时监听,启动local listener
+2个节点执行
+```
+su - grid
+lsnrctl stop listener_tmp
+lsnrctl start
+```
+
+### 5.4 启动备库并开始追日志
 ```
 $ sqlplus / as sysdba
 SQL> startup mount
-SQL>  ALTER DATABASE RECOVER MANAGED STANDBY DATABASE DISCONNECT FROM SESSION;
+SQL> ALTER DATABASE RECOVER MANAGED STANDBY DATABASE DISCONNECT FROM SESSION;
 ```
 
 主库执行切换日志
@@ -315,7 +327,7 @@ SQL>  ALTER SYSTEM ARCHIVE LOG CURRENT;
 SQL>  ALTER SYSTEM ARCHIVE LOG CURRENT;
 ```
 
-### 5.4 查看主备库的alert日志以及相应视图
+### 5.5 查看主备库的alert日志以及相应视图
 查看相应的视图
 ```
 SQL> select * from v$archive_gap;
@@ -324,7 +336,7 @@ SQL> select error from v$archive_dest;
 
 这个地方出问题遇到的最多的就是当使用了非默认的1521端口后,local_listener没有配
 
-### 5.5 备库启动到active dataguard的模式
+### 5.6 备库启动到active dataguard的模式
 在追了一段时间archivelog后，切换到实时应用redo
 ```
 SQL> alter database recover managed standby database cancel;
@@ -352,19 +364,19 @@ ORA-01110: data file 1: '+DATA/tyqxdg/datafile/system.260.1000300965'
 select error from v$archive_dest;
 ```
 
-### 5.6 验证
+### 5.7 验证
 ```
 SQL> SELECT thread#,max(sequence#) from v$archived_log where applied='YES' GROUP BY THREAD#;
 SQL> select * from v$archive_gap;
 ```
 
-### 5.7 启动备库的另外一个节点
+### 5.8 启动备库的另外一个节点
 ```
 $ sqlplus / as sysdba
 SQL>  startup;
 ```
 
-### 5.8 将实例信息加入到grid中
+### 5.9 将实例信息加入到grid中
 ```
 $ srvctl add database -d tyqxdg -o $ORACLE_HOME -p +DATA/tyqxdg/spfiletyqxdg.ora -r physical_standby
 $ srvctl add instance -d tyqxdg -n ntyqxdb1 -i tyqxdg1
