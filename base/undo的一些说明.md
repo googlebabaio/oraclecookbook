@@ -1,5 +1,13 @@
 <!-- toc -->
 # undo的作用
+
+- 当使用ROLLBACK语句时回滚事务，撤销DML操作改变的数据
+- 恢复数据库
+- 提供读取的一致性
+- 使用Oracle Flashback Query分析基于先前时间点的数据
+- 使用Oracle Flashback特性从逻辑故障中恢复数据库
+
+
 ## 1.回退事务
 当执行DML操作修改数据时,UNDO数据被存放到UNDO段,而新数据则被存放到数据段中,如果事务操作存在问题,就需要回退事务,以取消事务变化.假定用户A执行了语句UPDATE emp SET sal=1000 WHERE empno=7788后发现,应该修改雇员7963的工资,而不是雇员7788的工资,那么通过执行ROLLBACK语句可以取消事务变化.当执行ROLLBACK命令时,oracle会将UNDO段的UNDO数据800（工资）写回到数据段中.
 
@@ -48,7 +56,13 @@ undo表空间满了,如果事务都在active，这个时候就不能释放undo�
 
 ## 3.UNDO_RETENTION
 
-该初始化参数用于控制UNDO数据的最大保留时间,其默认值为900秒,从9i开始,通过配置该初始化参数,可以指定undo数据的保留时间,从而确定倒叙查询特征(Flashback Query)可以查看到的最早时间点.
+该初始化参数用于控制UNDO数据的最大保留时间,其默认值为900秒,从9i开始,通过配置该初始化参数,可以指定undo数据的保留时间,从而确定倒叙查询特征(Flashback Query)可以查看到的最早时间点
+
+Oracle提供如下为新数据库设置撤销保留时间间隔的指导：
+- OLTP系统：15分钟
+- 混合： 1小时
+- DSS系统：3小时
+- 闪回查询：24小时
 
 # undo相关视图
 ## 1.显示当前实例正在使用的UNDO表空间
@@ -121,3 +135,24 @@ WHERE segment_name’_SYSSMU5$’;
 - `extent_id`用于标识区编号
 - `bytes`用于标识区尺寸
 - `status`用于标识区状态(ACTIVE:表示该区处于活动状态,EXPIRED:标识该区未用)
+
+# 一些有用的SQL
+## 查看undo表空间使用率
+```
+select tablespace_name,
+       sum(total_size) "total_size_M",
+       sum(total_free) "free_size_M",
+       sum(max_continue) "最大连续空间/M",
+       round(sum(total_free) / sum(total_size) * 100) "剩余百分比/ratio"
+  from ((select tablespace_name,
+                (0) total_size,
+                round(sum(bytes) / 1024 / 1024, 2) total_free,
+                round(max(bytes) / 1024 / 1024, 2) max_continue
+           from dba_free_space
+          group by tablespace_name) union all
+        (select tablespace_name, round(sum(bytes) / 1024 / 1024, 2), 0, 0
+           from dba_data_files
+          group by tablespace_name))
+ group by tablespace_name
+ order by 5 asc;
+```
