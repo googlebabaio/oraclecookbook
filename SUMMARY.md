@@ -30,6 +30,7 @@
   * [ADG切换过程](dataguard/39.dg-switchov-failover.md)
   * [dataguard概念参数查漏补缺](dataguard/13.dg-parameters.md)
   * [解决主库报错error-1033的问题](dataguard/解决error-1033的问题.md)
+  * [给主备环境新添加redo的注意事项和步骤](dataguard\给主备环境新添加redo.md)
 * [基础知识](base/基础.md)
   - [Oracle索引的unusable、disable、enable](base/18-Oracle-index-unusable-disable-enable.md)
   - [Oracle建库时的各组件的用途](base/7.dbca-option-intro.md)
