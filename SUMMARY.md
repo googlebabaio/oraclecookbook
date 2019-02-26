@@ -49,6 +49,7 @@
   * [解决ora-00206](manage/解决ORA-00206.md)
   * [解决ora-13516 Oracle无法收集AWR](manage/19.ora-13516O-cannot-collect-awr.md)
   * [解决ORA-01152(ORA-10458、ORA-01110)](manage/解决ORA-01152(ORA-10458、ORA-01110).md)
+  * [解决ORA-01105，ORA-01606](manage/解决ORA-01105，ORA-01606.md)
   * [表碎片分析与整理](manage/37.表碎片分析.md)
   * [索引碎片分析与整理](manage/38.索引碎片分析.md)
   * [查看隐藏参数](manage/query-yincang-parameter.md)
