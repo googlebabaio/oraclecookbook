@@ -1,3 +1,13 @@
+# 调整顺序
+这个地方特别需要强调一下操作的步骤，先做需要重启的操作：
+
+1. 调整数据库实例1的参数
+2. 关闭数据库实例1，再调整asm的参数
+3. 重启节点1的asm，重启节点1的实例
+4. 在没有问题的情况下，再在第2个节点重复上面的操作
+5. 以上均没有问题后，再修改操作系统的huge page的参数，方法也是一个节点修改完启动好之后再修改第二个节点
+6. 主要注意amm与hugepage的问题
+
 ## 一、操作系统
 ### 1.设置huge_page
 ```
@@ -26,11 +36,13 @@ export HISTTIMEFORMAT=%Y-%m-%d:%H-%M-%S
 # su - grid
 $ sqlplus / as sysasm
 SQL> create pfile='/tmp/lmpfile.ora' from spfile;
-SQL> alter system set memory_max_target=2G scope=spfile sid='实例1';
-SQL> alter system set memory_target=2G scope=spfile sid='实例1;
+SQL> alter system set memory_max_target=2G scope=spfile sid='+ASM1';
+SQL> alter system set memory_target=2G scope=spfile sid='+ASM1';
 重启实例
 
 再第二个节点执行同样操作
+SQL> alter system set memory_max_target=2G scope=spfile sid='+ASM2';
+SQL> alter system set memory_target=2G scope=spfile sid='+ASM2';
 ```
 
 ## 三、数据库方面
@@ -40,11 +52,42 @@ create pfile='/home/oracle/pfile.bak' from spfile;
 ```
 
 ### 1.关闭DRM
+注意，最好是一个节点一个节点进行操作
 ```
 # su - oracle
-SQL> alter system set “_gc_undo_affinity”=FALSE scope=spfile;
-SQL> alter system set “_gc_policy_time”=0 scope=spfile;
+SQL> alter system set “_gc_undo_affinity”=FALSE sid='xxx1' scope=spfile;
+SQL> alter system set “_gc_policy_time”=0 sid='xxx2' scope=spfile;
 ```
+
+注意，如果两个节点的参数不一致的话，有可能在启动到mount状态的时候，就会报错：
+`ORA-01105，ORA-01606`
+解决办法是查看初始化参数和隐藏参数在两个节点的值,看哪些不一致
+```
+参考隐藏参数
+set linesize 333
+col name for a35
+col description for a66
+col value for a30
+SELECT   i.ksppinm name,
+   i.ksppdesc description,
+   CV.ksppstvl VALUE
+FROM   sys.x$ksppi i, sys.x$ksppcv CV
+   WHERE   i.inst_id = USERENV ('Instance')
+   AND CV.inst_id = USERENV ('Instance')
+   AND i.indx = CV.indx
+   AND i.ksppinm LIKE '/_gc%' ESCAPE '/'
+ORDER BY   REPLACE (i.ksppinm, '_', '');
+
+
+查看不同的参数
+col name format a25
+col value format a55
+set lines 210
+select * from (select name,value,inst_id from gv$parameter where inst_id=1) a full join (select name,value,inst_id from gv$parameter where inst_id=2) b
+on a.name = b.name where a.value <> b.value;
+
+```
+
 
 ### 2.调整redo大小
 ```
