@@ -70,7 +70,7 @@ alter system checkpoint
 
 删除以前的redo log
 alter database drop logfile group XXX;
-```
+````
 
 ###3.高资源消耗表记录有55个
 需要与业务结合起来看，根据列出的资源对象，如果是表，则查看其对应的SQL的执行计划是否合理。
