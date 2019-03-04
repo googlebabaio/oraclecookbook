@@ -56,7 +56,7 @@ create pfile='/home/oracle/pfile.bak' from spfile;
 ```
 # su - oracle
 SQL> alter system set “_gc_undo_affinity”=FALSE sid='xxx1' scope=spfile;
-SQL> alter system set “_gc_policy_time”=0 sid='xxx2' scope=spfile;
+SQL> alter system set “_gc_policy_time”=0 sid='xxx1' scope=spfile;
 ```
 
 注意，如果两个节点的参数不一致的话，有可能在启动到mount状态的时候，就会报错：
