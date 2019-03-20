@@ -98,3 +98,4 @@ RMAN> alter database open;
 
 # 参考
 https://www.cnblogs.com/storymedia/p/4536553.html
+https://blog.csdn.net/cuiyan1982/article/details/78327506
