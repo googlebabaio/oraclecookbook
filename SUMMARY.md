@@ -40,6 +40,7 @@
   - [利用rman进去备份与恢复](backup/rman.md)
   - [常用rman备份脚本](backup/rman备份脚本.md)
   - [常用数据泵备份脚本](backup/数据泵备份.md)
+  - [记录一次有数据文件的数据库恢复](backup/有数据文件的数据恢复.md)
 * [运维篇](manage/运维篇.md)
   - [修改数据库实例到归档模式](manage/27.alter-database-archivelog.md)
   - [双活及迁移的一些事](dataguard/6.multialive-qianyi.md)
