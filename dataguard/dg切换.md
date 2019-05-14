@@ -80,9 +80,9 @@ alter database commit to switchover to primary with session shutdown
 ERROR at line 1:
 ORA-16139: media recovery required
 ```
-要等这个switchover_status状态变成to primary以后才能切
+要等这个switchover_status状态变成`to primary` 或者为`session active`以后才能切
 
-状态如果为`session active`也可以直接做下面的切换操作
+
 #### 2.2 执行切换操作
 ```
 SQL> alter database commit to switchover to primary with session shutdown ;
