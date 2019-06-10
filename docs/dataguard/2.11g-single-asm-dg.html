@@ -1,0 +1,2096 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>11g单机环境下配置基于asm的dg · 中年人的Oracle枸杞</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="suredandan">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-toc-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="3.11g-multinode-dg.html" />
+    
+    
+    <link rel="prev" href="../install/26.apply-psu.html" />
+    
+
+    
+        <link rel="shortcut icon" href='../favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../favicon.ico' type="image/x-icon">
+    
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                        <b>1.1.</b>
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../install/安装篇.md">
+            
+                <span>
+            
+                    
+                        <b>1.2.</b>
+                    
+                    安装篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../install/1.11gsingleasm.html">
+            
+                <a href="../install/1.11gsingleasm.html">
+            
+                    
+                        <b>1.2.1.</b>
+                    
+                    11g单机安装asm
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../rac/5.11gRAC-intsall.html">
+            
+                <a href="../rac/5.11gRAC-intsall.html">
+            
+                    
+                        <b>1.2.2.</b>
+                    
+                    11gRAC安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../install/26.apply-psu.html">
+            
+                <a href="../install/26.apply-psu.html">
+            
+                    
+                        <b>1.2.3.</b>
+                    
+                    RAC环境打PSU补丁步骤
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.4" data-path="2.11g-single-asm-dg.html">
+            
+                <a href="2.11g-single-asm-dg.html">
+            
+                    
+                        <b>1.2.4.</b>
+                    
+                    11g单机环境下配置基于asm的dg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="3.11g-multinode-dg.html">
+            
+                <a href="3.11g-multinode-dg.html">
+            
+                    
+                        <b>1.2.5.</b>
+                    
+                    采用broker配置11g多节点dataguard(>=3节点)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="4.11g-doublerac-dg.html">
+            
+                <a href="4.11g-doublerac-dg.html">
+            
+                    
+                        <b>1.2.6.</b>
+                    
+                    采用备份复制的方式搭建11grac到rac的adg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="rac2rac-dg-duplicate-spfile.html">
+            
+                <a href="rac2rac-dg-duplicate-spfile.html">
+            
+                    
+                        <b>1.2.7.</b>
+                    
+                    使用duplicate原生在线搭建11grac到rac的adg
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../rac/RAC.md">
+            
+                <span>
+            
+                    
+                        <b>1.3.</b>
+                    
+                    RAC篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../rac/5.11gRAC-intsall.html">
+            
+                <a href="../rac/5.11gRAC-intsall.html">
+            
+                    
+                        <b>1.3.1.</b>
+                    
+                    11gRAC安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../rac/14.11gRAC-backend-process.html">
+            
+                <a href="../rac/14.11gRAC-backend-process.html">
+            
+                    
+                        <b>1.3.2.</b>
+                    
+                    11gRAC进程详解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../rac/8.11gR2RAC-option-intro.html">
+            
+                <a href="../rac/8.11gR2RAC-option-intro.html">
+            
+                    
+                        <b>1.3.3.</b>
+                    
+                    11gR2 RAC各组件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../rac/crs-has-cluster.html">
+            
+                <a href="../rac/crs-has-cluster.html">
+            
+                    
+                        <b>1.3.4.</b>
+                    
+                    crs-has-cluster的关系
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../rac/35.HAIP介绍.html">
+            
+                <a href="../rac/35.HAIP介绍.html">
+            
+                    
+                        <b>1.3.5.</b>
+                    
+                    HAIP介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../rac/12.RAC-log-infra.html">
+            
+                <a href="../rac/12.RAC-log-infra.html">
+            
+                    
+                        <b>1.3.6.</b>
+                    
+                    RAC环境的日志体系
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../rac/10g-rac-command.html">
+            
+                <a href="../rac/10g-rac-command.html">
+            
+                    
+                        <b>1.3.7.</b>
+                    
+                    10gRAC命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../rac/9.rac-commnd-intro.html">
+            
+                <a href="../rac/9.rac-commnd-intro.html">
+            
+                    
+                        <b>1.3.8.</b>
+                    
+                    11gRAC常用命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../rac/10.11gRAC-10gRAC.html">
+            
+                <a href="../rac/10.11gRAC-10gRAC.html">
+            
+                    
+                        <b>1.3.9.</b>
+                    
+                    11gRAC对比10gRAC
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.10" data-path="../rac/34.11gRAC的监听介绍.html">
+            
+                <a href="../rac/34.11gRAC的监听介绍.html">
+            
+                    
+                        <b>1.3.10.</b>
+                    
+                    11gRAC的监听介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.11" data-path="../rac/36.11gR2RAC修改监听默认端口.html">
+            
+                <a href="../rac/36.11gR2RAC修改监听默认端口.html">
+            
+                    
+                        <b>1.3.11.</b>
+                    
+                    11gR2RAC修改监听默认端口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.12" data-path="../rac/11.asm-commnd-intro.html">
+            
+                <a href="../rac/11.asm-commnd-intro.html">
+            
+                    
+                        <b>1.3.12.</b>
+                    
+                    asm常用命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../datauard/datauard.md">
+            
+                <span>
+            
+                    
+                        <b>1.4.</b>
+                    
+                    Dataguard篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.4.1" data-path="2.11g-single-asm-dg.html">
+            
+                <a href="2.11g-single-asm-dg.html">
+            
+                    
+                        <b>1.4.1.</b>
+                    
+                    11g单机环境下配置基于asm的dg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="3.11g-multinode-dg.html">
+            
+                <a href="3.11g-multinode-dg.html">
+            
+                    
+                        <b>1.4.2.</b>
+                    
+                    采用broker配置11g多节点dataguard(>=3节点)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="4.11g-doublerac-dg.html">
+            
+                <a href="4.11g-doublerac-dg.html">
+            
+                    
+                        <b>1.4.3.</b>
+                    
+                    采用备份复制的方式搭建11grac到rac的adg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="rac2rac-dg-duplicate-spfile.html">
+            
+                <a href="rac2rac-dg-duplicate-spfile.html">
+            
+                    
+                        <b>1.4.4.</b>
+                    
+                    使用duplicate原生在线搭建11grac到rac的adg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="17.case-dg-nosync-troubleshooting.html">
+            
+                <a href="17.case-dg-nosync-troubleshooting.html">
+            
+                    
+                        <b>1.4.5.</b>
+                    
+                    解决一起较复杂dg不同步的问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="16.dg-nosync-troubleshooting.html">
+            
+                <a href="16.dg-nosync-troubleshooting.html">
+            
+                    
+                        <b>1.4.6.</b>
+                    
+                    DG不同步诊断方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../manage/解决ORA-01152_ORA-10458_ORA-01110.html">
+            
+                <a href="../manage/解决ORA-01152_ORA-10458_ORA-01110.html">
+            
+                    
+                        <b>1.4.7.</b>
+                    
+                    解决ORA-01152(ORA-10458、ORA-01110)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="39.dg-switchov-failover.html">
+            
+                <a href="39.dg-switchov-failover.html">
+            
+                    
+                        <b>1.4.8.</b>
+                    
+                    ADG切换过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="13.dg-parameters.html">
+            
+                <a href="13.dg-parameters.html">
+            
+                    
+                        <b>1.4.9.</b>
+                    
+                    dataguard概念参数查漏补缺
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" data-path="解决error-1033的问题.md">
+            
+                <span>
+            
+                    
+                        <b>1.4.10.</b>
+                    
+                    解决主库报错error-1033的问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="给主备环境新添加redo.html">
+            
+                <a href="给主备环境新添加redo.html">
+            
+                    
+                        <b>1.4.11.</b>
+                    
+                    给主备环境新添加redo的注意事项和步骤
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../base/基础.md">
+            
+                <span>
+            
+                    
+                        <b>1.5.</b>
+                    
+                    基础知识
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../base/18-Oracle-index-unusable-disable-enable.html">
+            
+                <a href="../base/18-Oracle-index-unusable-disable-enable.html">
+            
+                    
+                        <b>1.5.1.</b>
+                    
+                    Oracle索引的unusable、disable、enable
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../base/7.dbca-option-intro.html">
+            
+                <a href="../base/7.dbca-option-intro.html">
+            
+                    
+                        <b>1.5.2.</b>
+                    
+                    Oracle建库时的各组件的用途
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../base/undo的一些说明.html">
+            
+                <a href="../base/undo的一些说明.html">
+            
+                    
+                        <b>1.5.3.</b>
+                    
+                    UNDO的一些说明
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                        <b>1.6.</b>
+                    
+                    备份与恢复篇
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../backup/rman备份中的百分号后面的字母的含义.html">
+            
+                <a href="../backup/rman备份中的百分号后面的字母的含义.html">
+            
+                    
+                        <b>1.6.1.</b>
+                    
+                    rman备份中的百分号后面的字母的含义
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../backup/rman.html">
+            
+                <a href="../backup/rman.html">
+            
+                    
+                        <b>1.6.2.</b>
+                    
+                    利用rman进去备份与恢复
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../backup/rman备份脚本.html">
+            
+                <a href="../backup/rman备份脚本.html">
+            
+                    
+                        <b>1.6.3.</b>
+                    
+                    常用rman备份脚本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../backup/数据泵备份.html">
+            
+                <a href="../backup/数据泵备份.html">
+            
+                    
+                        <b>1.6.4.</b>
+                    
+                    常用数据泵备份脚本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../backup/有数据文件的数据恢复.html">
+            
+                <a href="../backup/有数据文件的数据恢复.html">
+            
+                    
+                        <b>1.6.5.</b>
+                    
+                    记录一次有数据文件的数据库恢复
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../manage/运维篇.md">
+            
+                <span>
+            
+                    
+                        <b>1.7.</b>
+                    
+                    运维篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../manage/27.alter-database-archivelog.html">
+            
+                <a href="../manage/27.alter-database-archivelog.html">
+            
+                    
+                        <b>1.7.1.</b>
+                    
+                    修改数据库实例到归档模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="6.multialive-qianyi.html">
+            
+                <a href="6.multialive-qianyi.html">
+            
+                    
+                        <b>1.7.2.</b>
+                    
+                    双活及迁移的一些事
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../manage/20.awr-workhouse-intro.html">
+            
+                <a href="../manage/20.awr-workhouse-intro.html">
+            
+                    
+                        <b>1.7.3.</b>
+                    
+                    awr仓库的运维
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../manage/24.slove-error-1089.html">
+            
+                <a href="../manage/24.slove-error-1089.html">
+            
+                    
+                        <b>1.7.4.</b>
+                    
+                    处理一个error-1089问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" data-path="../manage/23.oracle-startup-auto.html">
+            
+                <a href="../manage/23.oracle-startup-auto.html">
+            
+                    
+                        <b>1.7.5.</b>
+                    
+                    设置Oracle开机自启动
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.6" data-path="../manage/25.where-is-alert.html">
+            
+                <a href="../manage/25.where-is-alert.html">
+            
+                    
+                        <b>1.7.6.</b>
+                    
+                    日志的位置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.7" data-path="../manage/29.manage-user.html">
+            
+                <a href="../manage/29.manage-user.html">
+            
+                    
+                        <b>1.7.7.</b>
+                    
+                    用户管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.8" data-path="../manage/28.create-user-profile.html">
+            
+                <a href="../manage/28.create-user-profile.html">
+            
+                    
+                        <b>1.7.8.</b>
+                    
+                    给用户创建profile
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.9" data-path="../manage/30.解决ora-16597.html">
+            
+                <a href="../manage/30.解决ora-16597.html">
+            
+                    
+                        <b>1.7.9.</b>
+                    
+                    解决ora-16597
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.10" data-path="../manage/33.解决ora-29780.html">
+            
+                <a href="../manage/33.解决ora-29780.html">
+            
+                    
+                        <b>1.7.10.</b>
+                    
+                    解决ora-29780
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.11" data-path="../manage/解决ORA-00206.html">
+            
+                <a href="../manage/解决ORA-00206.html">
+            
+                    
+                        <b>1.7.11.</b>
+                    
+                    解决ora-00206
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.12" data-path="../manage/19.ora-13516O-cannot-collect-awr.html">
+            
+                <a href="../manage/19.ora-13516O-cannot-collect-awr.html">
+            
+                    
+                        <b>1.7.12.</b>
+                    
+                    解决ora-13516 Oracle无法收集AWR
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.13" data-path="../manage/解决ORA-01152(ORA-10458、ORA-01110">
+            
+                <span>
+            
+                    
+                        <b>1.7.13.</b>
+                    
+                    解决ORA-01152(ORA-10458、ORA-01110)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.14" data-path="../manage/解决ORA-01105，ORA-01606.html">
+            
+                <a href="../manage/解决ORA-01105，ORA-01606.html">
+            
+                    
+                        <b>1.7.14.</b>
+                    
+                    解决ORA-01105，ORA-01606
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.15" data-path="../manage/37.表碎片分析.html">
+            
+                <a href="../manage/37.表碎片分析.html">
+            
+                    
+                        <b>1.7.15.</b>
+                    
+                    表碎片分析与整理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.16" data-path="../manage/38.索引碎片分析.html">
+            
+                <a href="../manage/38.索引碎片分析.html">
+            
+                    
+                        <b>1.7.16.</b>
+                    
+                    索引碎片分析与整理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.17" data-path="../manage/query-yincang-parameter.html">
+            
+                <a href="../manage/query-yincang-parameter.html">
+            
+                    
+                        <b>1.7.17.</b>
+                    
+                    查看隐藏参数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.18" data-path="../manage/查询锁表的SQL">
+            
+                <span>
+            
+                    
+                        <b>1.7.18.</b>
+                    
+                    查询锁表的SQL
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../tunning/性能优化篇.md">
+            
+                <span>
+            
+                    
+                        <b>1.8.</b>
+                    
+                    性能优化篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../tunning/通过AWR计算IOPS和MBPS.md">
+            
+                <span>
+            
+                    
+                        <b>1.8.1.</b>
+                    
+                    通过AWR计算IOPS和MBPS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../tunning/15.intro-xxxps.html">
+            
+                <a href="../tunning/15.intro-xxxps.html">
+            
+                    
+                        <b>1.8.2.</b>
+                    
+                    XXXPS的概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../zaqizaba/杂项篇.md">
+            
+                <span>
+            
+                    
+                        <b>1.9.</b>
+                    
+                    杂项篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../zaqizaba/21.install-rzsz.html">
+            
+                <a href="../zaqizaba/21.install-rzsz.html">
+            
+                    
+                        <b>1.9.1.</b>
+                    
+                    rzsz工具安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../zaqizaba/22.ssh-copy-id-using-not22port.html">
+            
+                <a href="../zaqizaba/22.ssh-copy-id-using-not22port.html">
+            
+                    
+                        <b>1.9.2.</b>
+                    
+                    ssh-copy-id使用非22端口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../qms数据库整改.html">
+            
+                <a href="../qms数据库整改.html">
+            
+                    
+                        <b>1.9.3.</b>
+                    
+                    qms数据库整改
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >11g单机环境下配置基于asm的dg</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <!-- toc -->
+<ul>
+<li><a href="#%E4%B8%80%E7%8E%AF%E5%A2%83%E8%AF%B4%E6%98%8E">&#x4E00;&#x3001;&#x73AF;&#x5883;&#x8BF4;&#x660E;</a></li>
+<li><a href="#%E4%BA%8C%E9%87%87%E7%94%A8%E6%8A%80%E6%9C%AF%E8%AF%B4%E6%98%8E">&#x4E8C;&#x3001;&#x91C7;&#x7528;&#x6280;&#x672F;&#x8BF4;&#x660E;</a></li>
+<li><a href="#%E4%B8%89%E7%AE%80%E8%A6%81%E9%85%8D%E7%BD%AE%E6%B5%81%E7%A8%8B%E8%AF%B4%E6%98%8E">&#x4E09;&#x3001;&#x7B80;&#x8981;&#x914D;&#x7F6E;&#x6D41;&#x7A0B;&#x8BF4;&#x660E;</a></li>
+<li><a href="#%E5%9B%9B%E8%AF%A6%E7%BB%86%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B">&#x56DB;&#x3001;&#x8BE6;&#x7EC6;&#x642D;&#x5EFA;&#x8FC7;&#x7A0B;</a><ul>
+<li><a href="#41%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87">4.1.&#x73AF;&#x5883;&#x51C6;&#x5907;</a></li>
+<li><a href="#42-%E4%B8%BB%E5%A4%87%E5%BA%93%E9%83%BD%E9%9C%80%E8%A6%81%E5%81%9A%E7%9A%84%E5%B7%A5%E4%BD%9C">4.2 &#x4E3B;&#x5907;&#x5E93;&#x90FD;&#x9700;&#x8981;&#x505A;&#x7684;&#x5DE5;&#x4F5C;</a></li>
+<li><a href="#43-%E4%B8%BB%E5%BA%93%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C">4.3 &#x4E3B;&#x5E93;&#x51C6;&#x5907;&#x5DE5;&#x4F5C;</a></li>
+<li><a href="#44-%E5%A4%87%E5%BA%93%E9%85%8D%E7%BD%AE">4.4 &#x5907;&#x5E93;&#x914D;&#x7F6E;</a></li>
+<li><a href="#45-%E9%85%8D%E7%BD%AEdataguard">4.5 &#x914D;&#x7F6E;dataguard</a></li>
+<li><a href="#46-%E9%85%8D%E7%BD%AEdg-broker">4.6 &#x914D;&#x7F6E;dg broker</a></li>
+<li><a href="#47-%E5%88%87%E6%8D%A2%E6%93%8D%E4%BD%9C">4.7 &#x5207;&#x6362;&#x64CD;&#x4F5C;</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%94%E5%B8%B8%E7%94%A8%E7%BB%B4%E6%8A%A4%E6%93%8D%E4%BD%9C">&#x4E94;&#x3001;&#x5E38;&#x7528;&#x7EF4;&#x62A4;&#x64CD;&#x4F5C;</a><ul>
+<li><a href="#51-%E5%A4%87%E5%BA%93%E9%80%80%E5%87%BAredo%E5%BA%94%E7%94%A8%E7%8A%B6%E6%80%81">5.1 &#x5907;&#x5E93;&#x9000;&#x51FA;redo&#x5E94;&#x7528;&#x72B6;&#x6001;</a></li>
+<li><a href="#52-%E6%89%93%E5%BC%80standby%E4%B8%8A%E7%9A%84oracle%E5%BA%93">5.2 &#x6253;&#x5F00;standby&#x4E0A;&#x7684;oracle&#x5E93;</a></li>
+<li><a href="#53-%E6%9F%A5%E7%9C%8Bdata-guard%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%90%E8%A1%8C%E5%9C%A8%E5%93%AA%E7%A7%8D%E6%A8%A1%E5%BC%8F%E4%B8%8B">5.3 &#x67E5;&#x770B;Data Guard&#x6570;&#x636E;&#x5E93;&#x8FD0;&#x884C;&#x5728;&#x54EA;&#x79CD;&#x6A21;&#x5F0F;&#x4E0B;&#xFF1A;</a></li>
+<li><a href="#54-%E5%9C%A8%E5%A4%87%E6%9C%BA%E6%9F%A5%E7%9C%8B%E6%97%A5%E5%BF%97%E5%BA%8F%E5%88%97%E5%92%8C%E8%A2%AB%E5%BA%94%E7%94%A8%E7%9A%84%E7%8A%B6%E6%80%81">5.4 &#x5728;&#x5907;&#x673A;&#x67E5;&#x770B;&#x65E5;&#x5FD7;&#x5E8F;&#x5217;&#x548C;&#x88AB;&#x5E94;&#x7528;&#x7684;&#x72B6;&#x6001;</a></li>
+<li><a href="#55-%E6%9F%A5%E7%9C%8Bdata-guard-standby-%E5%90%8E%E5%8F%B0%E6%81%A2%E5%A4%8D%E8%BF%9B%E7%A8%8B%E6%98%AF%E5%90%A6%E6%AD%A3%E5%B8%B8">5.5 &#x67E5;&#x770B;Data Guard Standby &#x540E;&#x53F0;&#x6062;&#x590D;&#x8FDB;&#x7A0B;&#x662F;&#x5426;&#x6B63;&#x5E38;</a></li>
+<li><a href="#56-%E6%9F%A5%E8%AF%A2%E4%B8%BB%E5%BA%93%E6%97%A5%E5%BF%97%E4%B8%8E%E5%A4%87%E5%BA%93%E6%98%AF%E5%90%A6%E4%B8%80%E8%87%B4">5.6 &#x67E5;&#x8BE2;&#x4E3B;&#x5E93;&#x65E5;&#x5FD7;&#x4E0E;&#x5907;&#x5E93;&#x662F;&#x5426;&#x4E00;&#x81F4;</a></li>
+<li><a href="#57-%E6%9F%A5%E7%9C%8B%E4%B8%BB%E5%BA%93%E7%9A%84%E5%BD%92%E6%A1%A3%E6%97%A5%E5%BF%97%E7%9A%84%E7%8A%B6%E6%80%81">5.7 &#x67E5;&#x770B;&#x4E3B;&#x5E93;&#x7684;&#x5F52;&#x6863;&#x65E5;&#x5FD7;&#x7684;&#x72B6;&#x6001;&#xFF1A;</a></li>
+<li><a href="#58-%E5%A4%87%E5%BA%93%E9%9C%80%E8%A6%81%E6%89%8B%E5%B7%A5%E7%94%9F%E6%88%90standby-redo-log%E5%90%97">5.8 &#x5907;&#x5E93;&#x9700;&#x8981;&#x624B;&#x5DE5;&#x751F;&#x6210;standby redo log&#x5417;&#xFF1F;</a></li>
+<li><a href="#59-%E6%A3%80%E6%9F%A5standby%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8A%E6%98%AF%E5%90%A6%E5%BD%92%E6%A1%A3%E6%9C%89%E8%A2%AB%E5%BA%94%E7%94%A8">5.9 &#x68C0;&#x67E5;Standby&#x6570;&#x636E;&#x5E93;&#x4E0A;&#x662F;&#x5426;&#x5F52;&#x6863;&#x6709;&#x88AB;&#x5E94;&#x7528;&#xFF1A;</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<hr>
+<h2 id="&#x4E00;&#x3001;&#x73AF;&#x5883;&#x8BF4;&#x660E;">&#x4E00;&#x3001;&#x73AF;&#x5883;&#x8BF4;&#x660E;</h2>
+<p>&#x672C;&#x6587;&#x7ED9;&#x51FA;&#x4E86; &#x6A21;&#x62DF;asm&#x73AF;&#x5883;&#x4E0B;&#x7684;dataguard&#x642D;&#x5EFA;&#x7684;&#x8FC7;&#x7A0B;&#xFF0C;&#x4E3B;&#x5907;&#x5E93;&#x5747;&#x91C7;&#x7528;&#x5355;&#x5B9E;&#x4F8B;+asm&#x3002;
+&#x4E3A;&#x4E86;&#x6A21;&#x62DF;&#x53EF;&#x80FD;&#x9047;&#x5230;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x96BE;&#x5EA6;&#xFF0C;&#x8BA9;&#x4E3B;&#x5907;&#x4E24;&#x8FB9;&#x7684;&#x78C1;&#x76D8;&#x7EC4;&#x7684;&#x540D;&#x5B57;&#x4E0D;&#x4E00;&#x6837;&#x3002;
+&#x4E3B;&#x5E93;&#xFF1A;+DATA ,  +ARCH
+&#x5907;&#x5E93;&#xFF1A;+ORADATA &#xFF0C; +ARCHDATA
+dg&#x642D;&#x5EFA;&#x524D;&#x63D0;&#xFF1A;&#x4E3B;&#x5E93;&#x5DF2;&#x7ECF;&#x521B;&#x5EFA;&#x4E86;&#x5B9E;&#x4F8B;nazeebo&#xFF0C;&#x5907;&#x5E93;&#x5DF2;&#x7ECF;&#x5B89;&#x88C5;&#x597D;&#x6570;&#x636E;&#x5E93;&#x8F6F;&#x4EF6;&#xFF0C;&#x4E24;&#x4E2A;&#x5E93;&#x90FD;&#x91C7;&#x7528;asm&#x8FDB;&#x884C;&#x7BA1;&#x7406;&#x3002;</p>
+<blockquote>
+<p>&#x5982;&#x4F55;&#x5728;11g&#x5355;&#x673A;&#x91C7;&#x7528;asm&#x7BA1;&#x7406;&#xFF0C;&#x8BF7;&#x53C2;&#x8003;&#xFF1A;11g&#x5355;&#x673A;&#x5B89;&#x88C5;asm</p>
+</blockquote>
+<h2 id="&#x4E8C;&#x3001;&#x91C7;&#x7528;&#x6280;&#x672F;&#x8BF4;&#x660E;">&#x4E8C;&#x3001;&#x91C7;&#x7528;&#x6280;&#x672F;&#x8BF4;&#x660E;</h2>
+<table>
+<thead>
+<tr>
+<th>&#x5E8F;&#x53F7;</th>
+<th>&#x6280;&#x672F;&#x9009;&#x578B;</th>
+<th>&#x7406;&#x7531;&#x8BF4;&#x660E;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>&#x5907;&#x5E93;&#x7684;&#x6062;&#x590D;&#x91C7;&#x7528;rman&#x7684;&#x5168;&#x5907;+&#x589E;&#x91CF;&#x5907;&#x4EFD;&#x8FDB;&#x884C;&#x6062;&#x590D;</td>
+<td>(1)&#x8003;&#x8651;&#x5230;&#x6570;&#x636E;&#x91CF;&#x8F83;&#x5927;&#x548C;&#x7F51;&#x7EDC;&#x56E0;&#x7D20;&#xFF0C;&#x6545;&#x800C;&#x4E0D;&#x91C7;&#x7528;man&#x7684;&#x7279;&#x6027;duplicate for standby database&#xFF1B;(2)&#x8003;&#x8651;&#x5230;&#x4E00;&#x6B21;&#x65F6;&#x95F4;&#x7A97;&#x53E3;&#x6709;&#x4E0D;&#x80FD;&#x5B8C;&#x6210;dataguard&#x5907;&#x5E93;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x6545;&#x800C;&#x53EF;&#x4EE5;&#x8003;&#x8651;&#x5229;&#x7528;rman&#x5168;&#x5907;&#x5148;&#x53BB;&#x505A;&#x6062;&#x590D;&#xFF0C;&#x7136;&#x540E;&#x5728;&#x5B9E;&#x9645;&#x65F6;&#x95F4;&#x7A97;&#x53E3;&#x524D;&#x7528;&#x8FFD;&#x8865;&#x5F52;&#x6863;&#x7684;&#x65B9;&#x5F0F;&#x6062;&#x590D;&#x5907;&#x5E93;&#xFF0C;&#x4F7F;&#x5F97;&#x5907;&#x5E93;&#x7684;&#x6570;&#x636E;&#x5C3D;&#x53EF;&#x80FD;&#x548C;&#x4E3B;&#x5E93;&#x4E00;&#x81F4;&#xFF0C;&#x51CF;&#x5C11;&#x91C7;&#x7528;&#x7684;&#x65F6;&#x95F4;&#x64CD;&#x4F5C;&#x7684;&#x65F6;&#x95F4;&#x7A97;&#x53E3;</td>
+</tr>
+<tr>
+<td>2</td>
+<td>&#x4F7F;&#x7528;dg broker&#x8FDB;&#x884C;&#x914D;&#x7F6E;</td>
+<td>(1)&#x56E0;&#x4E3A;&#x8981;&#x8003;&#x8651;&#x5230;&#x5207;&#x6362;&#xFF0C;&#x800C;&#x5982;&#x679C;&#x662F;&#x91C7;&#x7528;&#x547D;&#x4EE4;&#x884C;&#x7684;&#x65B9;&#x5F0F;&#x53EF;&#x80FD;&#x4F1A;&#x9020;&#x6210;&#x88AB;&#x521D;&#x59CB;&#x5316;&#x53C2;&#x6570;&#x641E;&#x6DF7;&#xFF0C;&#x6240;&#x4EE5;&#x91C7;&#x7528;Oracle&#x5B98;&#x65B9;&#x63A8;&#x8350;&#x7684;dg broker&#x8FDB;&#x884C;&#x914D;&#x7F6E;&#x548C;&#x7BA1;&#x7406; &#xFF1B;(2)&#x8003;&#x8651;&#x5230;&#x914D;&#x7F6E;&#x7684;&#x7B80;&#x6D01;&#x6027;&#xFF0C;&#x91C7;&#x7528;dg broker&#x4EC5;&#x4EC5;&#x9700;&#x8981;&#x914D;&#x7F6E;&#x5F88;&#x5C11;&#x7684;&#x51E0;&#x4E2A;&#x521D;&#x59CB;&#x5316;&#x53C2;&#x6570;</td>
+</tr>
+<tr>
+<td>3</td>
+<td>&#x4F7F;&#x7528;dg broker&#x8FDB;&#x884C;&#x7BA1;&#x7406;(&#x5982;&#x5207;&#x6362;)</td>
+<td>&#x64CD;&#x4F5C;&#x7B80;&#x5355;&#x6613;&#x7528;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="&#x4E09;&#x3001;&#x7B80;&#x8981;&#x914D;&#x7F6E;&#x6D41;&#x7A0B;&#x8BF4;&#x660E;">&#x4E09;&#x3001;&#x7B80;&#x8981;&#x914D;&#x7F6E;&#x6D41;&#x7A0B;&#x8BF4;&#x660E;</h2>
+<table>
+<thead>
+<tr>
+<th>&#x6B65;&#x9AA4;</th>
+<th>&#x64CD;&#x4F5C;&#x5185;&#x5BB9;</th>
+<th>&#x5907;&#x6CE8;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>&#x63D0;&#x524D;&#x5BF9;&#x5907;&#x5E93;&#x8FDB;&#x884C;&#x6570;&#x636E;&#x5E93;&#x73AF;&#x5883;&#x7684;&#x5B89;&#x88C5;&#x4EE5;&#x53CA;&#x76F8;&#x5E94;&#x76EE;&#x5F55;&#x7684;&#x521B;&#x5EFA;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x521B;&#x5EFA;&#x5B9E;&#x4F8B;</td>
+<td>&#x6B64;&#x9879;&#x5DE5;&#x4F5C;&#x4E0D;&#x5360;&#x7528;&#x53CC;&#x6D3B;&#x914D;&#x7F6E;&#x64CD;&#x4F5C;&#x65F6;&#x95F4;&#x7A97;&#x53E3;</td>
+</tr>
+<tr>
+<td>2</td>
+<td>&#x63D0;&#x524D;&#x914D;&#x7F6E;&#x597D;&#x4E3B;&#x5E93;&#x4EE5;&#x53CA;&#x5907;&#x5E93;&#x7684;listener.ora &#x548C; tnsnames.ora&#xFF0C;&#x5E76;&#x9700;&#x8981;&#x786E;&#x4FDD;&#x80FD;&#x4E92;&#x76F8;&#x4E4B;&#x95F4;tnsping&#x901A;</td>
+<td>&#x6B64;&#x9879;&#x5DE5;&#x4F5C;&#x4E0D;&#x5360;&#x7528;&#x53CC;&#x6D3B;&#x914D;&#x7F6E;&#x64CD;&#x4F5C;&#x65F6;&#x95F4;&#x7A97;&#x53E3;</td>
+</tr>
+<tr>
+<td>3</td>
+<td>&#x5BF9;&#x4E3B;&#x5E93;&#x548C;dataguard&#x76F8;&#x5173;&#x7684;&#x521D;&#x59CB;&#x5316;&#x53C2;&#x6570;&#x8FDB;&#x884C;&#x914D;&#x7F6E;&#xFF0C;&#x5E76;&#x5728;&#x4E3B;&#x5E93;&#x4E0A;&#x521B;&#x5EFA;standby redo log group</td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>&#x751F;&#x6210;&#x4E3B;&#x5E93;&#x7684;pfile.bak&#x3001;&#x521B;&#x5EFA;standby control file</td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>&#x5C06;&#x4E3B;&#x5E93;&#x7684;pfile.bak&#x3001;standby control file&#x548C;&#x5BC6;&#x7801;&#x6587;&#x4EF6;&#x4F20;&#x5230;&#x5907;&#x5E93;&#x7684;&#x76F8;&#x5E94;&#x4F4D;&#x7F6E;&#x4E0A;</td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>&#x5728;&#x5907;&#x5E93;&#x4FEE;&#x6539;&#x4F20;&#x8FC7;&#x6765;&#x7684;pfile.bak &#xFF0C;&#x4FEE;&#x6539;&#x597D;&#x7528;&#x8FD9;&#x4E2A;pfile&#x5C06;&#x6570;&#x636E;&#x5E93;&#x542F;&#x52A8;&#x5230;nomount&#x72B6;&#x6001;&#xFF0C;&#x521B;&#x5EFA;spfile&#xFF0C;&#x518D;&#x91CD;&#x542F;&#x5907;&#x5E93;&#x5230;nomount&#x72B6;&#x6001;</td>
+<td></td>
+</tr>
+<tr>
+<td>7</td>
+<td>&#x5BF9;&#x4E3B;&#x5E93;&#x8FDB;&#x884C;rman&#x5168;&#x5907;</td>
+<td></td>
+</tr>
+<tr>
+<td>8</td>
+<td>&#x5C06;&#x4E3B;&#x5E93;&#x7684;&#x5168;&#x5907;&#x4F20;&#x8F93;&#x5230;&#x5907;&#x5E93;&#x4E0A;</td>
+<td></td>
+</tr>
+<tr>
+<td>9</td>
+<td>&#x5728;&#x5907;&#x5E93;&#x4E0A;&#x5229;&#x7528;rman&#x8FDB;&#x884C;standby control file&#x7684;&#x6062;&#x590D;&#xFF0C;&#x5E76;&#x5C06;&#x5907;&#x5E93;&#x4FEE;&#x6539;&#x5230;mount&#x72B6;&#x6001;</td>
+<td></td>
+</tr>
+<tr>
+<td>10</td>
+<td>&#x7528;rman&#x5BF9;&#x5907;&#x5E93;&#x8FDB;&#x884C;restore&#x6062;&#x590D;&#xFF0C;&#x6062;&#x590D;&#x5B8C;&#x6210;&#x540E;&#x4E0D;&#x6253;&#x5F00;&#x5907;&#x5E93; &#xFF08;&#x5728;&#x8FD9;&#x4E2A;&#x8FC7;&#x573A;&#x4E2D;&#x5982;&#x679C;&#x4E3B;&#x5E93;&#x6CA1;&#x6709;&#x505C;&#x6B62;&#x4E1A;&#x52A1;&#xFF0C;&#x90A3;&#x4E48;&#x6709;&#x53EF;&#x80FD;&#x4F1A;&#x6709;&#x65B0;&#x7684;&#x5F52;&#x6863;&#x65E5;&#x5FD7;&#x751F;&#x6210;&#xFF0C;&#x90A3;&#x4E48;&#x9700;&#x8981;&#x5C06;&#x65B0;&#x751F;&#x6210;&#x7684;&#x5F52;&#x6863;&#x65E5;&#x5FD7;&#x4F20;&#x9012;&#x8FC7;&#x6765;&#x5E76;&#x8FDB;&#x884C;&#x6062;&#x590D;&#xFF09;</td>
+<td>rman&#x6062;&#x590D;&#x4E0D;&#x4F1A;&#x751F;&#x6210;redo log&#xFF0C;&#x8FD9;&#x4E2A;&#x5728;&#x4E4B;&#x540E;&#x8C03;&#x7528;broker&#x4F1A;&#x5E2E;&#x8FD9;&#x521B;&#x5EFA;&#xFF0C;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x7684;alert&#x62A5;&#x9519;&#x53EF;&#x4EE5;&#x6682;&#x65F6;&#x4E0D;&#x7528;&#x53BB;&#x7BA1;</td>
+</tr>
+<tr>
+<td>11</td>
+<td>&#x5728;&#x4E3B;&#x5E93;&#x505A;&#x5168;&#x5907;&#x5230;&#x5728;&#x5907;&#x5E93;&#x4F20;&#x8F93;&#x4EE5;&#x53CA;&#x6062;&#x590D;&#x8FD9;&#x6BB5;&#x65F6;&#x95F4;&#xFF0C;&#x4E1A;&#x52A1;&#x4F1A;&#x4EA7;&#x751F;&#x76F8;&#x5E94;&#x7684;&#x65E5;&#x5FD7;&#xFF0C;&#x5C06;&#x8FD9;&#x4E9B;&#x65E5;&#x5FD7;&#x5F52;&#x6863;(&#x5F52;&#x6863;&#x65E5;&#x5FD7;)&#x4F20;&#x8F93;&#x5230;&#x5907;&#x5E93;&#xFF0C;&#x8FDB;&#x884C;&#x5F52;&#x6863;&#x65E5;&#x5FD7;&#x7684;&#x8FFD;&#x8865;</td>
+<td></td>
+</tr>
+<tr>
+<td>12</td>
+<td>&#x5728;&#x5907;&#x5E93;&#x6253;&#x5F00;&#x65E5;&#x5FD7;&#x5E94;&#x7528;</td>
+<td>alter database recover managed standby database using current logfile disconnect;</td>
+</tr>
+<tr>
+<td>13</td>
+<td>&#x5728;&#x4E3B;&#x5E93;&#x548C;&#x5907;&#x5E93;&#x5206;&#x522B;&#x6253;&#x5F00;dg_broker_start</td>
+<td>alter system set dg_broker_start=true;</td>
+</tr>
+<tr>
+<td>14</td>
+<td>&#x5728;&#x4E3B;&#x5E93;&#x4E0A;&#x767B;&#x5F55;dg broker&#x7684;&#x547D;&#x4EE4;&#x884C;&#x7BA1;&#x7406;&#x7AEF;</td>
+<td>dgmgrl sys/&#x5BC6;&#x7801;@tnsnames</td>
+</tr>
+<tr>
+<td>15</td>
+<td>&#x521B;&#x5EFA;&#x914D;&#x7F6E;&#x4FE1;&#x606F;</td>
+<td>create configuration</td>
+</tr>
+<tr>
+<td>16</td>
+<td>&#x6DFB;&#x52A0;&#x5907;&#x5E93;&#x7684;&#x4FE1;&#x606F;</td>
+<td>add database</td>
+</tr>
+<tr>
+<td>17</td>
+<td>&#x542F;&#x7528;&#x914D;&#x7F6E;</td>
+<td>&#x8FD9;&#x4E00;&#x6B65;&#x5F88;&#x91CD;&#x8981;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x53C2;&#x6570;&#x4FEE;&#x6539;&#x90FD;&#x662F;&#x5728;&#x8FD9;&#x4E2A;&#x547D;&#x4EE4;&#x53D1;&#x51FA;&#x540E;&#x624D;&#x8FDB;&#x884C;&#x5B9E;&#x8D28;&#x7684;&#x4FEE;&#x6539;&#xFF0C;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x53EF;&#x4EE5;&#x5BF9;alert&#x65E5;&#x5FD7;&#x8FDB;&#x884C;&#x8DDF;&#x8E2A;</td>
+</tr>
+<tr>
+<td>18</td>
+<td>&#x68C0;&#x67E5;&#x4E3B;&#x5E93;&#x5907;&#x5E93;&#x7684;alert&#x65E5;&#x5FD7;&#x662F;&#x5426;&#x6709;&#x62A5;&#x9519;</td>
+<td></td>
+</tr>
+<tr>
+<td>19</td>
+<td>&#x6D4B;&#x8BD5;&#x4E3B;&#x5E93;&#x4E0E;&#x5907;&#x5E93;&#x7684;dataguard&#x662F;&#x5426;&#x914D;&#x7F6E;&#x6210;&#x529F;</td>
+<td></td>
+</tr>
+<tr>
+<td>20</td>
+<td>&#x505A;&#x4E00;&#x4E9B;switchover&#x7684;&#x76F8;&#x5173;&#x6D4B;&#x8BD5;</td>
+<td></td>
+</tr>
+<tr>
+<td>21</td>
+<td>&#x6839;&#x636E;&#x9700;&#x8981;&#x770B;&#x662F;&#x5426;&#x9700;&#x8981;&#x52A0;&#x4E0A;&#x5F52;&#x6863;&#x65E5;&#x5FD7;&#x7684;&#x6E05;&#x7406;&#x811A;&#x672C;&#x7B49;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="&#x56DB;&#x3001;&#x8BE6;&#x7EC6;&#x642D;&#x5EFA;&#x8FC7;&#x7A0B;">&#x56DB;&#x3001;&#x8BE6;&#x7EC6;&#x642D;&#x5EFA;&#x8FC7;&#x7A0B;</h2>
+<h3 id="41&#x73AF;&#x5883;&#x51C6;&#x5907;">4.1.&#x73AF;&#x5883;&#x51C6;&#x5907;</h3>
+<table>
+<thead>
+<tr>
+<th>&#x5E8F;&#x53F7;</th>
+<th>&#x89D2;&#x8272;</th>
+<th>&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;</th>
+<th>&#x6570;&#x636E;&#x5E93;&#x7248;&#x672C;</th>
+<th>&#x4E3B;&#x673A;&#x540D;</th>
+<th>&#x5B9E;&#x4F8B;&#x540D;</th>
+<th>tnsnames</th>
+<th>&#x5907;&#x6CE8;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>&#x4E3B;&#x5E93;</td>
+<td>Redhat6.8</td>
+<td>11.2.0.4</td>
+<td>nazeebo</td>
+<td>nazeebo</td>
+<td>nazeebo</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>&#x5907;&#x5E93;</td>
+<td>Redhat6.8</td>
+<td>11.2.0.4</td>
+<td>lowa</td>
+<td>lowa</td>
+<td>lowa</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-&#x4E3B;&#x5907;&#x5E93;&#x90FD;&#x9700;&#x8981;&#x505A;&#x7684;&#x5DE5;&#x4F5C;">4.2 &#x4E3B;&#x5907;&#x5E93;&#x90FD;&#x9700;&#x8981;&#x505A;&#x7684;&#x5DE5;&#x4F5C;</h3>
+<h4 id="421-&#x76D1;&#x542C;&#x914D;&#x7F6E;">4.2.1 &#x76D1;&#x542C;&#x914D;&#x7F6E;</h4>
+<p>&#x4FEE;&#x6539;&#x76D1;&#x542C;&#xFF0C;&#x914D;&#x7F6E;&#x9759;&#x6001;&#x76D1;&#x542C;&#xFF0C;&#x56E0;&#x4E3A;&#x540E;&#x9762;&#x8981;&#x7528;&#x5230;&#x7684;dg broker&#xFF0C;&#x6240;&#x4EE5;&#x9759;&#x6001;&#x76D1;&#x542C;&#x4E2D;&#x6DFB;&#x52A0;GLOBAL_DBNAME = &#x5B9E;&#x4F8B;&#x540D;_DGMGRL &#x8FD9;&#x4E00;&#x4E2A;&#x76D1;&#x542C;&#x3002;&#x53C8;&#x56E0;&#x4E3A;&#x91C7;&#x7528;&#x4E86;asm&#x7BA1;&#x7406;&#xFF0C;&#x9700;&#x8981;&#x5C06;ORACLE_HOME&#x4FEE;&#x6539;&#x4E3A;oracle&#x7528;&#x6237;&#x7684;ORACLE_HOME&#x7684;&#x8DEF;&#x5F84;&#xFF08;&#x9ED8;&#x8BA4;&#x4E3A;grid&#x7528;&#x6237;&#x7684;ORACLE_HOME&#x8DEF;&#x5F84;&#xFF09;
+&#x4E3B;&#x5E93;&#x76D1;&#x542C;</p>
+<pre class="language-"><code>[grid@nazeebo admin]$ more listener.ora
+# listener.ora Network Configuration File: /u01/app/11.2.0.4/grid/network/admin/listener.ora
+# Generated by Oracle configuration tools.
+
+LISTENER =
+  (DESCRIPTION_LIST =
+    (DESCRIPTION =
+      (ADDRESS = (PROTOCOL = IPC)(KEY = EXTPROC1521))
+      (ADDRESS = (PROTOCOL = TCP)(HOST = nazeebo)(PORT = 1521))
+    )
+  )
+
+SID_LIST_LISTENER =  
+  (SID_LIST =  
+    (SID_DESC =  
+      (GLOBAL_DBNAME = nazeebo)  
+      (ORACLE_HOME = /u01/app/oracle/product/11.2.0.4/db_1)  
+      (SID_NAME = nazeebo)  
+    )  
+    (SID_DESC =  
+      (GLOBAL_DBNAME = nazeebo_DGMGRL)  
+      (ORACLE_HOME = /u01/app/oracle/product/11.2.0.4/db_1)  
+      (SID_NAME = nazeebo)  
+    )  
+  )  
+
+
+ADR_BASE_LISTENER = /u01/app/grid
+
+ENABLE_GLOBAL_DYNAMIC_ENDPOINT_LISTENER=ON        # line added by Agent
+</code></pre><p>&#x5907;&#x5E93;&#x76D1;&#x542C;</p>
+<pre class="language-"><code>[grid@lowa admin]$ more listener.ora
+# listener.ora Network Configuration File: /u01/app/11.2.0.4/grid/network/admin/listener.ora
+# Generated by Oracle configuration tools.
+
+LISTENER =
+  (DESCRIPTION_LIST =
+    (DESCRIPTION =
+      (ADDRESS = (PROTOCOL = IPC)(KEY = EXTPROC1521))
+      (ADDRESS = (PROTOCOL = TCP)(HOST = lowa)(PORT = 1521))
+    )
+  )
+
+
+SID_LIST_LISTENER =  
+  (SID_LIST =  
+    (SID_DESC =  
+      (GLOBAL_DBNAME = lowa)  
+      (ORACLE_HOME = /u01/app/oracle/product/11.2.0.4/db_1)  
+      (SID_NAME = lowa)  
+    )  
+    (SID_DESC =  
+      (GLOBAL_DBNAME = lowa_DGMGRL)  
+      (ORACLE_HOME = /u01/app/oracle/product/11.2.0.4/db_1)  
+      (SID_NAME = lowa)  
+    )  
+  )
+ADR_BASE_LISTENER = /u01/app/grid
+
+ENABLE_GLOBAL_DYNAMIC_ENDPOINT_LISTENER=ON        # line added by Agent
+</code></pre><h4 id="422-&#x914D;&#x7F6E;tnsnamesora">4.2.2 &#x914D;&#x7F6E;tnsnames.ora</h4>
+<p>&#x4E3B;&#x5E93;&#x548C;&#x5907;&#x5E93;&#x4FDD;&#x6301;&#x4E00;&#x81F4;</p>
+<pre class="language-"><code>[oracle@nazeebo admin]$ cat tnsnames.ora 
+# tnsnames.ora Network Configuration File: /u01/app/oracle/product/11.2.0.4/db_1/network/admin/tnsnames.ora
+# Generated by Oracle configuration tools.
+
+NAZEEBO =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = nazeebo)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = nazeebo)
+    )
+  )
+
+lowa =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = lowa)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = lowa)
+    )
+  )
+</code></pre><h3 id="43-&#x4E3B;&#x5E93;&#x51C6;&#x5907;&#x5DE5;&#x4F5C;">4.3 &#x4E3B;&#x5E93;&#x51C6;&#x5907;&#x5DE5;&#x4F5C;</h3>
+<h4 id="431-&#x4FEE;&#x6539;&#x521D;&#x59CB;&#x5316;&#x53C2;&#x6570;">4.3.1 &#x4FEE;&#x6539;&#x521D;&#x59CB;&#x5316;&#x53C2;&#x6570;</h4>
+<p>&#x53EA;&#x9700;&#x8981;&#x914D;&#x7F6E;&#x7B80;&#x7B80;&#x5355;&#x5355;&#x7684;5&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x641E;&#x5B9A;&#xFF08;&#x5269;&#x4E0B;&#x7684;broker&#x4F1A;&#x5E2E;&#x4F60;&#x8865;&#x5168;&#xFF09;</p>
+<pre class="language-"><code>&#x53C2;&#x6570;1&#xFF1A;alter system set log_archive_dest_1=&apos;location=+ARCH MANDATORY&apos;;
+&#x53C2;&#x6570;2&#xFF1A;alter system set log_archive_dest_2=&apos;service=lowa LGWR ASYNC&apos;;
+&#x53C2;&#x6570;3&#xFF1A;alter system set db_file_name_convert=&apos;+ORADATA/lowa&apos;,&apos;+DATA/nazeebo&apos;,&apos;+ARCHDATA/lowa&apos;,&apos;+ARCH/nazeebo&apos; scope=spfile;
+&#x53C2;&#x6570;4&#xFF1A;alter system set log_file_name_convert=&apos;+ORADATA/lowa&apos;,&apos;+DATA/nazeebo&apos;,&apos;+ARCHDATA/lowa&apos;,&apos;+ARCH/nazeebo&apos; scope=spfile;
+&#x53C2;&#x6570;5&#xFF1A;alter system set standby_file_management=AUTO;
+</code></pre><p>&#x8BF4;&#x660E;&#x4E00;&#x70B9;&#xFF0C;&#x53C2;&#x6570;1&#x8BBE;&#x7F6E;&#x672C;&#x5730;&#x5F52;&#x6863;&#x8DEF;&#x5F84;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x8BBE;&#x7F6E;&#x5F52;&#x6863;&#x7684;&#x78C1;&#x76D8;&#xFF0C;&#x5269;&#x4E0B;&#x7684;asm&#x4F1A;&#x81EA;&#x52A8;&#x5E2E;&#x52A9;&#x8865;&#x5168;&#xFF0C;&#x4EE5;&#x4E0B;&#x4E3A;&#x9A8C;&#x8BC1;&#x8FD9;&#x4E00;&#x70B9;&#xFF1A;</p>
+<pre class="language-"><code>SQL&gt; alter system set log_archive_dest_1=&apos;location=+ARCH MANDATORY&apos;;
+System altered.
+SQL&gt; 
+SQL&gt; alter system switch logfile;
+
+System altered.
+============================================================
+ASMCMD&gt; pwd
++arch/nazeebo/archivelog/2018_05_10
+ASMCMD&gt; ls
+thread_1_seq_59.260.975790853
+thread_1_seq_60.261.975791067
+thread_1_seq_61.262.975791103
+thread_1_seq_62.263.975791337
+ASMCMD&gt; ls
+thread_1_seq_59.260.975790853
+thread_1_seq_60.261.975791067
+thread_1_seq_61.262.975791103
+thread_1_seq_62.263.975791337
+</code></pre><p>&#x5982;&#x4E0A;&#x6240;&#x793A;&#xFF0C;&#x4FEE;&#x6539;&#x4E3A;+ARCH&#x540E;&#xFF0C;&#x78C1;&#x76D8;&#x7EC4;&#x76F8;&#x5BF9;&#x5E94;&#x7684;&#x76EE;&#x5F55;&#x81EA;&#x5DF1;&#x751F;&#x6210;&#x4E86;&#x5168;&#x8DEF;&#x5F84;&#x201C;+arch/nazeebo/archivelog/&#x201D;
+&#x53E6;&#x5916;&#xFF0C;&#x5BF9;&#x5E94;xxx_file_convert&#x7684;&#x987A;&#x5E8F;&#x53EF;&#x80FD;&#x4F1A;&#x8BB0;&#x9519;&#xFF0C;&#x6709;&#x4E00;&#x4E2A;&#x8BC0;&#x7A8D;&#xFF1A;&#x5BF9;&#x7AEF;&#x5199;&#x524D;&#x9762;&#x3002;</p>
+<h4 id="432-&#x6570;&#x636E;&#x5E93;&#x7EA7;&#x7684;&#x4E00;&#x4E9B;&#x8BBE;&#x7F6E;">4.3.2 &#x6570;&#x636E;&#x5E93;&#x7EA7;&#x7684;&#x4E00;&#x4E9B;&#x8BBE;&#x7F6E;</h4>
+<h5 id="4321-&#x5F3A;&#x5236;&#x5F52;&#x6863;">4.3.2.1 &#x5F3A;&#x5236;&#x5F52;&#x6863;</h5>
+<pre class="language-"><code>alter database force logging;
+</code></pre><h5 id="4322-&#x542F;&#x7528;&#x6700;&#x5C0F;&#x8865;&#x5145;&#x65E5;&#x5FD7;">4.3.2.2 &#x542F;&#x7528;&#x6700;&#x5C0F;&#x8865;&#x5145;&#x65E5;&#x5FD7;</h5>
+<pre class="language-"><code>alter database add supplemental log data ;
+select supplemental_log_data_min min from v$database ;
+</code></pre><blockquote>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x51E1;&#x662F;&#x542F;&#x7528;&#x6216;&#x8005;&#x5173;&#x95ED;&#x6570;&#x636E;&#x5E93;&#x7EA7;&#x8865;&#x5145;&#x65E5;&#x5FD7;(&#x5305;&#x62EC;&#x6700;&#x5C0F;&#x8865;&#x5145;&#x65E5;&#x5FD7;&#x548C;&#x53E6;&#x5916;&#x51E0;&#x79CD;&#x65E5;&#x5FD7;)&#x90FD;&#x4F1A;&#x5BFC;&#x81F4;&#x5171;&#x4EAB;&#x6C60;&#x4E2D;&#x6240;&#x6709;SQL&#x547D;&#x4EE4;&#x6E38;&#x6807;&#x975E;&#x6CD5;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x77ED;&#x671F;&#x4E4B;&#x5185;&#x5E94;&#x89E3;&#x6790;&#x4F1A;&#x663E;&#x8457;&#x4E0A;&#x5347;&#x3002;</p>
+<h5 id="4323-&#x5F00;&#x542F;&#x95EA;&#x56DE;">4.3.2.3 &#x5F00;&#x542F;&#x95EA;&#x56DE;</h5>
+<pre class="language-"><code>alter database flashback on;
+</code></pre><p>&#x540E;&#x671F;&#x5982;&#x679C;&#x6709;&#x53EF;&#x80FD;&#x5F00;&#x542F;snapshot standby&#x7684;&#x8BDD;&#xFF0C;&#x5EFA;&#x8BAE;&#x5F00;&#x542F;</p>
+</blockquote>
+<h4 id="433-&#x6DFB;&#x52A0;standby-redo-log">4.3.3 &#x6DFB;&#x52A0;standby redo log</h4>
+<ul>
+<li>&#x56E0;&#x4E3A;&#x9700;&#x8981;&#x505A;switchover&#x7684;&#x5207;&#x6362;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x914D;&#x7F6E;standby redo log&#xFF0C;&#x8FD9;&#x4E2A;&#x7684;&#x7EC4;&#x6570;&#x662F;(redo&#x7684;&#x4E2A;&#x6570;+1)*&#x6BCF;&#x7EC4;&#x6210;&#x5458;&#x6570;&#xFF0C;&#x8FD9;&#x4E2A;&#x6D4B;&#x8BD5;&#x73AF;&#x5883;&#x662F;3&#x7EC4;redo log&#xFF0C;&#x6240;&#x4EE5;&#x5C31;&#x5EFA;&#x7ACB;4&#x7EC4;standby redo log&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#x3002;&#x6CE8;&#x610F;&#x65E5;&#x5FD7;&#x5927;&#x5C0F;&#x53C2;&#x7167;redo log&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x4FDD;&#x6301;&#x4E00;&#x81F4;&#x3002;</li>
+<li>RAC&#x73AF;&#x5883;&#x4E24;&#x4E2A;&#x8282;&#x70B9;&#x5206;&#x522B;&#x90FD;&#x8981;&#x6DFB;&#x52A0;&#x540C;&#x6837;&#x591A;&#x7684;&#x7EC4;&#x6570;&#x4EE5;&#x53CA;&#x540C;&#x6837;&#x5927;&#x5C0F;&#xFF0C;&#x7528;thread&#x5173;&#x952E;&#x5B57;&#x6765;&#x786E;&#x5B9A;&#x662F;&#x54EA;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x3002;</li>
+<li>RAC&#x73AF;&#x5883;&#x4E0B;&#xFF0C;&#x4E3B;&#x5E93;&#x5E94;&#x8BE5;&#x6DFB;&#x52A0;&#xFF08;N+1&#xFF09;*2&#x7EC4;&#xFF0C;&#x5176;&#x4E2D;N &#x4E3A;&#x4E3B;&#x5E93;&#x4E24;&#x4E2A;&#x5206;&#x533A;&#x4E2D;&#x914D;&#x7F6E;&#x7684;&#x6700;&#x5927;redolog &#x7EC4;&#x6570;&#x3002;</li>
+</ul>
+<pre class="language-"><code>ALTER DATABASE ADD STANDBY LOGFILE GROUP 4 (&apos;+DATA&apos;,&apos;+ARCH&apos;) size 50M; 
+ALTER DATABASE ADD STANDBY LOGFILE GROUP 5 (&apos;+DATA&apos;,&apos;+ARCH&apos;) size 50M;  
+ALTER DATABASE ADD STANDBY LOGFILE GROUP 6 (&apos;+DATA&apos;,&apos;+ARCH&apos;) size 50M;  
+ALTER DATABASE ADD STANDBY LOGFILE GROUP 7 (&apos;+DATA&apos;,&apos;+ARCH&apos;) size 50M;
+</code></pre><h4 id="434-&#x521B;&#x5EFA;pfile&#x7684;&#x5907;&#x4EFD;">4.3.4 &#x521B;&#x5EFA;pfile&#x7684;&#x5907;&#x4EFD;</h4>
+<pre class="language-"><code>create pfile=&apos;/home/oracle/pfile.bak&apos; from spfile;
+</code></pre><h4 id="435-&#x521B;&#x5EFA;standby-control-file">4.3.5 &#x521B;&#x5EFA;standby control file</h4>
+<pre class="language-"><code>alter database create standby controlfile as &apos;/home/oracle/standby.ctl&apos;;
+</code></pre><h4 id="436-&#x4F20;&#x9012;&#x76F8;&#x5173;&#x6587;&#x4EF6;&#x5230;&#x5907;&#x5E93;">4.3.6 &#x4F20;&#x9012;&#x76F8;&#x5173;&#x6587;&#x4EF6;&#x5230;&#x5907;&#x5E93;</h4>
+<ul>
+<li>&#x4F20;&#x9012;pfile.bak&#x5230;&#x5907;&#x5E93;</li>
+<li>&#x4F20;&#x9012;&#x5BC6;&#x7801;&#x6587;&#x4EF6;&#x5230;&#x5907;&#x5E93;&#xFF0C;&#x5E76;&#x4FEE;&#x6539;&#x5BC6;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x540D;&#x5B57;&#x4E3A;&#x5907;&#x5E93;&#x7684;&#x5B9E;&#x4F8B;</li>
+<li>&#x4F20;&#x9012;standby control file&#x5230;&#x5907;&#x5E93;</li>
+</ul>
+<p>&#x7ED9;&#x4E00;&#x4E2A;&#x4E3B;&#x5E93;&#x7684;&#x53C2;&#x8003;pfile</p>
+<pre class="language-"><code>[oracle@nazeebo ~]$ cat pfile.bak 
+nazeebo.__db_cache_size=1929379840
+nazeebo.__java_pool_size=16777216
+nazeebo.__large_pool_size=33554432
+nazeebo.__pga_aggregate_target=838860800
+nazeebo.__sga_target=2516582400
+nazeebo.__shared_io_pool_size=0
+nazeebo.__shared_pool_size=503316480
+nazeebo.__streams_pool_size=0
+*.audit_file_dest=&apos;/u01/app/oracle/admin/nazeebo/adump&apos;
+*.audit_trail=&apos;db&apos;
+*.compatible=&apos;11.2.0.4.0&apos;
+*.control_files=&apos;+DATA/nazeebo/controlfile/current.259.975754453&apos;,&apos;+ARCH/nazeebo/controlfile/current.256.975754453&apos;
+*.db_block_size=8192
+*.db_create_file_dest=&apos;+DATA&apos;
+*.db_domain=&apos;&apos;
+*.db_file_name_convert=&apos;+ORADATA/lowa&apos;,&apos;+DATA/nazeebo&apos;,&apos;+ARCHDATA/lowa&apos;,&apos;+ARCH/nazeebo&apos;
+*.db_name=&apos;nazeebo&apos;
+*.db_recovery_file_dest=&apos;+ARCH&apos;
+*.db_recovery_file_dest_size=5218762752
+*.diagnostic_dest=&apos;/u01/app/oracle&apos;
+*.dispatchers=&apos;(PROTOCOL=TCP) (SERVICE=nazeeboXDB)&apos;
+*.log_archive_dest_1=&apos;location=+ARCH MANDATORY&apos;
+*.log_archive_dest_2=&apos;service=lowa LGWR ASYNC&apos;
+*.log_archive_format=&apos;%t_%s_%r.dbf&apos;
+*.log_file_name_convert=&apos;+ORADATA/lowa&apos;,&apos;+DATA/nazeebo&apos;,&apos;+ARCHDATA/lowa&apos;,&apos;+ARCH/nazeebo&apos;
+*.open_cursors=300
+*.pga_aggregate_target=838860800
+*.processes=150
+*.remote_login_passwordfile=&apos;EXCLUSIVE&apos;
+*.sga_target=2516582400
+*.standby_file_management=&apos;AUTO&apos;
+*.undo_tablespace=&apos;UNDOTBS1&apos;
+</code></pre><h3 id="44-&#x5907;&#x5E93;&#x914D;&#x7F6E;">4.4 &#x5907;&#x5E93;&#x914D;&#x7F6E;</h3>
+<h4 id="441-&#x4FEE;&#x6539;pfile&#x6587;&#x4EF6;">4.4.1 &#x4FEE;&#x6539;pfile&#x6587;&#x4EF6;</h4>
+<p>&#x4E3B;&#x8981;&#x6CE8;&#x610F;&#x51E0;&#x4E2A;&#x53C2;&#x6570;&#x5FC5;&#x9700;&#x4FEE;&#x6539;&#xFF1A;</p>
+<table>
+<thead>
+<tr>
+<th>&#x5E8F;&#x53F7;</th>
+<th>&#x4FEE;&#x6539;&#x53C2;&#x6570;</th>
+<th>&#x8BF4;&#x660E;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>.db_name</td>
+<td>&#x4FDD;&#x6301;&#x548C;&#x4E3B;&#x5E93;&#x7684;&#x4E00;&#x81F4;&#xFF0C;&#x53EA;&#x6709;&#x4E00;&#x81F4;&#x4E86;&#xFF0C;&#x7269;&#x7406;standby&#x624D;&#x80FD;&#x6B63;&#x786E;&#x914D;&#x7F6E;&#x3002;&#x53C2;&#x8003;&#x503C;&#xFF1A;nazeebo</td>
+</tr>
+<tr>
+<td>2</td>
+<td>.db_unique_name</td>
+<td>&#x5199;&#x5907;&#x5E93;&#x7684;&#x5B9E;&#x4F8B;&#x540D;&#xFF0C;&#x8981;&#x533A;&#x522B;&#x4E3B;&#x5E93;&#x7684;&#x5B9E;&#x4F8B;&#x540D;&#x3002;&#x53C2;&#x8003;&#x503C;&#xFF1A;lowa</td>
+</tr>
+<tr>
+<td>3</td>
+<td>log_archive_dest_1</td>
+<td>&#x5199;&#x672C;&#x5730;&#x7684;&#x5F52;&#x6863;&#x8DEF;&#x5F84;&#xFF0C;&#x53C2;&#x8003;&#x503C;&#xFF1A;Location=  `+ARCHDATA`</td>
+</tr>
+<tr>
+<td>4</td>
+<td>log_archive_dest_2</td>
+<td>&#x5199;&#x4E3B;&#x5E93;&#x7684;&#x5F52;&#x6863;&#x8DEF;&#x5F84;&#xFF0C;&#x53C2;&#x8003;&#x503C;&#xFF1A;log_archive_dest_2=&apos;service=nazeebo LGWR ASYNC&apos; &#x3002;<strong>&#x6CE8;&#x610F;</strong>&#xFF1A;service&#x5BF9;&#x5E94;&#x7684;&#x540D;&#x5B57;&#x5199;&#x7684;tnsnames&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x800C;&#x975E;&#x5B9E;&#x4F8B;&#x540D;&#x3002;</td>
+</tr>
+<tr>
+<td>5</td>
+<td>db_file_name_convert</td>
+<td>&#x53C2;&#x8003;&#x503C;&#xFF1A;db_file_name_convert=&apos;+DATA/nazeebo&apos;,&apos;+ORADATA/lowa&apos;,&apos;+ARCH/nazeebo&apos;,&apos;+ARCHDATA/lowa&apos;</td>
+</tr>
+<tr>
+<td>6</td>
+<td>log_file_name_convert</td>
+<td>&#x540C;db_file_name_convert</td>
+</tr>
+<tr>
+<td>7</td>
+<td>audit_file_dest</td>
+<td>&#x586B;&#x5199;&#x5B9E;&#x9645;&#x60F3;&#x653E;&#x7F6E;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x5982;&#x679C;&#x5728;RAC+ASM&#xFF0C;&#x9700;&#x8981;&#x5148;&#x63D0;&#x524D;&#x521B;&#x5EFA;&#x78C1;&#x76D8;&#x7EC4;&#xFF0C;&#x518D;&#x4FEE;&#x6539;</td>
+</tr>
+<tr>
+<td>8</td>
+<td>control_files</td>
+<td>&#x586B;&#x5199;&#x5B9E;&#x9645;&#x60F3;&#x653E;&#x7F6E;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x5982;&#x679C;&#x5728;RAC+ASM&#xFF0C;&#x9700;&#x8981;&#x5148;&#x63D0;&#x524D;&#x521B;&#x5EFA;&#x78C1;&#x76D8;&#x7EC4;&#xFF0C;&#x518D;&#x4FEE;&#x6539;</td>
+</tr>
+</tbody>
+</table>
+<p>&#x7ED9;&#x4E00;&#x4E2A;&#x5907;&#x5E93;&#x7684;&#x53C2;&#x8003;pfile</p>
+<pre class="language-"><code>[oracle@lowa ~]$ cat pfile.bak 
+lowa.__db_cache_size=1929379840
+lowa.__java_pool_size=16777216
+lowa.__large_pool_size=33554432
+lowa.__pga_aggregate_target=838860800
+lowa.__sga_target=2516582400
+lowa.__shared_io_pool_size=0
+lowa.__shared_pool_size=503316480
+lowa.__streams_pool_size=0
+*.audit_file_dest=&apos;/u01/app/oracle/admin/lowa/adump&apos;
+*.audit_trail=&apos;db&apos;
+*.compatible=&apos;11.2.0.4.0&apos;
+*.control_files=&apos;+ORADATA/lowa/controlfile/control.ctl&apos;,&apos;+ARCHDATA/lowa/controlfile/control.ctl&apos;
+*.db_block_size=8192
+*.db_create_file_dest=&apos;+ORADATA&apos;
+*.db_domain=&apos;&apos;
+*.db_file_name_convert=&apos;+DATA/nazeebo&apos;,&apos;+ORADATA/lowa&apos;,&apos;+ARCH/nazeebo&apos;,&apos;+ARCHDATA/lowa&apos;
+*.db_name=&apos;nazeebo&apos;
+*.db_unique_name=&apos;lowa&apos;
+*.db_recovery_file_dest=&apos;+ARCHDATA&apos;
+*.db_recovery_file_dest_size=5218762752
+*.diagnostic_dest=&apos;/u01/app/oracle&apos;
+#*.dispatchers=&apos;(PROTOCOL=TCP) (SERVICE=lowaXDB)&apos;
+*.log_archive_dest_1=&apos;location=+ARCHDATA MANDATORY&apos;
+*.log_archive_dest_2=&apos;service=nazeebo LGWR ASYNC&apos;
+*.log_archive_format=&apos;%t_%s_%r.dbf&apos;
+*.log_file_name_convert=&apos;+DATA/nazeebo&apos;,&apos;+ORADATA/lowa&apos;,&apos;+ARCH/nazeebo&apos;,&apos;+ARCHDATA/lowa&apos;
+*.open_cursors=300
+*.pga_aggregate_target=838860800
+*.processes=150
+*.remote_login_passwordfile=&apos;EXCLUSIVE&apos;
+*.sga_target=2516582400
+*.standby_file_management=&apos;AUTO&apos;
+*.undo_tablespace=&apos;UNDOTBS1&apos;
+</code></pre><h4 id="442-&#x521B;&#x5EFA;&#x76F8;&#x5E94;&#x7684;&#x76EE;&#x5F55;">4.4.2 &#x521B;&#x5EFA;&#x76F8;&#x5E94;&#x7684;&#x76EE;&#x5F55;</h4>
+<p>&#x5907;&#x5E93;&#x6709;&#x4E9B;&#x76EE;&#x5F55;&#x662F;&#x6CA1;&#x6709;&#x5EFA;&#x7ACB;&#x597D;&#x7684;&#xFF0C;&#x9700;&#x8981;&#x63D0;&#x524D;&#x5EFA;&#x7ACB;&#xFF0C;&#x975E;asm&#x7684;&#x53C2;&#x8003;&#x5982;&#x4E0B;&#xFF1A;
+&#x81F3;&#x5C11;&#x5E94;&#x8BE5;&#x6DFB;&#x52A0;&#x7684;&#x76EE;&#x5F55;&#x6709;&#xFF1A;<em>&#x6570;&#x636E;&#x6587;&#x4EF6;&#x3001;adump&#x3001;&#x5F52;&#x6863;&#x65E5;&#x5FD7;&#x3001;&#x95EA;&#x56DE;&#x533A;</em></p>
+<pre class="language-"><code>mkdir -p /u01/app/oracle/oradata/nazeebo 
+mkdir -p /u01/app/oracle/admin/nazeebo/adump
+mkdir -p /u01/app/oracle/archivelog/nazeebo
+mkdir -p /u01/app/oracle/fast_recovery_area/nazeebo
+</code></pre><p>&#x800C;asm&#x7BA1;&#x7406;&#x7684;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x9700;&#x8981;&#x8FDB;&#x5165;&#x5230;&#x76F8;&#x5E94;&#x7684;&#x78C1;&#x76D8;&#x7EC4;&#x521B;&#x5EFA;&#x6216;&#x8005;&#x7528;sqlplus&#x7684;&#x547D;&#x4EE4;&#x8FDB;&#x884C;&#x521B;&#x5EFA;
+&#x7528;asmcmd&#x547D;&#x4EE4;&#x6DFB;&#x52A0;&#x76EE;&#x5F55;&#xFF0C;&#x793A;&#x4F8B;&#xFF1A;</p>
+<pre class="language-"><code>shell&gt; asmcmd
+shell&gt; cd +DATA
+shell&gt; mkdir archivelog
+shell&gt; cd archivelog
+shell&gt; mkdir nazeebo
+</code></pre><p>&#x7528;sql&#x547D;&#x4EE4;&#x6DFB;&#x52A0;&#x76EE;&#x5F55;&#xFF0C;&#x793A;&#x4F8B;&#xFF1A;</p>
+<pre class="language-"><code>--&#x9996;&#x5148;&#x6DFB;&#x52A0;nazeebo
+SQL&gt; alter diskgroup datadg01 add directory &apos;+datadg01/nazeebo/&apos;;
+
+&#x7136;&#x540E;&#x6DFB;&#x52A0;datafile
+SQL&gt; alter diskgroup datadg01 add directory &apos;+datadg01/nazeebo/datafile&apos;;
+</code></pre><h4 id="443-&#x901A;&#x8FC7;spfile&#x542F;&#x52A8;&#x6570;&#x636E;&#x5E93;&#x5230;nomount&#x72B6;&#x6001;">4.4.3 &#x901A;&#x8FC7;spfile&#x542F;&#x52A8;&#x6570;&#x636E;&#x5E93;&#x5230;nomount&#x72B6;&#x6001;</h4>
+<pre class="language-"><code>sql&gt; startup pfile=&#x2019;/home/oracle/pfile.bak&#x2019; nomount
+</code></pre><p>&#x5728;&#x8FD9;&#x4E00;&#x6B65;&#x4E5F;&#x53EF;&#x4EE5;&#x987A;&#x4FBF;&#x68C0;&#x67E5;&#x4E4B;&#x524D;&#x7684;&#x76EE;&#x5F55;&#x6709;&#x6CA1;&#x6709;&#x521B;&#x5EFA;&#x6B63;&#x786E;
+&#x542F;&#x52A8;&#x5B8C;&#x6210;&#x65E0;&#x5F02;&#x5E38;&#x540E;&#xFF0C;&#x521B;&#x5EFA;spfile&#xFF0C;&#x518D;&#x4EE5;spfile&#x7684;&#x65B9;&#x5F0F;&#x542F;&#x52A8;&#x5230;nomount&#x72B6;&#x6001;</p>
+<pre class="language-"><code>sql&gt; create spfile from pfile=&#x2019;/home/oracle/pfile.bak&#x2019;;
+sql&gt; startup nomount
+</code></pre><h4 id="444-&#x6062;&#x590D;standby&#x63A7;&#x5236;&#x6587;&#x4EF6;">4.4.4 &#x6062;&#x590D;standby&#x63A7;&#x5236;&#x6587;&#x4EF6;</h4>
+<pre class="language-"><code>rman &gt; restore controlfile from &apos;/home/oracle/standby.ctl&apos;;
+</code></pre><p>&#x8FD9;&#x4E00;&#x6B65;&#x53EF;&#x4EE5;&#x68C0;&#x67E5;control&#x653E;&#x7F6E;&#x7684;&#x8DEF;&#x5F84;&#x662F;&#x5426;&#x6B63;&#x786E;&#x521B;&#x5EFA;&#x4E86;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x6709;&#x62A5;&#x9519;&#x8BF7;troubleshooting</p>
+<h4 id="445-&#x542F;&#x52A8;&#x5907;&#x5E93;&#x5230;mount&#x72B6;&#x6001;">4.4.5 &#x542F;&#x52A8;&#x5907;&#x5E93;&#x5230;mount&#x72B6;&#x6001;</h4>
+<pre class="language-"><code>sql&gt; alter database mount;
+</code></pre><p>&#x5907;&#x6CE8;&#xFF1A;&#x53EA;&#x6709;&#x5728;mount&#x72B6;&#x6001;&#x4E86;&#xFF0C;&#x624D;&#x53EF;&#x4EE5;&#x5229;&#x7528;rman&#x8FDB;&#x884C;&#x6570;&#x636E;&#x5E93;&#x7684;&#x6062;&#x590D;&#xFF0C;&#x6765;&#x8FBE;&#x5230;&#x521D;&#x59CB;&#x5316;&#x7684;&#x76EE;&#x7684;</p>
+<h3 id="45-&#x914D;&#x7F6E;dataguard">4.5 &#x914D;&#x7F6E;dataguard</h3>
+<h4 id="451-&#x5BF9;&#x4E3B;&#x5E93;&#x8FDB;&#x884C;&#x5168;&#x5907;&#xFF0C;&#x5E76;&#x5C06;&#x5907;&#x4EFD;&#x4F20;&#x9012;&#x5230;&#x5907;&#x5E93;">4.5.1 &#x5BF9;&#x4E3B;&#x5E93;&#x8FDB;&#x884C;&#x5168;&#x5907;&#xFF0C;&#x5E76;&#x5C06;&#x5907;&#x4EFD;&#x4F20;&#x9012;&#x5230;&#x5907;&#x5E93;</h4>
+<p>&#x53C2;&#x8003;&#x811A;&#x672C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre class="language-"><code>run {
+  allocate channel c1 type disk;
+  allocate channel c2 type disk;
+  allocate channel c3 type disk;
+  allocate channel c4 type disk;
+  backup  database format &apos;/home/oracle/rmandir/FULL_%U.bak&apos; ;
+  backup  archivelog  all format &apos;/home/oracle/rmandir/ARC_%U.bak&apos;;
+  release channel c1;
+  release channel c2;
+  release channel c3;
+  release channel c4;
+}
+</code></pre><blockquote>
+<p>&#x5907;&#x6CE8;&#xFF1A;
+&#x5728;&#x672C;&#x6587;&#x4E2D;&#xFF0C;&#x662F;&#x5728;&#x4E3B;&#x5907;&#x5E93;&#x521B;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;/home/oracle/rmandir&#x76EE;&#x5F55;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x5907;&#x4EFD;&#x6587;&#x4EF6;&#x90FD;&#x653E;&#x5728;&#x8FD9;&#x4E2A;&#x76EE;&#x5F55;&#x4E2D;&#x3002;&#x5BF9;&#x4E8E;&#x5206;&#x914D;&#x7684;channel&#xFF0C;&#x4EE5;&#x6839;&#x636E;&#x5B9E;&#x9645;&#x7684;&#x60C5;&#x51B5;&#x6765;&#x8FDB;&#x884C;&#x589E;&#x5220;&#x3002;
+&#x53E6;&#x5916;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#x51C6;&#x5907;&#x8DB3;&#x591F;&#x7684;&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#x8FDB;&#x884C;rman&#x7684;&#x5168;&#x5907;&#x3002;</p>
+</blockquote>
+<h4 id="452-&#x5728;&#x5907;&#x5E93;&#x8FDB;&#x884C;restore&#x7684;&#x6062;&#x590D;">4.5.2 &#x5728;&#x5907;&#x5E93;&#x8FDB;&#x884C;restore&#x7684;&#x6062;&#x590D;</h4>
+<p>&#x8FDB;&#x5165;&#x5230;&#x5907;&#x4EFD;&#x7684;&#x76EE;&#x5F55;&#xFF0C;&#x7136;&#x540E;&#x5728;&#x5907;&#x5E93;&#x8FDB;&#x884C;restore&#x7684;&#x6062;&#x590D;&#xFF0C;&#x53C2;&#x8003;&#x811A;&#x672C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre class="language-"><code>rman&gt; 
+run {
+allocate channel c1 type disk;
+allocate channel c2 type disk;
+allocate channel c3 type disk;
+allocate channel c4 type disk;
+restore database ;
+release channel c1;
+release channel c2;
+release channel c3;
+release channel c4;
+}
+</code></pre><blockquote>
+<p>&#x56E0;&#x4E3A;restore&#x4F1A;&#x5C06;&#x4E3B;&#x5E93;&#x521B;&#x5EFA;&#x7684;standby redo log&#x4E5F;&#x6062;&#x590D;&#x5230;&#x5907;&#x5E93;&#xFF0C;&#x6240;&#x4EE5;&#x52A1;&#x5FC5;&#x4FDD;&#x8BC1;&#x4E3B;&#x5E93;&#x521D;&#x59CB;&#x5316;&#x53C2;&#x6570;log_file_name_convert&#x7684;&#x6B63;&#x786E;&#x6027;&#x3002;</p>
+</blockquote>
+<h4 id="453-&#x8FFD;&#x8865;&#x65E5;&#x5FD7;">4.5.3 &#x8FFD;&#x8865;&#x65E5;&#x5FD7;</h4>
+<pre class="language-"><code>RMAN&gt; restore archivelog all;
+</code></pre><h4 id="454-&#x5728;&#x5907;&#x5E93;&#x5F00;&#x59CB;redo-apply">4.5.4 &#x5728;&#x5907;&#x5E93;&#x5F00;&#x59CB;redo apply</h4>
+<p>&#x5728;&#x4FDD;&#x8BC1;&#x6062;&#x590D;&#x6B63;&#x5E38;&#x4E4B;&#x540E;&#xFF0C;&#x5728;&#x5907;&#x5E93;&#x5F00;&#x59CB;redo apply</p>
+<pre class="language-"><code>SQL&gt; alter database recover managed standby database using current logfile disconnect;
+</code></pre><h3 id="46-&#x914D;&#x7F6E;dg-broker">4.6 &#x914D;&#x7F6E;dg broker</h3>
+<p>&#x4EE5;&#x4E0A;&#x7684;&#x6B65;&#x9AA4;&#x53EA;&#x662F;&#x5B8C;&#x6210;&#x4E86;&#x4E00;&#x534A;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x9700;&#x8981;&#x5229;&#x7528;dg broker&#x5B8C;&#x6210;&#x5269;&#x4E0B;&#x7684;&#x4E00;&#x534A;&#x5DE5;&#x4F5C;</p>
+<h4 id="461-&#x5206;&#x522B;&#x5728;&#x4E3B;&#x5907;&#x5E93;&#x5F00;&#x542F;dg-broker">4.6.1 &#x5206;&#x522B;&#x5728;&#x4E3B;&#x5907;&#x5E93;&#x5F00;&#x542F;dg broker</h4>
+<pre class="language-"><code>alter system set dg_broker_start=true;
+</code></pre><h4 id="462-&#x5728;&#x4E3B;&#x5E93;&#x767B;&#x9646;dg-broker">4.6.2 &#x5728;&#x4E3B;&#x5E93;&#x767B;&#x9646;dg broker</h4>
+<p>&#x6240;&#x6709;&#x7684;&#x64CD;&#x4F5C;&#x90FD;&#x53EA;&#x9700;&#x8981;&#x5728;&#x4E3B;&#x5E93;&#x4E0A;&#x8FDB;&#x884C;</p>
+<pre class="language-"><code>[oracle@nazeebo ~]$ dgmgrl sys/Oracle123@nazeebo
+DGMGRL for Linux: Version 11.2.0.4.0 - 64bit Production
+
+Copyright (c) 2000, 2009, Oracle. All rights reserved.
+
+Welcome to DGMGRL, type &quot;help&quot; for information.
+Connected.
+</code></pre><h4 id="463-&#x521B;&#x5EFA;&#x914D;&#x7F6E;&#x4FE1;&#x606F;">4.6.3 &#x521B;&#x5EFA;&#x914D;&#x7F6E;&#x4FE1;&#x606F;</h4>
+<pre class="language-"><code>DGMGRL&gt; create CONFIGURATION cfg_1 as PRIMARY DATABASE IS nazeebo CONNECT IDENTIFIER IS nazeebo;
+Configuration &quot;cfg_1&quot; created with primary database &quot;nazeebo&quot;
+</code></pre><h4 id="464-&#x6DFB;&#x52A0;&#x5907;&#x5E93;&#x4FE1;&#x606F;">4.6.4 &#x6DFB;&#x52A0;&#x5907;&#x5E93;&#x4FE1;&#x606F;</h4>
+<pre class="language-"><code>DGMGRL&gt; add DATABASE lowa as CONNECT IDENTIFIER IS lowa ; 
+Database &quot; lowa &quot; added
+</code></pre><h4 id="465-&#x542F;&#x52A8;&#x914D;&#x7F6E;">4.6.5 &#x542F;&#x52A8;&#x914D;&#x7F6E;</h4>
+<p>&#x8FD9;&#x4E00;&#x6B65;&#x662F;&#x771F;&#x6B63;&#x7684;&#x4F7F;&#x5F97;&#x914D;&#x7F6E;&#x751F;&#x6548;</p>
+<pre class="language-"><code>DGMGRL&gt; ENABLE CONFIGURATION;
+</code></pre><blockquote>
+<p>&#x5907;&#x6CE8;&#xFF1A;
+&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#xFF0C;&#x6700;&#x597D;&#x5C06;&#x4E3B;&#x5E93;&#x548C;&#x5907;&#x5E93;&#x7684;alert&#x65E5;&#x5FD7;&#x90FD;&#x6253;&#x5F00;&#x8FDB;&#x884C;&#x8DDF;&#x8E2A;</p>
+</blockquote>
+<h4 id="466-&#x67E5;&#x770B;&#x914D;&#x7F6E;&#x4FE1;&#x606F;">4.6.6 &#x67E5;&#x770B;&#x914D;&#x7F6E;&#x4FE1;&#x606F;</h4>
+<pre class="language-"><code>DGMGRL&gt; show CONFIGURATION;
+
+Configuration - cfg_1
+
+  Protection Mode: MaxPerformance
+  Databases:
+    nazeebo - Primary database
+    lowa    - Physical standby database
+
+Fast-Start Failover: DISABLED
+
+Configuration Status:
+SUCCESS
+
+DGMGRL&gt;
+</code></pre><h4 id="467-&#x6D4B;&#x8BD5;&#x914D;&#x7F6E;&#x662F;&#x5426;&#x6B63;&#x786E;&#x751F;&#x6548;">4.6.7 &#x6D4B;&#x8BD5;&#x914D;&#x7F6E;&#x662F;&#x5426;&#x6B63;&#x786E;&#x751F;&#x6548;</h4>
+<p>&#x5728;&#x4E3B;&#x5E93;&#x8FDB;&#x884C;&#x6D4B;&#x8BD5;&#x8868;&#x7684;&#x521B;&#x5EFA;&#xFF0C;&#x770B;&#x5728;&#x5907;&#x5E93;&#x4E0A;&#x662F;&#x5426;&#x80FD;&#x770B;&#x5230;&#x3002;</p>
+<h3 id="47-&#x5207;&#x6362;&#x64CD;&#x4F5C;">4.7 &#x5207;&#x6362;&#x64CD;&#x4F5C;</h3>
+<p>&#x901A;&#x8FC7;broker&#x53EF;&#x4EE5;&#x5F88;&#x5BB9;&#x6613;&#x7684;&#x5750;&#x5230;&#x5207;&#x6362;snapshot db&#xFF0C;switchover&#x5207;&#x6362;&#xFF0C;failover&#x5207;&#x6362;&#x3002;
+&#x5728;&#x4EE5;&#x524D;&#x901A;&#x8FC7;&#x547D;&#x4EE4;&#x5207;&#x6362;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x9996;&#x5148;&#x8981;&#x68C0;&#x67E5;&#x72B6;&#x6001;&#xFF0C;&#x7136;&#x540E;&#x5728;&#x4E3B;&#x5E93;&#x548C;&#x5907;&#x5E93;&#x90FD;&#x8981;&#x6572;&#x547D;&#x4EE4;&#x624D;&#x80FD;&#x5B9E;&#x73B0;&#x4EE5;&#x4E0A;&#x8BF4;&#x7684;&#x5207;&#x6362;&#x3002;
+&#x800C;&#x901A;&#x8FC7;dg broker&#x6765;&#x8FDB;&#x884C;&#x5207;&#x6362;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x4E00;&#x6761;&#x547D;&#x4EE4;&#xFF1A;</p>
+<pre class="language-"><code>1.&#x67E5;&#x770B;&#x5F53;&#x524D;&#x914D;&#x7F6E;&#x4FE1;&#x606F;
+DGMGRL&gt; show configuration
+
+Configuration - cfg_1
+
+  Protection Mode: MaxPerformance
+  Databases:
+    lowa    - Primary database
+    nazeebo - Physical standby database
+
+Fast-Start Failover: DISABLED
+
+Configuration Status:
+SUCCESS
+
+
+2.&#x505A;switchover
+DGMGRL&gt; help switchover
+
+Switches roles between a primary and standby database
+
+Syntax:
+
+  SWITCHOVER TO <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>standby</span> <span class="token attr-name">database</span> <span class="token attr-name">name</span><span class="token punctuation">&gt;</span></span>;
+
+DGMGRL&gt; switchover to lowa;
+Performing switchover NOW, please wait...
+Operation requires a connection to instance &quot;lowa&quot; on database &quot;lowa&quot;
+Connecting to instance &quot;lowa&quot;...
+Connected.
+New primary database &quot;lowa&quot; is opening...
+Operation requires startup of instance &quot;nazeebo&quot; on database &quot;nazeebo&quot;
+Starting instance &quot;nazeebo&quot;...
+ORACLE instance started.
+Database mounted.
+Database opened.
+Switchover succeeded, new primary is &quot;lowa&quot;
+
+3.&#x505A;&#x5B8C;&#x4E4B;&#x540E;&#x67E5;&#x770B;&#x65B0;&#x7684;&#x914D;&#x7F6E;&#x4FE1;&#x606F;
+DGMGRL&gt; show configuration
+
+Configuration - cfg_1
+
+  Protection Mode: MaxPerformance
+  Databases:
+    lowa    - Primary database
+    nazeebo - Physical standby database
+
+Fast-Start Failover: DISABLED
+
+Configuration Status:
+SUCCESS
+</code></pre><h2 id="&#x4E94;&#x3001;&#x5E38;&#x7528;&#x7EF4;&#x62A4;&#x64CD;&#x4F5C;">&#x4E94;&#x3001;&#x5E38;&#x7528;&#x7EF4;&#x62A4;&#x64CD;&#x4F5C;</h2>
+<h3 id="51-&#x5907;&#x5E93;&#x9000;&#x51FA;redo&#x5E94;&#x7528;&#x72B6;&#x6001;">5.1 &#x5907;&#x5E93;&#x9000;&#x51FA;redo&#x5E94;&#x7528;&#x72B6;&#x6001;</h3>
+<pre class="language-"><code>SQL&gt; alter database recover managed standby database cancel;
+Database altered.
+</code></pre><p>PS&#xFF1A;&#x505C;&#x6B62;standby&#x7684;redo&#x5E94;&#x7528;&#xFF0C;&#x6B64;&#x65F6;&#x53EA;&#x662F;&#x6682;&#x505C;redo &#x5E94;&#x7528;&#xFF0C;&#x5E76;&#x4E0D;&#x662F;&#x505C;&#x6B62;Standby &#x6570;&#x636E;&#x5E93;&#xFF0C;standby &#x4ECD;&#x7136;&#x4F1A;&#x4FDD;&#x6301;&#x63A5;&#x6536;&#x53EA;&#x4E0D;&#x8FC7;&#x4E0D;&#x4F1A;&#x518D;&#x5E94;&#x7528;&#x63A5;&#x6536;&#x5230;&#x7684;&#x5F52;&#x6863;&#xFF0C;&#x76F4;&#x5230;&#x518D;&#x6B21;&#x542F;&#x52A8;redo &#x5E94;&#x7528;&#x4E3A;&#x6B62;&#x3002;&#x7C7B;&#x4F3C;mysql&#x91CC;&#x9762;&#x7684;stop slave&#x529F;&#x80FD;;</p>
+<h3 id="52-&#x6253;&#x5F00;standby&#x4E0A;&#x7684;oracle&#x5E93;">5.2 &#x6253;&#x5F00;standby&#x4E0A;&#x7684;oracle&#x5E93;</h3>
+<pre class="language-"><code>SQL&gt; alter database open;
+Database altered. 
+&#x518D;&#x5E94;&#x7528;redo&#x65E5;&#x5FD7;
+SQL&gt; alter database recover managed standby database using current logfile disconnect ;
+</code></pre><h3 id="53-&#x67E5;&#x770B;data-guard&#x6570;&#x636E;&#x5E93;&#x8FD0;&#x884C;&#x5728;&#x54EA;&#x79CD;&#x6A21;&#x5F0F;&#x4E0B;&#xFF1A;">5.3 &#x67E5;&#x770B;Data Guard&#x6570;&#x636E;&#x5E93;&#x8FD0;&#x884C;&#x5728;&#x54EA;&#x79CD;&#x6A21;&#x5F0F;&#x4E0B;&#xFF1A;</h3>
+<pre class="language-"><code>&#x5728;&#x4E3B;&#x5E93;&#x4E0A;&#xFF1A;
+sql&gt;select DATABASE_ROLE,PROTECTION_MODE,PROTECTION_LEVEL from v$database;
+DATABASE_ROLE PROTECTION_MODE PROTECTION_LEVEL
+---------------- -------------------- --------------------
+PRIMARY MAXIMUM PERFORMANCE MAXIMUM PERFORMANCE
+
+&#x5728;&#x5907;&#x5E93;&#x4E0A;&#xFF1A;
+sql&gt;select DATABASE_ROLE,PROTECTION_MODE,PROTECTION_LEVEL from v$database;
+DATABASE_ROLE PROTECTION_MODE PROTECTION_LEVEL
+---------------- -------------------- --------------------
+PHYSICAL STANDBY MAXIMUM PERFORMANCE MAXIMUM PERFORMANCE
+</code></pre><h3 id="54-&#x5728;&#x5907;&#x673A;&#x67E5;&#x770B;&#x65E5;&#x5FD7;&#x5E8F;&#x5217;&#x548C;&#x88AB;&#x5E94;&#x7528;&#x7684;&#x72B6;&#x6001;">5.4 &#x5728;&#x5907;&#x673A;&#x67E5;&#x770B;&#x65E5;&#x5FD7;&#x5E8F;&#x5217;&#x548C;&#x88AB;&#x5E94;&#x7528;&#x7684;&#x72B6;&#x6001;</h3>
+<pre class="language-"><code>sql&gt;select sequence#,applied from v$archived_log where applied=&#x2019;YES&#x2019;;
+</code></pre><h3 id="55-&#x67E5;&#x770B;data-guard-standby-&#x540E;&#x53F0;&#x6062;&#x590D;&#x8FDB;&#x7A0B;&#x662F;&#x5426;&#x6B63;&#x5E38;">5.5 &#x67E5;&#x770B;Data Guard Standby &#x540E;&#x53F0;&#x6062;&#x590D;&#x8FDB;&#x7A0B;&#x662F;&#x5426;&#x6B63;&#x5E38;</h3>
+<pre class="language-"><code>&#x5728;&#x5907;&#x673A;&#x4E0A;&#xFF1A;
+$ps -ef |grep mrp
+&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x5E94;&#x8BE5;&#x6709;mrp&#x7684;&#x540E;&#x53F0;&#x8FDB;&#x7A0B;
+</code></pre><h3 id="56-&#x67E5;&#x8BE2;&#x4E3B;&#x5E93;&#x65E5;&#x5FD7;&#x4E0E;&#x5907;&#x5E93;&#x662F;&#x5426;&#x4E00;&#x81F4;">5.6 &#x67E5;&#x8BE2;&#x4E3B;&#x5E93;&#x65E5;&#x5FD7;&#x4E0E;&#x5907;&#x5E93;&#x662F;&#x5426;&#x4E00;&#x81F4;</h3>
+<pre class="language-"><code>SQL&gt; select sequence# from v$archived_log where recid = (select max(recid) from v$archived_log) and applied = &apos;YES&apos;;
+SQL&gt; select sequence# from v$archived_log where recid = (select max(recid) from v$archived_log);
+</code></pre><h3 id="57-&#x67E5;&#x770B;&#x4E3B;&#x5E93;&#x7684;&#x5F52;&#x6863;&#x65E5;&#x5FD7;&#x7684;&#x72B6;&#x6001;&#xFF1A;">5.7 &#x67E5;&#x770B;&#x4E3B;&#x5E93;&#x7684;&#x5F52;&#x6863;&#x65E5;&#x5FD7;&#x7684;&#x72B6;&#x6001;&#xFF1A;</h3>
+<pre class="language-"><code>SQL&gt; select dest_name,status,error from v$archive_dest where rownum&lt;3;
+DEST_NAME STATUS ERROR 
+-------------------- --------- -------------------------------
+LOG_ARCHIVE_DEST_1 VALID
+LOG_ARCHIVE_DEST_2 ERROR ORA-16191: Primary log shipping client not logged on standby
+</code></pre><h3 id="58-&#x5907;&#x5E93;&#x9700;&#x8981;&#x624B;&#x5DE5;&#x751F;&#x6210;standby-redo-log&#x5417;&#xFF1F;">5.8 &#x5907;&#x5E93;&#x9700;&#x8981;&#x624B;&#x5DE5;&#x751F;&#x6210;standby redo log&#x5417;&#xFF1F;</h3>
+<p>&#x7B54;&#x6848;&#x662F;&#x4E0D;&#x9700;&#x8981;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x4E3B;&#x5E93;&#x521B;&#x5EFA;&#x4E86;standby redo log&#xFF0C;&#x90A3;&#x4E48;&#x5728;&#x7528;rman&#x8FDB;&#x884C;&#x5907;&#x5E93;&#x751F;&#x6210;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5907;&#x5E93;&#x81EA;&#x52A8;&#x4F1A;&#x751F;&#x6210;standby redo log
+&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre class="language-"><code>SQL&gt; select * from v$logfile;
+
+    GROUP# STATUS      TYPE         MEMBER                         IS_REC
+---------- -------------- -------------- -------------------------------------------------- ------
+     1          ONLINE     +ORADATA/lowa/onlinelog/group_1.265.975795255        NO
+     1          ONLINE     +ARCHDATA/lowa/onlinelog/group_1.272.975795257     YES
+     2          ONLINE     +ORADATA/lowa/onlinelog/group_2.266.975795257        NO
+     2          ONLINE     +ARCHDATA/lowa/onlinelog/group_2.273.975795259     YES
+     3          ONLINE     +ORADATA/lowa/onlinelog/group_3.267.975795259        NO
+     3          ONLINE     +ARCHDATA/lowa/onlinelog/group_3.274.975795261     YES
+     7          STANDBY     +ORADATA/lowa/onlinelog/group_7.257.975794407        NO
+     7          STANDBY     +ARCHDATA/lowa/onlinelog/group_7.257.975794409     YES
+     4          STANDBY     +ORADATA/lowa/onlinelog/group_4.258.975794407        NO
+     4          STANDBY     +ARCHDATA/lowa/onlinelog/group_4.258.975794409     YES
+     5          STANDBY     +ORADATA/lowa/onlinelog/group_5.259.975794411        NO
+     5          STANDBY     +ARCHDATA/lowa/onlinelog/group_5.260.975794413     YES
+     6          STANDBY     +ORADATA/lowa/onlinelog/group_6.260.975794411        NO
+     6          STANDBY     +ARCHDATA/lowa/onlinelog/group_6.261.975794413     YES
+
+14 rows selected.
+
+SQL&gt;
+</code></pre><h3 id="59-&#x68C0;&#x67E5;standby&#x6570;&#x636E;&#x5E93;&#x4E0A;&#x662F;&#x5426;&#x5F52;&#x6863;&#x6709;&#x88AB;&#x5E94;&#x7528;&#xFF1A;">5.9 &#x68C0;&#x67E5;Standby&#x6570;&#x636E;&#x5E93;&#x4E0A;&#x662F;&#x5426;&#x5F52;&#x6863;&#x6709;&#x88AB;&#x5E94;&#x7528;&#xFF1A;</h3>
+<p>&#x5728;&#x5907;&#x5E93;&#x4E0A;&#x67E5;&#x770B; &#x662F;&#x5426;&#x6709;mrp&#x8FDB;&#x7A0B;</p>
+<pre class="language-"><code>SQL&gt; select process,status from v$managed_standby;
+
+PROCESS        STATUS
+------------------ ------------------------
+ARCH           CONNECTED
+ARCH           CONNECTED
+ARCH           CONNECTED
+ARCH           CLOSING
+RFS           IDLE
+RFS           IDLE
+RFS           IDLE
+MRP0           APPLYING_LOG
+
+8 rows selected.
+</code></pre><p>&#x5982;&#x679C;&#x6CA1;&#x6709;MRP&#x8FDB;&#x7A0B;&#xFF0C;&#x8BF4;&#x660E;&#x6CA1;&#x6709;&#x5F00;&#x542F;&#x4E3A; recover managed standby database&#x72B6;&#x6001; ; 
+&#x53EF;&#x4EE5;&#x4F7F;&#x7528;  alter database recover managed standby database disconnect from session ; &#x5F00;standby&#x3002;</p>
+<blockquote>
+<p>MRP&#x5C31;&#x662F;&#x5907;&#x5E93;&#x7684;&#x6062;&#x590D;&#x8FDB;&#x7A0B;
+RFS&#x8FDB;&#x7A0B;&#x63A5;&#x53D7;&#x4ECE;&#x4E3B;&#x5E93;&#x6765;&#x7684;&#x65E5;&#x5FD7;
+&#x6CA1;&#x6709;MRP&#x8FDB;&#x7A0B;&#xFF0C;&#x8BF4;&#x660E;&#x5907;&#x5E93;&#x6CA1;&#x6709;&#x5904;&#x4E8E;&#x6062;&#x590D;&#x72B6;&#x6001;</p>
+</blockquote>
+<footer class="page-footer"><span class="copyright">Copyright &#xA9; suredandan 2018 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">UpdateTime: 
+2018-11-27 13:33:28
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../install/26.apply-psu.html" class="navigation navigation-prev " aria-label="Previous page: RAC环境打PSU补丁步骤">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="3.11g-multinode-dg.html" class="navigation navigation-next " aria-label="Next page: 采用broker配置11g多节点dataguard(>=3节点)">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"11g单机环境下配置基于asm的dg","level":"1.2.4","depth":2,"next":{"title":"采用broker配置11g多节点dataguard(>=3节点)","level":"1.2.5","depth":2,"path":"dataguard/3.11g-multinode-dg.md","ref":"dataguard/3.11g-multinode-dg.md","articles":[]},"previous":{"title":"RAC环境打PSU补丁步骤","level":"1.2.3","depth":2,"path":"install/26.apply-psu.md","ref":"install/26.apply-psu.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","prism-themes","-highlight","codesnippet","splitter","simple-page-toc","page-toc-button","back-to-top-button","-lunr","-search","search-plus","favicon@^0.0.2","tbfed-pagefooter@^0.0.1","theme-default","sitemap-general"],"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright © suredandan 2018","modify_label":"UpdateTime: ","modify_format":"YYYY-MM-DD HH:mm:ss"},"prism":{"css":["prismjs/themes/prism-solarizedlight.css"]},"simple-page-toc":{"maxDepth":3,"skipFirstH1":true},"splitter":{},"codesnippet":{},"sitemap-general":{"prefix":"http://www.googlebaba.io/oracle/"},"fontsettings":{"theme":"white","family":"sans","size":2},"favicon":{"shortcut":"favicon.ico","bookmark":"favicon.ico"},"page-toc-button":{},"back-to-top-button":{},"prism-themes":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"showLevel":true,"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"}},"search-plus":{},"image-captions":{"caption":"_CAPTION_"}},"theme":"default","author":"suredandan","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"中年人的Oracle枸杞","language":"zh-hans","gitbook":"*","description":"记录日常的一些Oracle实施文档"},"file":{"path":"dataguard/2.11g-single-asm-dg.md","mtime":"2018-11-27T05:33:28.003Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-06-10T14:25:54.612Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-page-toc-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

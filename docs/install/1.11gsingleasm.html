@@ -1,0 +1,1788 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>11g单机安装asm · 中年人的Oracle枸杞</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="suredandan">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-toc-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../rac/5.11gRAC-intsall.html" />
+    
+    
+    <link rel="prev" href="安装篇.md" />
+    
+
+    
+        <link rel="shortcut icon" href='../favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../favicon.ico' type="image/x-icon">
+    
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                        <b>1.1.</b>
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="安装篇.md">
+            
+                <span>
+            
+                    
+                        <b>1.2.</b>
+                    
+                    安装篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.2.1" data-path="1.11gsingleasm.html">
+            
+                <a href="1.11gsingleasm.html">
+            
+                    
+                        <b>1.2.1.</b>
+                    
+                    11g单机安装asm
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../rac/5.11gRAC-intsall.html">
+            
+                <a href="../rac/5.11gRAC-intsall.html">
+            
+                    
+                        <b>1.2.2.</b>
+                    
+                    11gRAC安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="26.apply-psu.html">
+            
+                <a href="26.apply-psu.html">
+            
+                    
+                        <b>1.2.3.</b>
+                    
+                    RAC环境打PSU补丁步骤
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../dataguard/2.11g-single-asm-dg.html">
+            
+                <a href="../dataguard/2.11g-single-asm-dg.html">
+            
+                    
+                        <b>1.2.4.</b>
+                    
+                    11g单机环境下配置基于asm的dg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../dataguard/3.11g-multinode-dg.html">
+            
+                <a href="../dataguard/3.11g-multinode-dg.html">
+            
+                    
+                        <b>1.2.5.</b>
+                    
+                    采用broker配置11g多节点dataguard(>=3节点)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../dataguard/4.11g-doublerac-dg.html">
+            
+                <a href="../dataguard/4.11g-doublerac-dg.html">
+            
+                    
+                        <b>1.2.6.</b>
+                    
+                    采用备份复制的方式搭建11grac到rac的adg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../dataguard/rac2rac-dg-duplicate-spfile.html">
+            
+                <a href="../dataguard/rac2rac-dg-duplicate-spfile.html">
+            
+                    
+                        <b>1.2.7.</b>
+                    
+                    使用duplicate原生在线搭建11grac到rac的adg
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../rac/RAC.md">
+            
+                <span>
+            
+                    
+                        <b>1.3.</b>
+                    
+                    RAC篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../rac/5.11gRAC-intsall.html">
+            
+                <a href="../rac/5.11gRAC-intsall.html">
+            
+                    
+                        <b>1.3.1.</b>
+                    
+                    11gRAC安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../rac/14.11gRAC-backend-process.html">
+            
+                <a href="../rac/14.11gRAC-backend-process.html">
+            
+                    
+                        <b>1.3.2.</b>
+                    
+                    11gRAC进程详解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../rac/8.11gR2RAC-option-intro.html">
+            
+                <a href="../rac/8.11gR2RAC-option-intro.html">
+            
+                    
+                        <b>1.3.3.</b>
+                    
+                    11gR2 RAC各组件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../rac/crs-has-cluster.html">
+            
+                <a href="../rac/crs-has-cluster.html">
+            
+                    
+                        <b>1.3.4.</b>
+                    
+                    crs-has-cluster的关系
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../rac/35.HAIP介绍.html">
+            
+                <a href="../rac/35.HAIP介绍.html">
+            
+                    
+                        <b>1.3.5.</b>
+                    
+                    HAIP介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../rac/12.RAC-log-infra.html">
+            
+                <a href="../rac/12.RAC-log-infra.html">
+            
+                    
+                        <b>1.3.6.</b>
+                    
+                    RAC环境的日志体系
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../rac/10g-rac-command.html">
+            
+                <a href="../rac/10g-rac-command.html">
+            
+                    
+                        <b>1.3.7.</b>
+                    
+                    10gRAC命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../rac/9.rac-commnd-intro.html">
+            
+                <a href="../rac/9.rac-commnd-intro.html">
+            
+                    
+                        <b>1.3.8.</b>
+                    
+                    11gRAC常用命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../rac/10.11gRAC-10gRAC.html">
+            
+                <a href="../rac/10.11gRAC-10gRAC.html">
+            
+                    
+                        <b>1.3.9.</b>
+                    
+                    11gRAC对比10gRAC
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.10" data-path="../rac/34.11gRAC的监听介绍.html">
+            
+                <a href="../rac/34.11gRAC的监听介绍.html">
+            
+                    
+                        <b>1.3.10.</b>
+                    
+                    11gRAC的监听介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.11" data-path="../rac/36.11gR2RAC修改监听默认端口.html">
+            
+                <a href="../rac/36.11gR2RAC修改监听默认端口.html">
+            
+                    
+                        <b>1.3.11.</b>
+                    
+                    11gR2RAC修改监听默认端口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.12" data-path="../rac/11.asm-commnd-intro.html">
+            
+                <a href="../rac/11.asm-commnd-intro.html">
+            
+                    
+                        <b>1.3.12.</b>
+                    
+                    asm常用命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../datauard/datauard.md">
+            
+                <span>
+            
+                    
+                        <b>1.4.</b>
+                    
+                    Dataguard篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../dataguard/2.11g-single-asm-dg.html">
+            
+                <a href="../dataguard/2.11g-single-asm-dg.html">
+            
+                    
+                        <b>1.4.1.</b>
+                    
+                    11g单机环境下配置基于asm的dg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../dataguard/3.11g-multinode-dg.html">
+            
+                <a href="../dataguard/3.11g-multinode-dg.html">
+            
+                    
+                        <b>1.4.2.</b>
+                    
+                    采用broker配置11g多节点dataguard(>=3节点)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../dataguard/4.11g-doublerac-dg.html">
+            
+                <a href="../dataguard/4.11g-doublerac-dg.html">
+            
+                    
+                        <b>1.4.3.</b>
+                    
+                    采用备份复制的方式搭建11grac到rac的adg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../dataguard/rac2rac-dg-duplicate-spfile.html">
+            
+                <a href="../dataguard/rac2rac-dg-duplicate-spfile.html">
+            
+                    
+                        <b>1.4.4.</b>
+                    
+                    使用duplicate原生在线搭建11grac到rac的adg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../dataguard/17.case-dg-nosync-troubleshooting.html">
+            
+                <a href="../dataguard/17.case-dg-nosync-troubleshooting.html">
+            
+                    
+                        <b>1.4.5.</b>
+                    
+                    解决一起较复杂dg不同步的问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../dataguard/16.dg-nosync-troubleshooting.html">
+            
+                <a href="../dataguard/16.dg-nosync-troubleshooting.html">
+            
+                    
+                        <b>1.4.6.</b>
+                    
+                    DG不同步诊断方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../manage/解决ORA-01152_ORA-10458_ORA-01110.html">
+            
+                <a href="../manage/解决ORA-01152_ORA-10458_ORA-01110.html">
+            
+                    
+                        <b>1.4.7.</b>
+                    
+                    解决ORA-01152(ORA-10458、ORA-01110)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../dataguard/39.dg-switchov-failover.html">
+            
+                <a href="../dataguard/39.dg-switchov-failover.html">
+            
+                    
+                        <b>1.4.8.</b>
+                    
+                    ADG切换过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="../dataguard/13.dg-parameters.html">
+            
+                <a href="../dataguard/13.dg-parameters.html">
+            
+                    
+                        <b>1.4.9.</b>
+                    
+                    dataguard概念参数查漏补缺
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" data-path="../dataguard/解决error-1033的问题.md">
+            
+                <span>
+            
+                    
+                        <b>1.4.10.</b>
+                    
+                    解决主库报错error-1033的问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="../dataguard/给主备环境新添加redo.html">
+            
+                <a href="../dataguard/给主备环境新添加redo.html">
+            
+                    
+                        <b>1.4.11.</b>
+                    
+                    给主备环境新添加redo的注意事项和步骤
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../base/基础.md">
+            
+                <span>
+            
+                    
+                        <b>1.5.</b>
+                    
+                    基础知识
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../base/18-Oracle-index-unusable-disable-enable.html">
+            
+                <a href="../base/18-Oracle-index-unusable-disable-enable.html">
+            
+                    
+                        <b>1.5.1.</b>
+                    
+                    Oracle索引的unusable、disable、enable
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../base/7.dbca-option-intro.html">
+            
+                <a href="../base/7.dbca-option-intro.html">
+            
+                    
+                        <b>1.5.2.</b>
+                    
+                    Oracle建库时的各组件的用途
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../base/undo的一些说明.html">
+            
+                <a href="../base/undo的一些说明.html">
+            
+                    
+                        <b>1.5.3.</b>
+                    
+                    UNDO的一些说明
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                        <b>1.6.</b>
+                    
+                    备份与恢复篇
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../backup/rman备份中的百分号后面的字母的含义.html">
+            
+                <a href="../backup/rman备份中的百分号后面的字母的含义.html">
+            
+                    
+                        <b>1.6.1.</b>
+                    
+                    rman备份中的百分号后面的字母的含义
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../backup/rman.html">
+            
+                <a href="../backup/rman.html">
+            
+                    
+                        <b>1.6.2.</b>
+                    
+                    利用rman进去备份与恢复
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../backup/rman备份脚本.html">
+            
+                <a href="../backup/rman备份脚本.html">
+            
+                    
+                        <b>1.6.3.</b>
+                    
+                    常用rman备份脚本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../backup/数据泵备份.html">
+            
+                <a href="../backup/数据泵备份.html">
+            
+                    
+                        <b>1.6.4.</b>
+                    
+                    常用数据泵备份脚本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../backup/有数据文件的数据恢复.html">
+            
+                <a href="../backup/有数据文件的数据恢复.html">
+            
+                    
+                        <b>1.6.5.</b>
+                    
+                    记录一次有数据文件的数据库恢复
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../manage/运维篇.md">
+            
+                <span>
+            
+                    
+                        <b>1.7.</b>
+                    
+                    运维篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../manage/27.alter-database-archivelog.html">
+            
+                <a href="../manage/27.alter-database-archivelog.html">
+            
+                    
+                        <b>1.7.1.</b>
+                    
+                    修改数据库实例到归档模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../dataguard/6.multialive-qianyi.html">
+            
+                <a href="../dataguard/6.multialive-qianyi.html">
+            
+                    
+                        <b>1.7.2.</b>
+                    
+                    双活及迁移的一些事
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../manage/20.awr-workhouse-intro.html">
+            
+                <a href="../manage/20.awr-workhouse-intro.html">
+            
+                    
+                        <b>1.7.3.</b>
+                    
+                    awr仓库的运维
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../manage/24.slove-error-1089.html">
+            
+                <a href="../manage/24.slove-error-1089.html">
+            
+                    
+                        <b>1.7.4.</b>
+                    
+                    处理一个error-1089问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" data-path="../manage/23.oracle-startup-auto.html">
+            
+                <a href="../manage/23.oracle-startup-auto.html">
+            
+                    
+                        <b>1.7.5.</b>
+                    
+                    设置Oracle开机自启动
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.6" data-path="../manage/25.where-is-alert.html">
+            
+                <a href="../manage/25.where-is-alert.html">
+            
+                    
+                        <b>1.7.6.</b>
+                    
+                    日志的位置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.7" data-path="../manage/29.manage-user.html">
+            
+                <a href="../manage/29.manage-user.html">
+            
+                    
+                        <b>1.7.7.</b>
+                    
+                    用户管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.8" data-path="../manage/28.create-user-profile.html">
+            
+                <a href="../manage/28.create-user-profile.html">
+            
+                    
+                        <b>1.7.8.</b>
+                    
+                    给用户创建profile
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.9" data-path="../manage/30.解决ora-16597.html">
+            
+                <a href="../manage/30.解决ora-16597.html">
+            
+                    
+                        <b>1.7.9.</b>
+                    
+                    解决ora-16597
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.10" data-path="../manage/33.解决ora-29780.html">
+            
+                <a href="../manage/33.解决ora-29780.html">
+            
+                    
+                        <b>1.7.10.</b>
+                    
+                    解决ora-29780
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.11" data-path="../manage/解决ORA-00206.html">
+            
+                <a href="../manage/解决ORA-00206.html">
+            
+                    
+                        <b>1.7.11.</b>
+                    
+                    解决ora-00206
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.12" data-path="../manage/19.ora-13516O-cannot-collect-awr.html">
+            
+                <a href="../manage/19.ora-13516O-cannot-collect-awr.html">
+            
+                    
+                        <b>1.7.12.</b>
+                    
+                    解决ora-13516 Oracle无法收集AWR
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.13" data-path="../manage/解决ORA-01152(ORA-10458、ORA-01110">
+            
+                <span>
+            
+                    
+                        <b>1.7.13.</b>
+                    
+                    解决ORA-01152(ORA-10458、ORA-01110)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.14" data-path="../manage/解决ORA-01105，ORA-01606.html">
+            
+                <a href="../manage/解决ORA-01105，ORA-01606.html">
+            
+                    
+                        <b>1.7.14.</b>
+                    
+                    解决ORA-01105，ORA-01606
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.15" data-path="../manage/37.表碎片分析.html">
+            
+                <a href="../manage/37.表碎片分析.html">
+            
+                    
+                        <b>1.7.15.</b>
+                    
+                    表碎片分析与整理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.16" data-path="../manage/38.索引碎片分析.html">
+            
+                <a href="../manage/38.索引碎片分析.html">
+            
+                    
+                        <b>1.7.16.</b>
+                    
+                    索引碎片分析与整理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.17" data-path="../manage/query-yincang-parameter.html">
+            
+                <a href="../manage/query-yincang-parameter.html">
+            
+                    
+                        <b>1.7.17.</b>
+                    
+                    查看隐藏参数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.18" data-path="../manage/查询锁表的SQL">
+            
+                <span>
+            
+                    
+                        <b>1.7.18.</b>
+                    
+                    查询锁表的SQL
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../tunning/性能优化篇.md">
+            
+                <span>
+            
+                    
+                        <b>1.8.</b>
+                    
+                    性能优化篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../tunning/通过AWR计算IOPS和MBPS.md">
+            
+                <span>
+            
+                    
+                        <b>1.8.1.</b>
+                    
+                    通过AWR计算IOPS和MBPS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../tunning/15.intro-xxxps.html">
+            
+                <a href="../tunning/15.intro-xxxps.html">
+            
+                    
+                        <b>1.8.2.</b>
+                    
+                    XXXPS的概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../zaqizaba/杂项篇.md">
+            
+                <span>
+            
+                    
+                        <b>1.9.</b>
+                    
+                    杂项篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../zaqizaba/21.install-rzsz.html">
+            
+                <a href="../zaqizaba/21.install-rzsz.html">
+            
+                    
+                        <b>1.9.1.</b>
+                    
+                    rzsz工具安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../zaqizaba/22.ssh-copy-id-using-not22port.html">
+            
+                <a href="../zaqizaba/22.ssh-copy-id-using-not22port.html">
+            
+                    
+                        <b>1.9.2.</b>
+                    
+                    ssh-copy-id使用非22端口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../qms数据库整改.html">
+            
+                <a href="../qms数据库整改.html">
+            
+                    
+                        <b>1.9.3.</b>
+                    
+                    qms数据库整改
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >11g单机安装asm</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <!-- toc -->
+<ul>
+<li><a href="#0%E6%A6%82%E8%BF%B0">0.&#x6982;&#x8FF0;</a></li>
+<li><a href="#1-%E4%B8%BB%E6%9C%BA%E5%87%86%E5%A4%87">1. &#x4E3B;&#x673A;&#x51C6;&#x5907;</a></li>
+<li><a href="#2-%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E5%92%8C%E7%94%A8%E6%88%B7%E7%BB%84">2. &#x521B;&#x5EFA;&#x7528;&#x6237;&#x548C;&#x7528;&#x6237;&#x7EC4;</a></li>
+<li><a href="#3-%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95%E5%92%8C%E8%B5%8B%E4%BA%88%E6%9D%83%E9%99%90">3. &#x521B;&#x5EFA;&#x76EE;&#x5F55;&#x548C;&#x8D4B;&#x4E88;&#x6743;&#x9650;</a></li>
+<li><a href="#4-%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE">4. &#x7CFB;&#x7EDF;&#x914D;&#x7F6E;</a></li>
+<li><a href="#5-%E9%85%8D%E7%BD%AEcluster%E6%89%80%E9%9C%80%E8%A6%81%E7%9A%84%E7%A3%81%E7%9B%98%E7%BB%84%E6%88%96%E8%80%85%E8%A3%B8%E8%AE%BE%E5%A4%87">5. &#x914D;&#x7F6E;cluster&#x6240;&#x9700;&#x8981;&#x7684;&#x78C1;&#x76D8;&#x7EC4;&#x6216;&#x8005;&#x88F8;&#x8BBE;&#x5907;</a></li>
+<li><a href="#6-%E5%AE%89%E8%A3%85grid%E7%BB%84%E4%BB%B6">6. &#x5B89;&#x88C5;grid&#x7EC4;&#x4EF6;</a></li>
+<li><a href="#7-%E5%AE%89%E8%A3%85oracle%E7%BB%84%E4%BB%B6">7. &#x5B89;&#x88C5;oracle&#x7EC4;&#x4EF6;</a></li>
+<li><a href="#8-%E9%85%8D%E7%BD%AE%E5%AE%9E%E4%BE%8B">8. &#x914D;&#x7F6E;&#x5B9E;&#x4F8B;</a></li>
+<li><a href="#9%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4">9.&#x5E38;&#x7528;&#x547D;&#x4EE4;</a></li>
+<li><a href="#10%E7%9B%B8%E5%85%B3%E8%A7%86%E5%9B%BE">10.&#x76F8;&#x5173;&#x89C6;&#x56FE;</a></li>
+</ul>
+<!-- tocstop -->
+<hr>
+<h3 id="0&#x6982;&#x8FF0;">0.&#x6982;&#x8FF0;</h3>
+<p>&#x5728;&#x5355;&#x673A;&#x4E0A;&#x5B89;&#x88C5;asm&#xFF0C;&#x548C;&#x5B89;&#x88C5;&#x96C6;&#x7FA4;&#x7C7B;&#x4F3C;&#xFF0C;&#x7528;grid&#x7528;&#x6237;&#x5B89;&#x88C5;cluster&#x76F8;&#x5173;&#x8F6F;&#x4EF6;&#xFF0C;&#x7528;oracle&#x7528;&#x6237;&#x5B89;&#x88C5;</p>
+<h3 id="1-&#x4E3B;&#x673A;&#x51C6;&#x5907;">1. &#x4E3B;&#x673A;&#x51C6;&#x5907;</h3>
+<h4 id="11-&#x4E3B;&#x673A;&#x540D;&#x548C;&#x7F51;&#x7EDC;&#x914D;&#x7F6E;">1.1 &#x4E3B;&#x673A;&#x540D;&#x548C;&#x7F51;&#x7EDC;&#x914D;&#x7F6E;</h4>
+<pre class="language-"><code>hostname
+vi /etc/sysconfig/network
+vi /etc/hosts
+</code></pre><h4 id="12-&#x78C1;&#x76D8;&#x51C6;&#x5907;">1.2 &#x78C1;&#x76D8;&#x51C6;&#x5907;</h4>
+<h4 id="13-&#x5982;&#x679C;&#x4E3A;&#x975E;&#x684C;&#x9762;&#x73AF;&#x5883;&#xFF0C;&#x8003;&#x8651;&#x5148;&#x5B89;&#x88C5;&#x684C;&#x9762;&#x76F8;&#x5E94;&#x7684;&#x5305;&#xFF08;&#x975E;&#x5FC5;&#x987B;&#xFF09;">1.3 &#x5982;&#x679C;&#x4E3A;&#x975E;&#x684C;&#x9762;&#x73AF;&#x5883;&#xFF0C;&#x8003;&#x8651;&#x5148;&#x5B89;&#x88C5;&#x684C;&#x9762;&#x76F8;&#x5E94;&#x7684;&#x5305;&#xFF08;&#x975E;&#x5FC5;&#x987B;&#xFF09;</h4>
+<pre class="language-"><code>yum -y groupinstall &quot;X Window System&quot; &quot;Chinese Support&quot; &quot;Desktop&quot;
+yum -y install xterm
+</code></pre><h4 id="14-&#x5B89;&#x88C5;&#x76F8;&#x5E94;&#x7684;rpm&#x5305;">1.4 &#x5B89;&#x88C5;&#x76F8;&#x5E94;&#x7684;rpm&#x5305;</h4>
+<pre class="language-"><code>yum -y install binutils compat-libstdc++-33 elfutils-libelf elfutils-libelf-devel glibc glibc-common glibc-devel gcc- gcc-c++ libaio-devel libaio libgcc libstdc++ libstdc++-devel make sysstat unixODBC unixODBC-devel pdksh ksh compat-libcap1
+</code></pre><h4 id="15-&#x5173;&#x95ED;&#x9632;&#x706B;&#x5899;&#x7B49;">1.5 &#x5173;&#x95ED;&#x9632;&#x706B;&#x5899;&#x7B49;</h4>
+<pre class="language-"><code>service iptables stop
+chkconfig iptables off
+service NetworkManager stop
+chkconfig NetworkManager off
+</code></pre><h3 id="2-&#x521B;&#x5EFA;&#x7528;&#x6237;&#x548C;&#x7528;&#x6237;&#x7EC4;">2. &#x521B;&#x5EFA;&#x7528;&#x6237;&#x548C;&#x7528;&#x6237;&#x7EC4;</h3>
+<pre class="language-"><code>groupadd oinstall
+groupadd dba
+groupadd oper
+groupadd asmadmin
+groupadd asmdba
+groupadd asmoper
+useradd -g oinstall -G dba,asmdba,oper oracle
+useradd -g oinstall -G dba,asmadmin,asmdba,asmoper grid
+</code></pre><pre class="language-"><code>passwd grid
+passwd oracle
+</code></pre><h3 id="3-&#x521B;&#x5EFA;&#x76EE;&#x5F55;&#x548C;&#x8D4B;&#x4E88;&#x6743;&#x9650;">3. &#x521B;&#x5EFA;&#x76EE;&#x5F55;&#x548C;&#x8D4B;&#x4E88;&#x6743;&#x9650;</h3>
+<pre class="language-"><code>mkdir -p /u01/app/11.2.0.4/grid
+mkdir -p /u01/app/grid
+mkdir -p /u01/app/oracle/product/11.2.0.4/db_1
+chown -R oracle:oinstall /u01/app
+chmod -R 775 /u01/app
+</code></pre><h3 id="4-&#x7CFB;&#x7EDF;&#x914D;&#x7F6E;">4. &#x7CFB;&#x7EDF;&#x914D;&#x7F6E;</h3>
+<h4 id="41-&#x5185;&#x6838;&#x53C2;&#x6570;">4.1 &#x5185;&#x6838;&#x53C2;&#x6570;</h4>
+<p> vi /etc/sysctl.conf</p>
+<pre class="language-"><code>fs.aio-max-nr = 1048576
+fs.file-max = 6815744
+kernel.shmall = 2097152
+#kernel.shmmax = 4398046511104  //&#x4E00;&#x822C;&#x8BBE;&#x7F6E;&#x4E3A;&#x7CFB;&#x7EDF;&#x5185;&#x5B58;75%&#x5355;&#x4F4D;&#x662F;&#x5B57;&#x8282;
+kernel.shmmni = 4096
+kernel.sem = 250 32000 100 128
+net.ipv4.ip_local_port_range = 9000 65500
+net.core.rmem_default = 262144
+net.core.rmem_max = 4194304
+net.core.wmem_default = 262144
+net.core.wmem_max = 1048586
+</code></pre><pre class="language-"><code>&#x4F7F;&#x5185;&#x6838;&#x8BBE;&#x7F6E;&#x7ACB;&#x5373;&#x751F;&#x6548;&#xFF1A;
+shell&gt;  /sbin/sysctl -p
+</code></pre><h4 id="42-limit&#x9650;&#x5236;">4.2 limit&#x9650;&#x5236;</h4>
+<p> vi /etc/security/limits.conf</p>
+<pre class="language-"><code>oracle soft nproc 2047
+oracle hard nproc 16384
+oracle soft nofile 1024
+oracle hard nofile 65536
+oracle soft stack 10240
+grid soft nproc 2047
+grid hard nproc 16384
+grid soft nofile 1024
+grid hard nofile 65536
+grid soft stack 1024
+</code></pre><h4 id="43-login&#x9650;&#x5236;">4.3 login&#x9650;&#x5236;</h4>
+<p>vi /etc/pam.d/login</p>
+<pre class="language-"><code>session required /lib64/security/pam_limits.so
+session required pam_limits.so
+</code></pre><h4 id="44-grid&#x7528;&#x6237;&#x73AF;&#x5883;&#x53D8;&#x91CF;">4.4 grid&#x7528;&#x6237;&#x73AF;&#x5883;&#x53D8;&#x91CF;</h4>
+<pre class="language-"><code>export ORACLE_BASE=/u01/app/grid
+export ORACLE_HOME=/u01/app/11.2.0.4/grid
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib:.
+export NLS_LANG=American_america.ZHS16GBK
+export PATH=$PATH:$ORACLE_HOME/bin:.
+export ORACLE_SID=+ASM
+</code></pre><h4 id="45-oracle&#x7528;&#x6237;&#x73AF;&#x5883;&#x53D8;&#x91CF;">4.5 oracle&#x7528;&#x6237;&#x73AF;&#x5883;&#x53D8;&#x91CF;</h4>
+<pre class="language-"><code>export ORACLE_BASE=/u01/app/oracle
+export ORACLE_HOME=/u01/app/oracle/product/11.2.0.4/db_1
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib:.
+export NLS_LANG=AMERICAN_AMERICA.ZHS16GBK
+export ORACLE_SID=nazeebo
+export PATH=$PATH:$ORACLE_HOME/bin:.
+</code></pre><h3 id="5-&#x914D;&#x7F6E;cluster&#x6240;&#x9700;&#x8981;&#x7684;&#x78C1;&#x76D8;&#x7EC4;&#x6216;&#x8005;&#x88F8;&#x8BBE;&#x5907;">5. &#x914D;&#x7F6E;cluster&#x6240;&#x9700;&#x8981;&#x7684;&#x78C1;&#x76D8;&#x7EC4;&#x6216;&#x8005;&#x88F8;&#x8BBE;&#x5907;</h3>
+<pre class="language-"><code>[root@nazeebo ~]# fdisk -l
+
+Disk /dev/vda: 42.9 GB, 42949672960 bytes
+255 heads, 63 sectors/track, 5221 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00020f78
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/vda1   *           1        5222    41940992   83  Linux
+
+Disk /dev/vdb: 21.5 GB, 21474836480 bytes
+16 heads, 63 sectors/track, 41610 cylinders
+Units = cylinders of 1008 * 512 = 516096 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+
+Disk /dev/vdc: 26.8 GB, 26843545600 bytes
+16 heads, 63 sectors/track, 52012 cylinders
+Units = cylinders of 1008 * 512 = 516096 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+
+Disk /dev/vdd: 26.8 GB, 26843545600 bytes
+16 heads, 63 sectors/track, 52012 cylinders
+Units = cylinders of 1008 * 512 = 516096 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+</code></pre><p>&#x5728;&#x8FD9;&#x513F;&#x6709;&#x51E0;&#x79CD;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<h4 id="51-&#x7528;scsi&#x7684;&#x65B9;&#x5F0F;&#x83B7;&#x53D6;&#x5230;&#x8BBE;&#x5907;&#x7684;uuid">5.1 &#x7528;scsi&#x7684;&#x65B9;&#x5F0F;&#x83B7;&#x53D6;&#x5230;&#x8BBE;&#x5907;&#x7684;uuid</h4>
+<p>&#x5728;&#x8FD9;&#x513F;&#xFF0C;&#x6211;&#x5C06;&#x7528;lvm&#x7684;&#x65B9;&#x5F0F;&#x6A21;&#x62DF;</p>
+<pre class="language-"><code>pvcreate /dev/vdb
+vgcreate ora_vg /dev/vdb
+lvcreate -L 2g -n lv_asm_ocr ora_vg
+lvcreate -L 20g -n lv_asm_data ora_vg
+lvcreate -L 20g -n lv_asm_arch ora_vg
+vgdisplay ora_vg
+</code></pre><h4 id="52-&#x7528;raw&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x6709;&#x4E2A;&#x574F;&#x5904;&#x662F;&#x7CFB;&#x7EDF;&#x91CD;&#x542F;&#x540E;&#x6709;&#x53EF;&#x80FD;&#x4F1A;&#x662F;&#x7684;&#x76D8;&#x7B26;&#x9519;&#x4E71;&#xFF0C;&#x4F7F;cluster&#x8D77;&#x4E0D;&#x6765;">5.2 &#x7528;raw&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x6709;&#x4E2A;&#x574F;&#x5904;&#x662F;&#x7CFB;&#x7EDF;&#x91CD;&#x542F;&#x540E;&#x6709;&#x53EF;&#x80FD;&#x4F1A;&#x662F;&#x7684;&#x76D8;&#x7B26;&#x9519;&#x4E71;&#xFF0C;&#x4F7F;cluster&#x8D77;&#x4E0D;&#x6765;</h4>
+<p>&#x6240;&#x8C13;raw &#x8BBE;&#x5907;&#xFF0C;&#x5C31;&#x662F;&#x901A;&#x8FC7;&#x5B57;&#x7B26;&#x65B9;&#x5F0F;&#x8BBF;&#x95EE;&#x7684;&#x8BBE;&#x5907;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BFB;&#x5199;&#x8BBE;&#x5907;&#x4E0D;&#x9700;&#x8981;&#x7F13;&#x51B2;&#x533A;&#x3002; &#x5728;Linux &#x4E0B;&#xFF0C;&#x5BF9;&#x78C1;&#x76D8;&#x503C;&#x63D0;&#x4F9B;&#x4E86;&#x5757;&#x65B9;&#x5F0F;&#x7684;&#x8BBF;&#x95EE;&#x3002;&#x8981;&#x60F3;&#x901A;&#x8FC7;&#x5B57;&#x7B26;&#x65B9;&#x5F0F;&#x8BBF;&#x95EE;&#xFF0C;&#x5FC5;&#x987B;&#x914D;&#x7F6E;raw &#x8BBE;&#x5907;&#x670D;&#x52A1;&#xFF0C;&#x5E76;&#x4E14;Oracle &#x7528;&#x6237;&#x5BF9;&#x8FD9;&#x4E9B;raw &#x8BBE;&#x5907;&#x5FC5;&#x987B;&#x6709;&#x8BBF;&#x95EE;&#x7684;&#x6743;&#x9650;&#x3002;
+&#x5728;2&#x4E2A;&#x8282;&#x70B9;&#x4E0A;&#x505A;&#x5982;&#x4E0B;&#x64CD;&#x4F5C;&#xFF1A;</p>
+<pre class="language-"><code>1&#xFF09;&#x4FEE;&#x6539;/etc/udev/rules.d/60-raw.rules &#x6587;&#x4EF6;
+&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x5185;&#x5BB9;&#xFF1A;
+ACTION==&quot;add&quot;, KERNEL==&quot;vdb&quot;,RUN+=&quot;/bin/raw /dev/raw/raw1 %N&quot;
+ACTION==&quot;add&quot;, KERNEL==&quot;vdc&quot;,RUN+=&quot;/bin/raw /dev/raw/raw2 %N&quot;
+ACTION==&quot;add&quot;, KERNEL==&quot;vdd&quot;,RUN+=&quot;/bin/raw /dev/raw/raw3 %N&quot;
+ACTION==&quot;add&quot;,KERNEL==&quot;raw1&quot;, OWNER=&quot;grid&quot;, GROUP=&quot;oinstall&quot;, MODE=&quot;660&quot;
+ACTION==&quot;add&quot;,KERNEL==&quot;raw[2-3]&quot;, OWNER=&quot;oracle&quot;, GROUP=&quot;oinstall&quot;, MODE=&quot;660&quot;
+
+2&#xFF09; &#x91CD;&#x542F;&#x670D;&#x52A1;&#xFF1A;
+shell&gt; start_udev
+Starting udev: [ OK ]
+
+3&#xFF09; &#x67E5;&#x770B;raw&#x8BBE;&#x5907;&#xFF1A;
+shell&gt; raw -qa
+/dev/raw/raw1:    bound to major 252, minor 16
+/dev/raw/raw2:    bound to major 252, minor 32
+/dev/raw/raw3:    bound to major 252, minor 48
+shell&gt; ls -lrt /dev/raw
+total 0
+crw-rw---- 1 root   disk     162, 0 May  9 14:30 rawctl
+crw-rw---- 1 oracle oinstall 162, 3 May  9 14:30 raw3
+crw-rw---- 1 oracle oinstall 162, 2 May  9 14:30 raw2
+crw-rw---- 1 grid   oinstall 162, 1 May  9 14:30 raw1
+</code></pre><h4 id="53&#x5B89;&#x88C5;asmlib&#xFF0C;&#x7528;oracle-&#x63D0;&#x4F9B;&#x7684;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x5C42;&#x9762;&#x7684;asm&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#x6765;&#x8FDB;&#x884C;asm&#x78C1;&#x76D8;&#x7684;&#x521B;&#x5EFA;">5.3&#x5B89;&#x88C5;asmlib&#xFF0C;&#x7528;oracle &#x63D0;&#x4F9B;&#x7684;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x5C42;&#x9762;&#x7684;asm&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#x6765;&#x8FDB;&#x884C;asm&#x78C1;&#x76D8;&#x7684;&#x521B;&#x5EFA;</h4>
+<h3 id="6-&#x5B89;&#x88C5;grid&#x7EC4;&#x4EF6;">6. &#x5B89;&#x88C5;grid&#x7EC4;&#x4EF6;</h3>
+<pre class="language-"><code>[root@nazeebo softdb]# ll
+total 3664224
+drwxr-xr-x 7 root root       4096 Aug 27  2013 database
+drwxr-xr-x 7 root root       4096 Aug 27  2013 grid
+-rw-r--r-- 1 root root 1395582860 May  9 14:40 p13390677_112040_Linux-x86-64_1of7.zip
+-rw-r--r-- 1 root root 1151304589 May  9 14:47 p13390677_112040_Linux-x86-64_2of7.zip
+-rw-r--r-- 1 root root 1205251894 May  9 14:53 p13390677_112040_Linux-x86-64_3of7.zip
+[root@nazeebo softdb]#
+[root@nazeebo softdb]# chown -R grid:oinstall grid
+[root@nazeebo softdb]# chown -R oracle:oinstall database/
+[root@nazeebo softdb]# ll
+total 3664224
+drwxr-xr-x 7 oracle oinstall       4096 Aug 27  2013 database
+drwxr-xr-x 7 grid   oinstall       4096 Aug 27  2013 grid
+-rw-r--r-- 1 root   root     1395582860 May  9 14:40 p13390677_112040_Linux-x86-64_1of7.zip
+-rw-r--r-- 1 root   root     1151304589 May  9 14:47 p13390677_112040_Linux-x86-64_2of7.zip
+-rw-r--r-- 1 root   root     1205251894 May  9 14:53 p13390677_112040_Linux-x86-64_3of7.zip
+[root@nazeebo softdb]#
+</code></pre><p>&#x7528;grid&#x7528;&#x6237;&#x5B89;&#x88C5;</p>
+<h4 id="61-&#x56FE;&#x5F62;&#x5316;&#x754C;&#x9762;&#x5B89;&#x88C5;&#x8FC7;&#x7A0B;&#x5982;&#x56FE;&#xFF08;&#x4EC5;&#x5217;&#x4E3E;&#x5173;&#x952E;&#x7684;&#x56FE;&#xFF09;&#xFF1A;">6.1 &#x56FE;&#x5F62;&#x5316;&#x754C;&#x9762;&#x5B89;&#x88C5;&#x8FC7;&#x7A0B;&#x5982;&#x56FE;&#xFF08;&#x4EC5;&#x5217;&#x4E3E;&#x5173;&#x952E;&#x7684;&#x56FE;&#xFF09;&#xFF1A;</h4>
+<p>p13390677_112040_Linux-x86-64_3of7.zip
+<img src="../images/screenshot_1525858799655.png" alt="">
+<img src="../images/screenshot_1525858834718.png" alt="">
+<img src="../images/screenshot_1525858850198.png" alt="">
+<img src="../images/screenshot_1525858874790.png" alt="">
+<img src="../images/screenshot_1525858891619.png" alt="">
+<img src="../images/screenshot_1525858906577.png" alt="">
+<img src="../images/screenshot_1525858912052.png" alt="">
+&#x6839;&#x636E;&#x63D0;&#x793A; &#x7528;root&#x6267;&#x884C;&#x4E24;&#x4E2A;&#x811A;&#x672C;</p>
+<pre class="language-"><code>[root@nazeebo ~]# /u01/app/oraInventory/orainstRoot.sh
+Changing permissions of /u01/app/oraInventory.
+Adding read,write permissions for group.
+Removing read,write,execute permissions for world.
+
+Changing groupname of /u01/app/oraInventory to oinstall.
+The execution of the script is complete.
+[root@nazeebo ~]# /u01/app/11.2.0.4/grid/root.sh
+Performing root user operation for Oracle 11g
+
+The following environment variables are set as:
+    ORACLE_OWNER= grid
+    ORACLE_HOME=  /u01/app/11.2.0.4/grid
+
+Enter the full pathname of the local bin directory: [/usr/local/bin]:
+   Copying dbhome to /usr/local/bin ...
+   Copying oraenv to /usr/local/bin ...
+   Copying coraenv to /usr/local/bin ...
+
+
+Creating /etc/oratab file...
+Entries will be added to the /etc/oratab file as needed by
+Database Configuration Assistant when a database is created
+Finished running generic part of root script.
+Now product-specific root actions will be performed.
+Using configuration parameter file: /u01/app/11.2.0.4/grid/crs/install/crsconfig_params
+Creating trace directory
+LOCAL ADD MODE
+Creating OCR keys for user &apos;grid&apos;, privgrp &apos;oinstall&apos;..
+Operation successful.
+LOCAL ONLY MODE
+Successfully accumulated necessary OCR keys.
+Creating OCR keys for user &apos;root&apos;, privgrp &apos;root&apos;..
+Operation successful.
+CRS-4664: Node nazeebo successfully pinned.
+Adding Clusterware entries to upstart
+
+nazeebo     2018/05/09 16:11:36     /u01/app/11.2.0.4/grid/cdata/nazeebo/backup_20180509_161136.olr
+Successfully configured Oracle Grid Infrastructure for a Standalone Server
+[root@nazeebo ~]#
+</code></pre><p><img src="../images/screenshot_1525858927591.png" alt=""></p>
+<h4 id="62-&#x7528;asmca&#x6765;&#x521B;&#x5EFA;asm&#x78C1;&#x76D8;&#x7EC4;">6.2 &#x7528;asmca&#x6765;&#x521B;&#x5EFA;asm&#x78C1;&#x76D8;&#x7EC4;</h4>
+<p>&#x5207;&#x6362;&#x5230;grid&#x7528;&#x6237;&#xFF0C;&#x7528;asmca&#x56FE;&#x5F62;&#x5316;&#x5DE5;&#x5177;&#x6765;&#x521B;&#x5EFA;asm&#x78C1;&#x76D8;&#x4F9B;&#x4E4B;&#x540E;&#x7684;database&#x4F7F;&#x7528;
+&#x5B89;&#x88C5;&#x8FC7;&#x7A0B;&#x5982;&#x56FE;&#xFF08;&#x4EC5;&#x4EC5;&#x5217;&#x51FA;&#x5173;&#x952E;&#x6B65;&#x9AA4;&#xFF09;
+<img src="../images/screenshot_1525859069305.png" alt="">
+<img src="../images/screenshot_1525859075791.png" alt="">
+&#x7528;asmcmd&#x4E5F;&#x53EF;&#x4EE5;&#x770B;&#x89C1;</p>
+<pre class="language-"><code>[grid@nazeebo grid]$ asmcmd
+ASMCMD&gt; lsdg
+State    Type    Rebal  Sector  Block       AU  Total_MB  Free_MB  Req_mir_free_MB  Usable_file_MB  Offline_disks  Voting_files  Name
+MOUNTED  EXTERN  N         512   4096  1048576     25600    25548                0           25548              0             N  ARCH/
+MOUNTED  EXTERN  N         512   4096  1048576     25600    25548                0           25548              0             N  DATA/
+MOUNTED  EXTERN  N         512   4096  1048576     20480    20421                0           20421              0             N  OCR/
+ASMCMD&gt;
+</code></pre><h3 id="7-&#x5B89;&#x88C5;oracle&#x7EC4;&#x4EF6;">7. &#x5B89;&#x88C5;oracle&#x7EC4;&#x4EF6;</h3>
+<p>&#x5C06;&#x5B89;&#x88C5;&#x5305;&#x89E3;&#x538B;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;
+unzip p13390677_112040_Linux-x86-64_1of7.zip
+unzip p13390677_112040_Linux-x86-64_2of7.zip
+&#x5B89;&#x88C5;&#x8FC7;&#x7A0B;&#x5982;&#x56FE;&#xFF08;&#x4EC5;&#x4EC5;&#x5217;&#x51FA;&#x5173;&#x952E;&#x6B65;&#x9AA4;&#xFF09;
+<img src="../images/screenshot_1525859162909.png" alt="">
+<img src="../images/screenshot_1525859166955.png" alt="">
+<img src="../images/screenshot_1525859171420.png" alt="">
+<img src="../images/screenshot_1525859178659.png" alt="">
+<img src="../images/screenshot_1525859185140.png" alt="">
+<img src="../images/screenshot_1525859190253.png" alt="">
+<img src="../images/screenshot_1525859194147.png" alt="">
+&#x6839;&#x636E;&#x63D0;&#x793A; &#x7528;root&#x6267;&#x884C;&#x811A;&#x672C;</p>
+<pre class="language-"><code>[root@nazeebo ~]# /u01/app/oracle/product/11.2.0.4/db_1/root.sh
+Performing root user operation for Oracle 11g
+
+The following environment variables are set as:
+    ORACLE_OWNER= oracle
+    ORACLE_HOME=  /u01/app/oracle/product/11.2.0.4/db_1
+
+Enter the full pathname of the local bin directory: [/usr/local/bin]:
+The contents of &quot;dbhome&quot; have not changed. No need to overwrite.
+The contents of &quot;oraenv&quot; have not changed. No need to overwrite.
+The contents of &quot;coraenv&quot; have not changed. No need to overwrite.
+
+Entries will be added to the /etc/oratab file as needed by
+Database Configuration Assistant when a database is created
+Finished running generic part of root script.
+Now product-specific root actions will be performed.
+Finished product-specific root actions.
+[root@nazeebo ~]#
+</code></pre><p><img src="../images/screenshot_1525859229145.png" alt="">
+<img src="../images/screenshot_1525859233631.png" alt=""></p>
+<h3 id="8-&#x914D;&#x7F6E;&#x5B9E;&#x4F8B;">8. &#x914D;&#x7F6E;&#x5B9E;&#x4F8B;</h3>
+<h4 id="81&#x914D;&#x7F6E;&#x76D1;&#x542C;">8.1&#x914D;&#x7F6E;&#x76D1;&#x542C;</h4>
+<p>&#x56E0;&#x4E3A;&#x7528;grid&#x5B89;&#x88C5;&#x4E86;cluster&#x7684;&#x7EC4;&#x4EF6;&#x7528;&#x4E8E;asm&#x7BA1;&#x7406;&#xFF0C;&#x800C;&#x8FD9;&#x4E00;&#x6B65;&#x4E2D;&#xFF0C;grid&#x5DF2;&#x7ECF;&#x521B;&#x5EFA;&#x4E86;&#x76D1;&#x542C;&#xFF0C;&#x6545;&#x4E0D;&#x518D;&#x9700;&#x8981;&#x65B0;&#x5EFA;&#x76D1;&#x542C;&#x4E86;&#x3002;
+&#x67E5;&#x770B;&#x5DF2;&#x7ECF;&#x521B;&#x5EFA;&#x4E86;&#x7684;&#x76D1;&#x542C;&#x7684;&#x72B6;&#x6001;</p>
+<pre class="language-"><code>[grid@nazeebo ~]$ lsnrctl status
+
+LSNRCTL for Linux: Version 11.2.0.4.0 - Production on 10-MAY-2018 15:48:55
+
+Copyright (c) 1991, 2013, Oracle.  All rights reserved.
+
+Connecting to (DESCRIPTION=(ADDRESS=(PROTOCOL=IPC)(KEY=EXTPROC1521)))
+STATUS of the LISTENER
+------------------------
+Alias                     LISTENER
+Version                   TNSLSNR for Linux: Version 11.2.0.4.0 - Production
+Start Date                09-MAY-2018 16:15:18
+Uptime                    0 days 0 hr. 5 min. 38 sec
+Trace Level               off
+Security                  ON: Local OS Authentication
+SNMP                      OFF
+Listener Parameter File   /u01/app/11.2.0.4/grid/network/admin/listener.ora
+Listener Log File         /u01/app/grid/diag/tnslsnr/nazeebo/listener/alert/log.xml
+Listening Endpoints Summary...
+  (DESCRIPTION=(ADDRESS=(PROTOCOL=ipc)(KEY=EXTPROC1521)))
+  (DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=nazeebo)(PORT=1521)))
+Services Summary...
+Service &quot;+ASM&quot; has 1 instance(s).
+  Instance &quot;+ASM&quot;, status READY, has 1 handler(s) for this service...
+The command completed successfully
+</code></pre><h4 id="82dbca&#x5EFA;&#x5E93;">8.2dbca&#x5EFA;&#x5E93;</h4>
+<p>&#x5B89;&#x88C5;&#x8FC7;&#x7A0B;&#x5982;&#x56FE;&#xFF08;&#x4EC5;&#x4EC5;&#x5217;&#x51FA;&#x5173;&#x952E;&#x6B65;&#x9AA4;&#xFF09;
+<img src="../images/screenshot_1525859260863.png" alt="">
+<img src="../images/screenshot_1525859272365.png" alt="">
+<img src="../images/screenshot_1525859276705.png" alt="">
+<img src="../images/screenshot_1525859303432.png" alt="">
+<img src="../images/screenshot_1525859308159.png" alt=""></p>
+<h3 id="9&#x5E38;&#x7528;&#x547D;&#x4EE4;">9.&#x5E38;&#x7528;&#x547D;&#x4EE4;</h3>
+<h4 id="91&#x68C0;&#x67E5;crs&#x76F8;&#x5173;&#x7684;&#x72B6;&#x6001;">9.1&#x68C0;&#x67E5;crs&#x76F8;&#x5173;&#x7684;&#x72B6;&#x6001;</h4>
+<blockquote>
+<p>&#x56E0;&#x4E3A;&#x662F;&#x5355;&#x673A;&#x7684;&#xFF0C;&#x6240;&#x4EE5;crsctl check crs&#x548C;crsctl check cluster&#x90FD;&#x65E0;&#x6548;</p>
+<pre class="language-"><code>[grid@nazeebo ~]$ crsctl check css
+CRS-4529: Cluster Synchronization Services is online
+[grid@nazeebo ~]$ crsctl check has
+CRS-4638: Oracle High Availability Services is online
+[grid@nazeebo ~]$ crsctl check evm
+CRS-4533: Event Manager is online
+</code></pre><h4 id="92&#x67E5;&#x770B;&#x8D44;&#x6E90;&#x72B6;&#x6001;nodeapps&#x8282;&#x70B9;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#xFF0C;asm&#x5B9E;&#x4F8B;&#xFF0C;&#x6570;&#x636E;&#x5E93;&#x5B9E;&#x4F8B;&#x7B49;">9.2&#x67E5;&#x770B;&#x8D44;&#x6E90;&#x72B6;&#x6001;(nodeapps&#x8282;&#x70B9;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#xFF0C;ASM&#x5B9E;&#x4F8B;&#xFF0C;&#x6570;&#x636E;&#x5E93;&#x5B9E;&#x4F8B;&#x7B49;)</h4>
+<pre class="language-"><code>[grid@nazeebo ~]$ crsctl status res -t
+--------------------------------------------------------------------------------
+NAME           TARGET  STATE        SERVER                   STATE_DETAILS
+--------------------------------------------------------------------------------
+Local Resources
+--------------------------------------------------------------------------------
+ora.ARCH.dg
+               ONLINE  ONLINE       nazeebo
+ora.DATA.dg
+               ONLINE  ONLINE       nazeebo
+ora.LISTENER.lsnr
+               ONLINE  ONLINE       nazeebo
+ora.OCR.dg
+               ONLINE  ONLINE       nazeebo
+ora.asm
+               ONLINE  ONLINE       nazeebo                  Started
+ora.ons
+               OFFLINE OFFLINE      nazeebo
+--------------------------------------------------------------------------------
+Cluster Resources
+--------------------------------------------------------------------------------
+ora.cssd
+      1        ONLINE  ONLINE       nazeebo
+ora.diskmon
+      1        OFFLINE OFFLINE
+ora.evmd
+      1        ONLINE  ONLINE       nazeebo
+ora.nazeebo.db
+      1        ONLINE  ONLINE       nazeebo                  Open
+</code></pre><p>&#x82E5;&#x8D44;&#x6E90;&#x4EE5;ora.&#x5F00;&#x5934;&#x7684; &#x7528;srvctl &#x6765;&#x7EF4;&#x62A4; &#x5426;&#x5219;&#x7528;crsctl
+srvctl &#x7EF4;&#x62A4;&#x7684;&#x8D44;&#x6E90;&#x5305;&#x62EC;&#xFF1A;ASM&#xFF0C;database&#xFF0C;instance&#xFF0C;service&#xFF0C;node applications ,listener,vip address,gns,scan vip ,scan listener ,oracle home, oc4j, server,server pool, asm disk group, asm file system</p>
+<p>11.2&#x7684;cluster&#x7684; &#x6B63;&#x786E;&#x542F;&#x52A8;&#x96C6;&#x7FA4;&#xFF1A;</p>
+<pre class="language-"><code>crsctl start cluster -all
+crsctl stop cluster -all
+crsctl check cluster -all
+</code></pre></blockquote>
+<h4 id="93&#x67E5;&#x770B;&#x5404;&#x8D44;&#x6E90;&#x72B6;&#x6001;nodeapps&#x8282;&#x70B9;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#xFF0C;asm&#x5B9E;&#x4F8B;&#xFF0C;&#x6570;&#x636E;&#x5E93;&#x5B9E;&#x4F8B;&#x7B49;">9.3&#x67E5;&#x770B;&#x5404;&#x8D44;&#x6E90;&#x72B6;&#x6001;(nodeapps&#x8282;&#x70B9;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#xFF0C;ASM&#x5B9E;&#x4F8B;&#xFF0C;&#x6570;&#x636E;&#x5E93;&#x5B9E;&#x4F8B;&#x7B49;)</h4>
+<pre class="language-"><code>[grid@nazeebo ~]$ crs_stat -t -v
+Name           Type           R/RA   F/FT   Target    State     Host
+----------------------------------------------------------------------
+ora.ARCH.dg    ora....up.type 0/5    0/     ONLINE    ONLINE    nazeebo
+ora.DATA.dg    ora....up.type 0/5    0/     ONLINE    ONLINE    nazeebo
+ora....ER.lsnr ora....er.type 0/5    0/     ONLINE    ONLINE    nazeebo
+ora.OCR.dg     ora....up.type 0/5    0/     ONLINE    ONLINE    nazeebo
+ora.asm        ora.asm.type   0/5    0/     ONLINE    ONLINE    nazeebo
+ora.cssd       ora.cssd.type  0/5    0/5    ONLINE    ONLINE    nazeebo
+ora.diskmon    ora....on.type 0/10   0/5    OFFLINE   OFFLINE
+ora.evmd       ora.evm.type   0/10   0/5    ONLINE    ONLINE    nazeebo
+ora.nazeebo.db ora....se.type 0/2    0/1    ONLINE    ONLINE    nazeebo
+ora.ons        ora.ons.type   0/3    0/     OFFLINE   OFFLINE
+</code></pre><h4 id="94&#x67E5;&#x770B;&#x6570;&#x636E;&#x5E93;&#x7684;&#x914D;&#x7F6E;&#x65B0;">9.4&#x67E5;&#x770B;&#x6570;&#x636E;&#x5E93;&#x7684;&#x914D;&#x7F6E;&#x65B0;</h4>
+<pre class="language-"><code>[grid@nazeebo ~]$ srvctl config database
+nazeebo
+[grid@nazeebo ~]$ srvctl config database -d nazeebo -a
+Database unique name: nazeebo
+Database name: nazeebo
+Oracle home: /u01/app/oracle/product/11.2.0.4/db_1
+Oracle user: oracle
+Spfile: +DATA/nazeebo/spfilenazeebo.ora
+Domain:
+Start options: open
+Stop options: immediate
+Database role: PRIMARY
+Management policy: AUTOMATIC
+Database instance: nazeebo
+Disk Groups: DATA,ARCH
+Services:
+Database is enabled
+</code></pre><h4 id="95&#x67E5;&#x770B;asm&#x7684;&#x914D;&#x7F6E;&#x4FE1;&#x606F;">9.5&#x67E5;&#x770B;asm&#x7684;&#x914D;&#x7F6E;&#x4FE1;&#x606F;</h4>
+<pre class="language-"><code>[grid@nazeebo ~]$  srvctl status asm
+ASM is running on nazeebo
+[grid@nazeebo ~]$  srvctl status asm -a
+ASM is running on nazeebo
+ASM is enabled.
+[grid@nazeebo ~]$ srvctl config asm -a
+ASM home: /u01/app/11.2.0.4/grid
+ASM listener: LISTENER
+Spfile: +OCR/asm/asmparameterfile/registry.253.975687351
+ASM diskgroup discovery string:
+ASM is enabled.
+</code></pre><h4 id="96&#x67E5;&#x770B;ocr&#x7684;&#x914D;&#x7F6E;&#x4FE1;&#x606F;">9.6&#x67E5;&#x770B;ocr&#x7684;&#x914D;&#x7F6E;&#x4FE1;&#x606F;</h4>
+<pre class="language-"><code>[grid@nazeebo ~]$ ocrcheck
+Status of Oracle Cluster Registry is as follows :
+     Version                  :          3
+     Total space (kbytes)     :     262120
+     Used space (kbytes)      :        152
+     Available space (kbytes) :     261968
+     ID                       : 1642006547
+     Device/File Name         : /u01/app/11.2.0.4/grid/cdata/localhost/local.ocr
+                                    Device/File integrity check succeeded
+
+                                    Device/File not configured
+
+                                    Device/File not configured
+
+                                    Device/File not configured
+
+                                    Device/File not configured
+
+     Cluster registry integrity check succeeded
+
+     Logical corruption check bypassed due to non-privileged user
+</code></pre><h3 id="10&#x76F8;&#x5173;&#x89C6;&#x56FE;">10.&#x76F8;&#x5173;&#x89C6;&#x56FE;</h3>
+<p>v$asm_disk(_stat)      --&#x67E5;&#x770B;&#x78C1;&#x76D8;&#x53CA;&#x5176;&#x72B6;&#x6001;&#x4FE1;&#x606F;
+v$asm_diskgroup(_stat) --&#x67E5;&#x770B;&#x78C1;&#x76D8;&#x7EC4;&#x53CA;&#x5176;&#x72B6;&#x6001;&#x4FE1;&#x606F;
+v$asm_operation        --&#x67E5;&#x770B;&#x5F53;&#x524D;&#x78C1;&#x76D8;&#x7684;&#x64CD;&#x4F5C;&#x4FE1;&#x606F;
+v$asm_client           --&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x8FDE;&#x63A5;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x4F8B;&#x4FE1;&#x606F;
+v$asm_file             --&#x8FD4;&#x56DE;asm&#x6587;&#x4EF6;&#x7684;&#x76F8;&#x5173;&#x4FE1;&#x606F;
+v$asm_template         --&#x8FD4;&#x56DE;asm&#x6587;&#x4EF6;&#x6837;&#x672C;&#x7684;&#x76F8;&#x5173;&#x4FE1;&#x606F;
+v$asm_alias            --&#x8FD4;&#x56DE;asm&#x6587;&#x4EF6;&#x7684;&#x522B;&#x540D;&#x4FE1;&#x606F;</p>
+<footer class="page-footer"><span class="copyright">Copyright &#xA9; suredandan 2018 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">UpdateTime: 
+2019-01-24 10:26:29
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="安装篇.md" class="navigation navigation-prev " aria-label="Previous page: 安装篇">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../rac/5.11gRAC-intsall.html" class="navigation navigation-next " aria-label="Next page: 11gRAC安装">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"11g单机安装asm","level":"1.2.1","depth":2,"next":{"title":"11gRAC安装","level":"1.2.2","depth":2,"path":"rac/5.11gRAC-intsall.md","ref":"rac/5.11gRAC-intsall.md","articles":[]},"previous":{"title":"安装篇","level":"1.2","depth":1,"path":"install/安装篇.md","ref":"install/安装篇.md","articles":[{"title":"11g单机安装asm","level":"1.2.1","depth":2,"path":"install/1.11gsingleasm.md","ref":"install/1.11gsingleasm.md","articles":[]},{"title":"11gRAC安装","level":"1.2.2","depth":2,"path":"rac/5.11gRAC-intsall.md","ref":"rac/5.11gRAC-intsall.md","articles":[]},{"title":"RAC环境打PSU补丁步骤","level":"1.2.3","depth":2,"path":"install/26.apply-psu.md","ref":"install/26.apply-psu.md","articles":[]},{"title":"11g单机环境下配置基于asm的dg","level":"1.2.4","depth":2,"path":"dataguard/2.11g-single-asm-dg.md","ref":"dataguard/2.11g-single-asm-dg.md","articles":[]},{"title":"采用broker配置11g多节点dataguard(>=3节点)","level":"1.2.5","depth":2,"path":"dataguard/3.11g-multinode-dg.md","ref":"dataguard/3.11g-multinode-dg.md","articles":[]},{"title":"采用备份复制的方式搭建11grac到rac的adg","level":"1.2.6","depth":2,"path":"dataguard/4.11g-doublerac-dg.md","ref":"dataguard/4.11g-doublerac-dg.md","articles":[]},{"title":"使用duplicate原生在线搭建11grac到rac的adg","level":"1.2.7","depth":2,"path":"dataguard/rac2rac-dg-duplicate-spfile.md","ref":"dataguard/rac2rac-dg-duplicate-spfile.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["prism","prism-themes","-highlight","codesnippet","splitter","simple-page-toc","page-toc-button","back-to-top-button","-lunr","-search","search-plus","favicon@^0.0.2","tbfed-pagefooter@^0.0.1","theme-default","sitemap-general"],"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright © suredandan 2018","modify_label":"UpdateTime: ","modify_format":"YYYY-MM-DD HH:mm:ss"},"prism":{"css":["prismjs/themes/prism-solarizedlight.css"]},"simple-page-toc":{"maxDepth":3,"skipFirstH1":true},"splitter":{},"codesnippet":{},"sitemap-general":{"prefix":"http://www.googlebaba.io/oracle/"},"fontsettings":{"theme":"white","family":"sans","size":2},"favicon":{"shortcut":"favicon.ico","bookmark":"favicon.ico"},"page-toc-button":{},"back-to-top-button":{},"prism-themes":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"showLevel":true,"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"}},"search-plus":{},"image-captions":{"caption":"_CAPTION_"}},"theme":"default","author":"suredandan","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"中年人的Oracle枸杞","language":"zh-hans","gitbook":"*","description":"记录日常的一些Oracle实施文档"},"file":{"path":"install/1.11gsingleasm.md","mtime":"2019-01-24T02:26:29.415Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-06-10T14:25:54.612Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-page-toc-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

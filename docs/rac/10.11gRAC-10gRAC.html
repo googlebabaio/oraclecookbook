@@ -1,0 +1,1852 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>11gRAC对比10gRAC · 中年人的Oracle枸杞</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="suredandan">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-toc-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="34.11gRAC的监听介绍.html" />
+    
+    
+    <link rel="prev" href="9.rac-commnd-intro.html" />
+    
+
+    
+        <link rel="shortcut icon" href='../favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../favicon.ico' type="image/x-icon">
+    
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                        <b>1.1.</b>
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../install/安装篇.md">
+            
+                <span>
+            
+                    
+                        <b>1.2.</b>
+                    
+                    安装篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../install/1.11gsingleasm.html">
+            
+                <a href="../install/1.11gsingleasm.html">
+            
+                    
+                        <b>1.2.1.</b>
+                    
+                    11g单机安装asm
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="5.11gRAC-intsall.html">
+            
+                <a href="5.11gRAC-intsall.html">
+            
+                    
+                        <b>1.2.2.</b>
+                    
+                    11gRAC安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../install/26.apply-psu.html">
+            
+                <a href="../install/26.apply-psu.html">
+            
+                    
+                        <b>1.2.3.</b>
+                    
+                    RAC环境打PSU补丁步骤
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../dataguard/2.11g-single-asm-dg.html">
+            
+                <a href="../dataguard/2.11g-single-asm-dg.html">
+            
+                    
+                        <b>1.2.4.</b>
+                    
+                    11g单机环境下配置基于asm的dg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../dataguard/3.11g-multinode-dg.html">
+            
+                <a href="../dataguard/3.11g-multinode-dg.html">
+            
+                    
+                        <b>1.2.5.</b>
+                    
+                    采用broker配置11g多节点dataguard(>=3节点)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../dataguard/4.11g-doublerac-dg.html">
+            
+                <a href="../dataguard/4.11g-doublerac-dg.html">
+            
+                    
+                        <b>1.2.6.</b>
+                    
+                    采用备份复制的方式搭建11grac到rac的adg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../dataguard/rac2rac-dg-duplicate-spfile.html">
+            
+                <a href="../dataguard/rac2rac-dg-duplicate-spfile.html">
+            
+                    
+                        <b>1.2.7.</b>
+                    
+                    使用duplicate原生在线搭建11grac到rac的adg
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="RAC.md">
+            
+                <span>
+            
+                    
+                        <b>1.3.</b>
+                    
+                    RAC篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="5.11gRAC-intsall.html">
+            
+                <a href="5.11gRAC-intsall.html">
+            
+                    
+                        <b>1.3.1.</b>
+                    
+                    11gRAC安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="14.11gRAC-backend-process.html">
+            
+                <a href="14.11gRAC-backend-process.html">
+            
+                    
+                        <b>1.3.2.</b>
+                    
+                    11gRAC进程详解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="8.11gR2RAC-option-intro.html">
+            
+                <a href="8.11gR2RAC-option-intro.html">
+            
+                    
+                        <b>1.3.3.</b>
+                    
+                    11gR2 RAC各组件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="crs-has-cluster.html">
+            
+                <a href="crs-has-cluster.html">
+            
+                    
+                        <b>1.3.4.</b>
+                    
+                    crs-has-cluster的关系
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="35.HAIP介绍.html">
+            
+                <a href="35.HAIP介绍.html">
+            
+                    
+                        <b>1.3.5.</b>
+                    
+                    HAIP介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="12.RAC-log-infra.html">
+            
+                <a href="12.RAC-log-infra.html">
+            
+                    
+                        <b>1.3.6.</b>
+                    
+                    RAC环境的日志体系
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="10g-rac-command.html">
+            
+                <a href="10g-rac-command.html">
+            
+                    
+                        <b>1.3.7.</b>
+                    
+                    10gRAC命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="9.rac-commnd-intro.html">
+            
+                <a href="9.rac-commnd-intro.html">
+            
+                    
+                        <b>1.3.8.</b>
+                    
+                    11gRAC常用命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.9" data-path="10.11gRAC-10gRAC.html">
+            
+                <a href="10.11gRAC-10gRAC.html">
+            
+                    
+                        <b>1.3.9.</b>
+                    
+                    11gRAC对比10gRAC
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.10" data-path="34.11gRAC的监听介绍.html">
+            
+                <a href="34.11gRAC的监听介绍.html">
+            
+                    
+                        <b>1.3.10.</b>
+                    
+                    11gRAC的监听介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.11" data-path="36.11gR2RAC修改监听默认端口.html">
+            
+                <a href="36.11gR2RAC修改监听默认端口.html">
+            
+                    
+                        <b>1.3.11.</b>
+                    
+                    11gR2RAC修改监听默认端口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.12" data-path="11.asm-commnd-intro.html">
+            
+                <a href="11.asm-commnd-intro.html">
+            
+                    
+                        <b>1.3.12.</b>
+                    
+                    asm常用命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../datauard/datauard.md">
+            
+                <span>
+            
+                    
+                        <b>1.4.</b>
+                    
+                    Dataguard篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../dataguard/2.11g-single-asm-dg.html">
+            
+                <a href="../dataguard/2.11g-single-asm-dg.html">
+            
+                    
+                        <b>1.4.1.</b>
+                    
+                    11g单机环境下配置基于asm的dg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../dataguard/3.11g-multinode-dg.html">
+            
+                <a href="../dataguard/3.11g-multinode-dg.html">
+            
+                    
+                        <b>1.4.2.</b>
+                    
+                    采用broker配置11g多节点dataguard(>=3节点)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../dataguard/4.11g-doublerac-dg.html">
+            
+                <a href="../dataguard/4.11g-doublerac-dg.html">
+            
+                    
+                        <b>1.4.3.</b>
+                    
+                    采用备份复制的方式搭建11grac到rac的adg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../dataguard/rac2rac-dg-duplicate-spfile.html">
+            
+                <a href="../dataguard/rac2rac-dg-duplicate-spfile.html">
+            
+                    
+                        <b>1.4.4.</b>
+                    
+                    使用duplicate原生在线搭建11grac到rac的adg
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../dataguard/17.case-dg-nosync-troubleshooting.html">
+            
+                <a href="../dataguard/17.case-dg-nosync-troubleshooting.html">
+            
+                    
+                        <b>1.4.5.</b>
+                    
+                    解决一起较复杂dg不同步的问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../dataguard/16.dg-nosync-troubleshooting.html">
+            
+                <a href="../dataguard/16.dg-nosync-troubleshooting.html">
+            
+                    
+                        <b>1.4.6.</b>
+                    
+                    DG不同步诊断方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../manage/解决ORA-01152_ORA-10458_ORA-01110.html">
+            
+                <a href="../manage/解决ORA-01152_ORA-10458_ORA-01110.html">
+            
+                    
+                        <b>1.4.7.</b>
+                    
+                    解决ORA-01152(ORA-10458、ORA-01110)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../dataguard/39.dg-switchov-failover.html">
+            
+                <a href="../dataguard/39.dg-switchov-failover.html">
+            
+                    
+                        <b>1.4.8.</b>
+                    
+                    ADG切换过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="../dataguard/13.dg-parameters.html">
+            
+                <a href="../dataguard/13.dg-parameters.html">
+            
+                    
+                        <b>1.4.9.</b>
+                    
+                    dataguard概念参数查漏补缺
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" data-path="../dataguard/解决error-1033的问题.md">
+            
+                <span>
+            
+                    
+                        <b>1.4.10.</b>
+                    
+                    解决主库报错error-1033的问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="../dataguard/给主备环境新添加redo.html">
+            
+                <a href="../dataguard/给主备环境新添加redo.html">
+            
+                    
+                        <b>1.4.11.</b>
+                    
+                    给主备环境新添加redo的注意事项和步骤
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../base/基础.md">
+            
+                <span>
+            
+                    
+                        <b>1.5.</b>
+                    
+                    基础知识
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../base/18-Oracle-index-unusable-disable-enable.html">
+            
+                <a href="../base/18-Oracle-index-unusable-disable-enable.html">
+            
+                    
+                        <b>1.5.1.</b>
+                    
+                    Oracle索引的unusable、disable、enable
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../base/7.dbca-option-intro.html">
+            
+                <a href="../base/7.dbca-option-intro.html">
+            
+                    
+                        <b>1.5.2.</b>
+                    
+                    Oracle建库时的各组件的用途
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../base/undo的一些说明.html">
+            
+                <a href="../base/undo的一些说明.html">
+            
+                    
+                        <b>1.5.3.</b>
+                    
+                    UNDO的一些说明
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                        <b>1.6.</b>
+                    
+                    备份与恢复篇
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../backup/rman备份中的百分号后面的字母的含义.html">
+            
+                <a href="../backup/rman备份中的百分号后面的字母的含义.html">
+            
+                    
+                        <b>1.6.1.</b>
+                    
+                    rman备份中的百分号后面的字母的含义
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../backup/rman.html">
+            
+                <a href="../backup/rman.html">
+            
+                    
+                        <b>1.6.2.</b>
+                    
+                    利用rman进去备份与恢复
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../backup/rman备份脚本.html">
+            
+                <a href="../backup/rman备份脚本.html">
+            
+                    
+                        <b>1.6.3.</b>
+                    
+                    常用rman备份脚本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../backup/数据泵备份.html">
+            
+                <a href="../backup/数据泵备份.html">
+            
+                    
+                        <b>1.6.4.</b>
+                    
+                    常用数据泵备份脚本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../backup/有数据文件的数据恢复.html">
+            
+                <a href="../backup/有数据文件的数据恢复.html">
+            
+                    
+                        <b>1.6.5.</b>
+                    
+                    记录一次有数据文件的数据库恢复
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../manage/运维篇.md">
+            
+                <span>
+            
+                    
+                        <b>1.7.</b>
+                    
+                    运维篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../manage/27.alter-database-archivelog.html">
+            
+                <a href="../manage/27.alter-database-archivelog.html">
+            
+                    
+                        <b>1.7.1.</b>
+                    
+                    修改数据库实例到归档模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../dataguard/6.multialive-qianyi.html">
+            
+                <a href="../dataguard/6.multialive-qianyi.html">
+            
+                    
+                        <b>1.7.2.</b>
+                    
+                    双活及迁移的一些事
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../manage/20.awr-workhouse-intro.html">
+            
+                <a href="../manage/20.awr-workhouse-intro.html">
+            
+                    
+                        <b>1.7.3.</b>
+                    
+                    awr仓库的运维
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../manage/24.slove-error-1089.html">
+            
+                <a href="../manage/24.slove-error-1089.html">
+            
+                    
+                        <b>1.7.4.</b>
+                    
+                    处理一个error-1089问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" data-path="../manage/23.oracle-startup-auto.html">
+            
+                <a href="../manage/23.oracle-startup-auto.html">
+            
+                    
+                        <b>1.7.5.</b>
+                    
+                    设置Oracle开机自启动
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.6" data-path="../manage/25.where-is-alert.html">
+            
+                <a href="../manage/25.where-is-alert.html">
+            
+                    
+                        <b>1.7.6.</b>
+                    
+                    日志的位置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.7" data-path="../manage/29.manage-user.html">
+            
+                <a href="../manage/29.manage-user.html">
+            
+                    
+                        <b>1.7.7.</b>
+                    
+                    用户管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.8" data-path="../manage/28.create-user-profile.html">
+            
+                <a href="../manage/28.create-user-profile.html">
+            
+                    
+                        <b>1.7.8.</b>
+                    
+                    给用户创建profile
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.9" data-path="../manage/30.解决ora-16597.html">
+            
+                <a href="../manage/30.解决ora-16597.html">
+            
+                    
+                        <b>1.7.9.</b>
+                    
+                    解决ora-16597
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.10" data-path="../manage/33.解决ora-29780.html">
+            
+                <a href="../manage/33.解决ora-29780.html">
+            
+                    
+                        <b>1.7.10.</b>
+                    
+                    解决ora-29780
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.11" data-path="../manage/解决ORA-00206.html">
+            
+                <a href="../manage/解决ORA-00206.html">
+            
+                    
+                        <b>1.7.11.</b>
+                    
+                    解决ora-00206
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.12" data-path="../manage/19.ora-13516O-cannot-collect-awr.html">
+            
+                <a href="../manage/19.ora-13516O-cannot-collect-awr.html">
+            
+                    
+                        <b>1.7.12.</b>
+                    
+                    解决ora-13516 Oracle无法收集AWR
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.13" data-path="../manage/解决ORA-01152(ORA-10458、ORA-01110">
+            
+                <span>
+            
+                    
+                        <b>1.7.13.</b>
+                    
+                    解决ORA-01152(ORA-10458、ORA-01110)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.14" data-path="../manage/解决ORA-01105，ORA-01606.html">
+            
+                <a href="../manage/解决ORA-01105，ORA-01606.html">
+            
+                    
+                        <b>1.7.14.</b>
+                    
+                    解决ORA-01105，ORA-01606
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.15" data-path="../manage/37.表碎片分析.html">
+            
+                <a href="../manage/37.表碎片分析.html">
+            
+                    
+                        <b>1.7.15.</b>
+                    
+                    表碎片分析与整理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.16" data-path="../manage/38.索引碎片分析.html">
+            
+                <a href="../manage/38.索引碎片分析.html">
+            
+                    
+                        <b>1.7.16.</b>
+                    
+                    索引碎片分析与整理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.17" data-path="../manage/query-yincang-parameter.html">
+            
+                <a href="../manage/query-yincang-parameter.html">
+            
+                    
+                        <b>1.7.17.</b>
+                    
+                    查看隐藏参数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.18" data-path="../manage/查询锁表的SQL">
+            
+                <span>
+            
+                    
+                        <b>1.7.18.</b>
+                    
+                    查询锁表的SQL
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../tunning/性能优化篇.md">
+            
+                <span>
+            
+                    
+                        <b>1.8.</b>
+                    
+                    性能优化篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../tunning/通过AWR计算IOPS和MBPS.md">
+            
+                <span>
+            
+                    
+                        <b>1.8.1.</b>
+                    
+                    通过AWR计算IOPS和MBPS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../tunning/15.intro-xxxps.html">
+            
+                <a href="../tunning/15.intro-xxxps.html">
+            
+                    
+                        <b>1.8.2.</b>
+                    
+                    XXXPS的概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../zaqizaba/杂项篇.md">
+            
+                <span>
+            
+                    
+                        <b>1.9.</b>
+                    
+                    杂项篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../zaqizaba/21.install-rzsz.html">
+            
+                <a href="../zaqizaba/21.install-rzsz.html">
+            
+                    
+                        <b>1.9.1.</b>
+                    
+                    rzsz工具安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../zaqizaba/22.ssh-copy-id-using-not22port.html">
+            
+                <a href="../zaqizaba/22.ssh-copy-id-using-not22port.html">
+            
+                    
+                        <b>1.9.2.</b>
+                    
+                    ssh-copy-id使用非22端口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../qms数据库整改.html">
+            
+                <a href="../qms数据库整改.html">
+            
+                    
+                        <b>1.9.3.</b>
+                    
+                    qms数据库整改
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >11gRAC对比10gRAC</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <!-- toc -->
+<ul>
+<li><a href="#11g%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%94%B9%E8%BF%9B-%E5%92%8C-11g%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4">11g&#x670D;&#x52A1;&#x7684;&#x6539;&#x8FDB; &#x548C; 11g&#x5E38;&#x7528;&#x547D;&#x4EE4;</a><ul>
+<li><a href="#10grac%E7%9A%84%E4%B8%89%E5%A4%A7%E6%9C%8D%E5%8A%A1css-crs-evm">10gRAC&#x7684;&#x4E09;&#x5927;&#x670D;&#x52A1;&#xFF1A;CSS, CRS, EVM</a><ul>
+<li><a href="#css">CSS</a></li>
+<li><a href="#crs">CRS</a></li>
+<li><a href="#evm">EVM</a></li>
+</ul>
+</li>
+<li><a href="#11grac%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%94%B9%E8%BF%9B">11gRAC&#x7684;&#x670D;&#x52A1;&#x6539;&#x8FDB;</a><ul>
+<li><a href="#crsd">crsd</a></li>
+<li><a href="#ohasd">ohasd</a></li>
+</ul>
+</li>
+<li><a href="#clusteware-%E5%88%A9%E7%94%A8-os-%E7%9A%84init-%E8%84%9A%E6%9C%AC%E5%90%AF%E5%8A%A8%E7%9A%84">clusteware &#x5229;&#x7528; os &#x7684;init &#x811A;&#x672C;&#x542F;&#x52A8;&#x7684;</a></li>
+<li><a href="#11g%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4">11g&#x5E38;&#x7528;&#x547D;&#x4EE4;</a><ul>
+<li><a href="#%E6%A3%80%E6%9F%A5%E6%95%B4%E4%B8%AA%E9%9B%86%E7%BE%A4%E7%8A%B6%E6%80%81">&#x68C0;&#x67E5;&#x6574;&#x4E2A;&#x96C6;&#x7FA4;&#x72B6;&#x6001;</a></li>
+<li><a href="#%E5%9C%A8root%E4%B8%8B%E5%85%B3%E9%97%AD%E6%95%B4%E4%B8%AA%E9%9B%86%E7%BE%A4%E5%8C%85%E6%8B%AC%E8%B5%84%E6%BA%90">&#x5728;root&#x4E0B;&#x5173;&#x95ED;&#x6574;&#x4E2A;&#x96C6;&#x7FA4;(&#x5305;&#x62EC;&#x8D44;&#x6E90;)</a></li>
+<li><a href="#%E5%85%B3%E9%97%ADcluster-%E5%90%8E%E6%9F%A5%E7%9C%8B%E7%8A%B6%E6%80%81">&#x5173;&#x95ED;cluster &#x540E;&#x67E5;&#x770B;&#x72B6;&#x6001;</a></li>
+<li><a href="#%E5%90%AF%E5%8A%A8%E9%9B%86%E7%BE%A4%E5%B9%B6%E6%9F%A5%E7%9C%8B%E7%8A%B6%E6%80%81">&#x542F;&#x52A8;&#x96C6;&#x7FA4;&#x5E76;&#x67E5;&#x770B;&#x72B6;&#x6001;</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%BF%A1%E6%81%AF">&#x67E5;&#x770B;&#x6570;&#x636E;&#x5E93;&#x7684;&#x4FE1;&#x606F;</a></li>
+<li><a href="#%E5%85%B3%E9%97%AD%E6%95%B0%E6%8D%AE%E5%BA%93">&#x5173;&#x95ED;&#x6570;&#x636E;&#x5E93;</a></li>
+<li><a href="#%E5%85%B3%E9%97%AD%E5%AE%9E%E4%BE%8B">&#x5173;&#x95ED;&#x5B9E;&#x4F8B;</a></li>
+<li><a href="#%E5%85%B3%E9%97%AD%E7%9B%91%E5%90%AC">&#x5173;&#x95ED;&#x76D1;&#x542C;</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8Bdb%E7%9A%84%E7%8A%B6%E6%80%8110g%E4%B9%9F%E7%94%A8%E8%BF%99%E4%B8%AA">&#x67E5;&#x770B;db&#x7684;&#x72B6;&#x6001;(10g&#x4E5F;&#x7528;&#x8FD9;&#x4E2A;)</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8Bscan%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF">&#x67E5;&#x770B;scan&#x7684;&#x76F8;&#x5173;&#x4FE1;&#x606F;</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8Bvip%E7%9A%84%E4%BF%A1%E6%81%AF">&#x67E5;&#x770B;vip&#x7684;&#x4FE1;&#x606F;</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E7%9B%91%E5%90%AC%E4%BF%A1%E6%81%AF">&#x67E5;&#x770B;&#x76D1;&#x542C;&#x4FE1;&#x606F;</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8Basm%E7%8A%B6%E6%80%81">&#x67E5;&#x770B;asm&#x72B6;&#x6001;</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E7%A3%81%E7%9B%98%E7%BB%84%E4%BF%A1%E6%81%AF">&#x67E5;&#x770B;&#x78C1;&#x76D8;&#x7EC4;&#x4FE1;&#x606F;</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E9%87%8D%E8%A6%81%E7%9A%84%E5%90%8E%E5%8F%B0%E8%BF%9B%E7%A8%8B">&#x67E5;&#x770B;&#x91CD;&#x8981;&#x7684;&#x540E;&#x53F0;&#x8FDB;&#x7A0B;</a></li>
+<li><a href="#crs_stat">crs_stat</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E8%BD%AF%E4%BB%B6%E7%9A%84%E7%89%88%E6%9C%AC">&#x67E5;&#x8BE2;&#x8F6F;&#x4EF6;&#x7684;&#x7248;&#x672C;</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h1 id="11g&#x670D;&#x52A1;&#x7684;&#x6539;&#x8FDB;-&#x548C;-11g&#x5E38;&#x7528;&#x547D;&#x4EE4;">11g&#x670D;&#x52A1;&#x7684;&#x6539;&#x8FDB; &#x548C; 11g&#x5E38;&#x7528;&#x547D;&#x4EE4;</h1>
+<h2 id="10grac&#x7684;&#x4E09;&#x5927;&#x670D;&#x52A1;&#xFF1A;css-crs-evm">10gRAC&#x7684;&#x4E09;&#x5927;&#x670D;&#x52A1;&#xFF1A;CSS, CRS, EVM</h2>
+<h3 id="css">CSS</h3>
+<p>CSS (clustersynchronization service&#xFF09;&#x81EA;&#x52A8;&#x8282;&#x70B9;&#x91CD;&#x542F;
+CSS &#x670D;&#x52A1;&#x7684;&#x8FDB;&#x7A0B;&#xFF1A;ocssd&#x3001;oprocd, oclsomon &#x8FD9;&#x4E09;&#x4E2A;&#x8FDB;&#x7A0B;&#x90FD;&#x5177;&#x6709;&#x91CD;&#x542F;&#x7CFB;&#x7EDF;&#x7684;&#x529F;&#x80FD;
+&#x82E5;ocssd &#x88AB;kill &#x7CFB;&#x7EDF;&#x5C31;&#x4F1A;&#x91CD;&#x542F;  oclsomon &#x8D1F;&#x8D23;&#x76D1;&#x63A7;ocssd &#x7684;&#x72B6;&#x6001;</p>
+<h3 id="crs">CRS</h3>
+<p>CRS&#x7684;&#x4E3B;&#x8FDB;&#x7A0B;&#x662F;crsd &#x8D1F;&#x8D23;&#x542F;&#x52A8;&#x3001;&#x5173;&#x95ED;&#x3001;&#x76D1;&#x63A7;&#x8D44;&#x6E90;&#x72B6;&#x6001;</p>
+<h3 id="evm">EVM</h3>
+<p>EVM &#x8FDB;&#x7A0B;evmd</p>
+<h2 id="11grac&#x7684;&#x670D;&#x52A1;&#x6539;&#x8FDB;">11gRAC&#x7684;&#x670D;&#x52A1;&#x6539;&#x8FDB;</h2>
+<p>grid 11.2 &#x628A;&#x539F;&#x6765;&#x7684;CRS&#x62C6;&#x5206;&#x6210;&#x4E24;&#x4EFD; &#x5206;&#x522B;&#x53EB;<code>CRSD</code>&#x6808;&#x548C;<code>OHASD</code>&#x6808;</p>
+<ul>
+<li><code>CRSD</code>&#x8D1F;&#x8D23;&#x9AD8;&#x7EA7;&#x522B;&#x7684;&#x8D44;&#x6E90;&#xFF0C;&#x5982;&#x6570;&#x636E;&#x5E93;&#x5B9E;&#x4F8B;</li>
+<li><code>OHASD</code>&#x8D1F;&#x8D23;&#x4E0B;&#x5C42;&#x7EA7;&#x522B;&#x8FDB;&#x7A0B;&#xFF0C;&#x56E0;&#x6B64;&#x6709;upper stack &#x548C; lower</li>
+</ul>
+<blockquote>
+<p>PS:
+CRS&#x7684;&#x914D;&#x7F6E;&#x4FE1;&#x606F;OCR&#x88AB;&#x5206;&#x6210;OLR&#x548C;OCR
+&#x5176;&#x4E2D; OHASD &#x7BA1;&#x7406;OLR&#xFF0C;CRSD&#x7BA1;&#x7406;OCR</p>
+</blockquote>
+<h3 id="crsd">crsd</h3>
+<p>CRSD&#x4E13;&#x6CE8;&#x4E8E; &#x4E0A;&#x5C42;&#xFF08;&#x5E94;&#x7528;&#x5C42;&#xFF09;&#x8D44;&#x6E90;&#x7684;&#x7BA1;&#x7406;&#x7EF4;&#x62A4; &#x5148;&#x4E0E;CRSD&#x5173;&#x95ED;&#x7684;&#x90A3;&#x4E9B;&#x8D44;&#x6E90;&#x662F;&#x4E0A;&#x5C42;&#x8D44;&#x6E90;&#xFF0C;CRSD&#x4E4B;&#x540E;&#x5173;&#x95ED;&#x7684;&#x8D44;&#x6E90;&#x5C31;&#x662F;OHASD&#x7684;&#x8D44;&#x6E90;&#x4E86;</p>
+<h3 id="ohasd">ohasd</h3>
+<p>OHASD&#x662F;&#x6574;&#x4E2A; oracle &#x8FDB;&#x7A0B;&#x5806;&#x6808;&#x7684;&#x57FA;&#x7840;&#x636E;/etc/oracle/scls_scr/<hostname>&#x76EE;&#x5F55;&#x7684;&#x63A7;&#x5236;&#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x51B3;&#x5B9A;&#x5176;&#x4ED6;&#x5806;&#x6808;&#x6210;&#x5458;&#x7684;&#x72B6;&#x6001;  OHASD&#x6808;&#x7684;&#x542F;&#x52A8;&#x987A;&#x5E8F;&#x8BB0;&#x5F55;&#x5728;GPnp profile ,&#x4E5F;&#x4F9D;&#x8D56;&#x4E8E;OLR&#x4E2D;&#x7684;&#x4FE1;&#x606F;</hostname></p>
+<h2 id="clusteware-&#x5229;&#x7528;-os-&#x7684;init-&#x811A;&#x672C;&#x542F;&#x52A8;&#x7684;">clusteware &#x5229;&#x7528; os &#x7684;init &#x811A;&#x672C;&#x542F;&#x52A8;&#x7684;</h2>
+<pre class="language-"><code># Run xdm in runlevel 5
+x:5:respawn:/etc/X11/prefdm -nodaemon
+htfa:35:respawn:/etc/init.d/init.tfa run &gt;/dev/null 2&gt;&amp;1 &lt;/dev/null
+
+
+h1:35:respawn:/etc/init.d/init.ohasd run &gt;/dev/null 2&gt;&amp;1 &lt;/dev/null
+</code></pre><h2 id="11g&#x5E38;&#x7528;&#x547D;&#x4EE4;">11g&#x5E38;&#x7528;&#x547D;&#x4EE4;</h2>
+<h3 id="&#x68C0;&#x67E5;&#x6574;&#x4E2A;&#x96C6;&#x7FA4;&#x72B6;&#x6001;">&#x68C0;&#x67E5;&#x6574;&#x4E2A;&#x96C6;&#x7FA4;&#x72B6;&#x6001;</h3>
+<pre class="language-"><code>[grid@rac1 ~]$ olsnodes -n
+rac1    1
+rac2    2
+
+[grid@rac1 ~]$ crsctl check crs
+CRS-4638: Oracle High Availability Services is online
+CRS-4537: Cluster Ready Services is online
+CRS-4529: Cluster Synchronization Services is online
+CRS-4533: Event Manager is online
+</code></pre><pre class="language-"><code>[grid@rac2 ~]$ crsctl check cluster -all
+**************************************************************
+rac1:
+CRS-4537: Cluster Ready Services is online
+CRS-4529: Cluster Synchronization Services is online
+CRS-4533: Event Manager is online
+**************************************************************
+rac2:
+CRS-4537: Cluster Ready Services is online
+CRS-4529: Cluster Synchronization Services is online
+CRS-4533: Event Manager is online
+**************************************************************
+</code></pre><pre class="language-"><code>[grid@rac1 ~]$ crsctl status res -t
+--------------------------------------------------------------------------------
+NAME           TARGET  STATE        SERVER                   STATE_DETAILS
+                   &#x76EE;&#x6807;&#x72B6;&#x6001; &#x5F53;&#x524D;&#x72B6;&#x6001;    &#x8DD1;&#x5728;&#x54EA;&#x4E2A;&#x673A;&#x5668;
+--------------------------------------------------------------------------------
+Local Resources
+--------------------------------------------------------------------------------
+ora.DATA.dg
+               ONLINE  ONLINE       rac1
+               ONLINE  ONLINE       rac2
+ora.LISTENER.lsnr
+               ONLINE  ONLINE       rac1
+               ONLINE  ONLINE       rac2
+ora.OCRVT.dg
+               ONLINE  ONLINE       rac1
+               ONLINE  ONLINE       rac2
+ora.asm
+               ONLINE  ONLINE       rac1                     Started
+               ONLINE  ONLINE       rac2                     Started
+
+ora.gsd  &#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x5411;&#x524D;&#x517C;&#x5BB9;&#xFF08;9i rac &#xFF09;&#x76F8;&#x4E92;&#x517C;&#x5BB9;&#x7684;&#x4E00;&#x4E2A;&#x670D;&#x52A1;&#xFF0C;&#x7BA1;&#x7406;9i&#x7684;&#x63A5;&#x53E3;&#x800C;&#x5DF2;&#xFF0C;&#x6CA1;&#x6709;9i&#x73AF;&#x5883;&#x7B49;&#x4E8E;&#x65E0;&#xFF0C;&#x662F;&#x6B63;&#x786E;&#x7684;
+               OFFLINE OFFLINE      rac1
+               OFFLINE OFFLINE      rac2
+ora.net1.network
+               ONLINE  ONLINE       rac1
+               ONLINE  ONLINE       rac2
+ora.ons
+               ONLINE  ONLINE       rac1
+               ONLINE  ONLINE       rac2
+ora.registry.acfs
+               ONLINE  ONLINE       rac1
+               ONLINE  ONLINE       rac2
+--------------------------------------------------------------------------------
+Cluster Resources
+--------------------------------------------------------------------------------
+ora.LISTENER_SCAN1.lsnr
+      1        ONLINE  ONLINE       rac1
+ora.cvu
+      1        ONLINE  ONLINE       rac1
+ora.oc4j
+      1        ONLINE  ONLINE       rac1
+ora.rac1.vip
+      1        ONLINE  ONLINE       rac1
+ora.rac2.vip
+      1        ONLINE  ONLINE       rac2
+ora.racjiqun.db
+      1        ONLINE  OFFLINE                               Instance Shutdown,S
+                                                             TARTING
+      2        ONLINE  OFFLINE                               Instance Shutdown,S
+                                                             TARTING
+ora.scan1.vip
+      1        ONLINE  ONLINE       rac1
+</code></pre><pre class="language-"><code>[grid@rac1 ~]$ srvctl status nodeapps
+VIP rac1-vip is enabled
+VIP rac1-vip is running on node: rac1
+VIP rac2-vip is enabled
+VIP rac2-vip is running on node: rac2
+Network is enabled
+Network is running on node: rac1
+Network is running on node: rac2
+GSD is disabled
+GSD is not running on node: rac1
+GSD is not running on node: rac2
+ONS is enabled
+ONS daemon is running on node: rac1
+ONS daemon is running on node: rac2
+</code></pre><h3 id="&#x5728;root&#x4E0B;&#x5173;&#x95ED;&#x6574;&#x4E2A;&#x96C6;&#x7FA4;&#x5305;&#x62EC;&#x8D44;&#x6E90;">&#x5728;root&#x4E0B;&#x5173;&#x95ED;&#x6574;&#x4E2A;&#x96C6;&#x7FA4;(&#x5305;&#x62EC;&#x8D44;&#x6E90;)</h3>
+<pre class="language-"><code>[root@rac1 ~]# cd /home/grid/
+[root@rac1 grid]# ls
+Desktop  oradiag_grid
+[root@rac1 grid]# source .bash_profile
+[root@rac1 grid]# crsctl stop cluster   &#x5173;&#x95ED;1&#x8282;&#x70B9;&#x7684;cluster
+
+
+CRS-2673: Attempting to stop &apos;ora.crsd&apos; on &apos;rac1&apos;
+CRS-2790: Starting shutdown of Cluster Ready Services-managed resources on &apos;rac1&apos;
+CRS-2673: Attempting to stop &apos;ora.rac1.vip&apos; on &apos;rac1&apos;
+CRS-2673: Attempting to stop &apos;ora.OCRVT.dg&apos; on &apos;rac1&apos;
+CRS-2673: Attempting to stop &apos;ora.racjiqun.db&apos; on &apos;rac1&apos;
+CRS-2673: Attempting to stop &apos;ora.registry.acfs&apos; on &apos;rac1&apos;
+CRS-2677: Stop of &apos;ora.racjiqun.db&apos; on &apos;rac1&apos; succeeded
+CRS-2673: Attempting to stop &apos;ora.DATA.dg&apos; on &apos;rac1&apos;
+CRS-2677: Stop of &apos;ora.rac1.vip&apos; on &apos;rac1&apos; succeeded
+CRS-2672: Attempting to start &apos;ora.rac1.vip&apos; on &apos;rac2&apos;
+CRS-2677: Stop of &apos;ora.DATA.dg&apos; on &apos;rac1&apos; succeeded
+CRS-2677: Stop of &apos;ora.registry.acfs&apos; on &apos;rac1&apos; succeeded
+CRS-2676: Start of &apos;ora.rac1.vip&apos; on &apos;rac2&apos; succeeded
+CRS-2677: Stop of &apos;ora.OCRVT.dg&apos; on &apos;rac1&apos; succeeded
+CRS-2673: Attempting to stop &apos;ora.asm&apos; on &apos;rac1&apos;
+CRS-2677: Stop of &apos;ora.asm&apos; on &apos;rac1&apos; succeeded
+CRS-2673: Attempting to stop &apos;ora.ons&apos; on &apos;rac1&apos;
+CRS-2677: Stop of &apos;ora.ons&apos; on &apos;rac1&apos; succeeded
+CRS-2673: Attempting to stop &apos;ora.net1.network&apos; on &apos;rac1&apos;
+CRS-2677: Stop of &apos;ora.net1.network&apos; on &apos;rac1&apos; succeeded
+CRS-2792: Shutdown of Cluster Ready Services-managed resources on &apos;rac1&apos; has completed
+CRS-2677: Stop of &apos;ora.crsd&apos; on &apos;rac1&apos; succeeded
+CRS-2673: Attempting to stop &apos;ora.ctssd&apos; on &apos;rac1&apos;
+CRS-2673: Attempting to stop &apos;ora.evmd&apos; on &apos;rac1&apos;
+CRS-2673: Attempting to stop &apos;ora.asm&apos; on &apos;rac1&apos;
+CRS-2677: Stop of &apos;ora.evmd&apos; on &apos;rac1&apos; succeeded
+CRS-2677: Stop of &apos;ora.asm&apos; on &apos;rac1&apos; succeeded
+CRS-2673: Attempting to stop &apos;ora.cluster_interconnect.haip&apos; on &apos;rac1&apos;
+CRS-2677: Stop of &apos;ora.cluster_interconnect.haip&apos; on &apos;rac1&apos; succeeded
+CRS-2677: Stop of &apos;ora.ctssd&apos; on &apos;rac1&apos; succeeded
+CRS-2673: Attempting to stop &apos;ora.cssd&apos; on &apos;rac1&apos;
+CRS-2677: Stop of &apos;ora.cssd&apos; on &apos;rac1&apos; succeeded
+</code></pre><h3 id="&#x5173;&#x95ED;cluster-&#x540E;&#x67E5;&#x770B;&#x72B6;&#x6001;">&#x5173;&#x95ED;cluster &#x540E;&#x67E5;&#x770B;&#x72B6;&#x6001;</h3>
+<pre class="language-"><code>[grid@rac1 ~]$ crsctl check cluster -all
+**************************************************************
+rac1:
+CRS-4535: Cannot communicate with Cluster Ready Services
+CRS-4530: Communications failure contacting Cluster Synchronization Services daemon
+CRS-4534: Cannot communicate with Event Manager
+**************************************************************
+rac2:
+CRS-4537: Cluster Ready Services is online
+CRS-4529: Cluster Synchronization Services is online
+CRS-4533: Event Manager is online
+**************************************************************
+</code></pre><pre class="language-"><code>[root@rac2 ~]# cd /home/grid/
+[root@rac2 grid]# source .bash_profile
+[root@rac2 grid]# crsctl stop cluster  &#x5173;&#x95ED;2&#x8282;&#x70B9;&#x7684;cluster
+CRS-2673: Attempting to stop &apos;ora.crsd&apos; on &apos;rac2&apos;
+CRS-2790: Starting shutdown of Cluster Ready Services-managed resources on &apos;rac2&apos;
+CRS-2673: Attempting to stop &apos;ora.rac1.vip&apos; on &apos;rac2&apos;
+CRS-2673: Attempting to stop &apos;ora.OCRVT.dg&apos; on &apos;rac2&apos;
+CRS-2673: Attempting to stop &apos;ora.racjiqun.db&apos; on &apos;rac2&apos;
+CRS-2673: Attempting to stop &apos;ora.registry.acfs&apos; on &apos;rac2&apos;
+CRS-2673: Attempting to stop &apos;ora.cvu&apos; on &apos;rac2&apos;
+CRS-2673: Attempting to stop &apos;ora.oc4j&apos; on &apos;rac2&apos;
+CRS-2673: Attempting to stop &apos;ora.LISTENER_SCAN1.lsnr&apos; on &apos;rac2&apos;
+CRS-2677: Stop of &apos;ora.LISTENER_SCAN1.lsnr&apos; on &apos;rac2&apos; succeeded
+CRS-2673: Attempting to stop &apos;ora.scan1.vip&apos; on &apos;rac2&apos;
+CRS-2677: Stop of &apos;ora.cvu&apos; on &apos;rac2&apos; succeeded
+CRS-2677: Stop of &apos;ora.rac1.vip&apos; on &apos;rac2&apos; succeeded
+CRS-2673: Attempting to stop &apos;ora.rac2.vip&apos; on &apos;rac2&apos;
+CRS-2677: Stop of &apos;ora.scan1.vip&apos; on &apos;rac2&apos; succeeded
+CRS-2677: Stop of &apos;ora.racjiqun.db&apos; on &apos;rac2&apos; succeeded
+CRS-2673: Attempting to stop &apos;ora.DATA.dg&apos; on &apos;rac2&apos;
+CRS-2677: Stop of &apos;ora.rac2.vip&apos; on &apos;rac2&apos; succeeded
+CRS-2677: Stop of &apos;ora.DATA.dg&apos; on &apos;rac2&apos; succeeded
+CRS-2677: Stop of &apos;ora.registry.acfs&apos; on &apos;rac2&apos; succeeded
+CRS-2677: Stop of &apos;ora.OCRVT.dg&apos; on &apos;rac2&apos; succeeded
+CRS-2673: Attempting to stop &apos;ora.asm&apos; on &apos;rac2&apos;
+CRS-2677: Stop of &apos;ora.asm&apos; on &apos;rac2&apos; succeeded
+CRS-2677: Stop of &apos;ora.oc4j&apos; on &apos;rac2&apos; succeeded
+CRS-2673: Attempting to stop &apos;ora.ons&apos; on &apos;rac2&apos;
+CRS-2677: Stop of &apos;ora.ons&apos; on &apos;rac2&apos; succeeded
+CRS-2673: Attempting to stop &apos;ora.net1.network&apos; on &apos;rac2&apos;
+CRS-2677: Stop of &apos;ora.net1.network&apos; on &apos;rac2&apos; succeeded
+CRS-2792: Shutdown of Cluster Ready Services-managed resources on &apos;rac2&apos; has completed
+CRS-2677: Stop of &apos;ora.crsd&apos; on &apos;rac2&apos; succeeded
+CRS-2673: Attempting to stop &apos;ora.ctssd&apos; on &apos;rac2&apos;
+CRS-2673: Attempting to stop &apos;ora.evmd&apos; on &apos;rac2&apos;
+CRS-2673: Attempting to stop &apos;ora.asm&apos; on &apos;rac2&apos;
+CRS-2677: Stop of &apos;ora.evmd&apos; on &apos;rac2&apos; succeeded
+CRS-2677: Stop of &apos;ora.asm&apos; on &apos;rac2&apos; succeeded
+CRS-2673: Attempting to stop &apos;ora.cluster_interconnect.haip&apos; on &apos;rac2&apos;
+CRS-2677: Stop of &apos;ora.ctssd&apos; on &apos;rac2&apos; succeeded
+CRS-2677: Stop of &apos;ora.cluster_interconnect.haip&apos; on &apos;rac2&apos; succeeded
+CRS-2673: Attempting to stop &apos;ora.cssd&apos; on &apos;rac2&apos;
+CRS-2677: Stop of &apos;ora.cssd&apos; on &apos;rac2&apos; succeeded
+</code></pre><pre class="language-"><code>[grid@rac1 ~]$ crsctl check cluster -all
+**************************************************************
+rac1:
+CRS-4535: Cannot communicate with Cluster Ready Services
+CRS-4530: Communications failure contacting Cluster Synchronization Services daemon
+CRS-4534: Cannot communicate with Event Manager
+**************************************************************
+rac2:
+CRS-4535: Cannot communicate with Cluster Ready Services
+CRS-4530: Communications failure contacting Cluster Synchronization Services daemon
+CRS-4534: Cannot communicate with Event Manager
+**************************************************************
+</code></pre><h3 id="&#x542F;&#x52A8;&#x96C6;&#x7FA4;&#x5E76;&#x67E5;&#x770B;&#x72B6;&#x6001;">&#x542F;&#x52A8;&#x96C6;&#x7FA4;&#x5E76;&#x67E5;&#x770B;&#x72B6;&#x6001;</h3>
+<pre class="language-"><code>[root@rac1 grid]# crsctl start cluster -all
+
+CRS-2672: Attempting to start &apos;ora.cssdmonitor&apos; on &apos;rac1&apos;
+CRS-2672: Attempting to start &apos;ora.cssdmonitor&apos; on &apos;rac2&apos;
+CRS-2676: Start of &apos;ora.cssdmonitor&apos; on &apos;rac1&apos; succeeded
+CRS-2672: Attempting to start &apos;ora.cssd&apos; on &apos;rac1&apos;
+CRS-2672: Attempting to start &apos;ora.diskmon&apos; on &apos;rac1&apos;
+CRS-2676: Start of &apos;ora.cssdmonitor&apos; on &apos;rac2&apos; succeeded
+CRS-2672: Attempting to start &apos;ora.cssd&apos; on &apos;rac2&apos;
+CRS-2672: Attempting to start &apos;ora.diskmon&apos; on &apos;rac2&apos;
+CRS-2676: Start of &apos;ora.diskmon&apos; on &apos;rac2&apos; succeeded
+CRS-2676: Start of &apos;ora.diskmon&apos; on &apos;rac1&apos; succeeded
+CRS-2676: Start of &apos;ora.cssd&apos; on &apos;rac2&apos; succeeded
+CRS-2676: Start of &apos;ora.cssd&apos; on &apos;rac1&apos; succeeded
+CRS-2672: Attempting to start &apos;ora.ctssd&apos; on &apos;rac2&apos;
+CRS-2672: Attempting to start &apos;ora.ctssd&apos; on &apos;rac1&apos;
+CRS-2676: Start of &apos;ora.ctssd&apos; on &apos;rac2&apos; succeeded
+CRS-2672: Attempting to start &apos;ora.evmd&apos; on &apos;rac2&apos;
+CRS-2672: Attempting to start &apos;ora.cluster_interconnect.haip&apos; on &apos;rac2&apos;
+CRS-2676: Start of &apos;ora.ctssd&apos; on &apos;rac1&apos; succeeded
+CRS-2672: Attempting to start &apos;ora.evmd&apos; on &apos;rac1&apos;
+CRS-2672: Attempting to start &apos;ora.cluster_interconnect.haip&apos; on &apos;rac1&apos;
+CRS-2676: Start of &apos;ora.evmd&apos; on &apos;rac2&apos; succeeded
+CRS-2676: Start of &apos;ora.evmd&apos; on &apos;rac1&apos; succeeded
+CRS-2676: Start of &apos;ora.cluster_interconnect.haip&apos; on &apos;rac1&apos; succeeded
+CRS-2672: Attempting to start &apos;ora.asm&apos; on &apos;rac1&apos;
+CRS-2676: Start of &apos;ora.cluster_interconnect.haip&apos; on &apos;rac2&apos; succeeded
+CRS-2672: Attempting to start &apos;ora.asm&apos; on &apos;rac2&apos;
+CRS-2676: Start of &apos;ora.asm&apos; on &apos;rac2&apos; succeeded
+CRS-2672: Attempting to start &apos;ora.crsd&apos; on &apos;rac2&apos;
+CRS-2676: Start of &apos;ora.asm&apos; on &apos;rac1&apos; succeeded
+CRS-2672: Attempting to start &apos;ora.crsd&apos; on &apos;rac1&apos;
+CRS-2676: Start of &apos;ora.crsd&apos; on &apos;rac2&apos; succeeded
+CRS-2676: Start of &apos;ora.crsd&apos; on &apos;rac1&apos; succeeded
+
+[root@rac1 ~]# ps -ef|grep smon
+root      3151     1  0 16:32 ?        00:00:08 /oracle/gridjia/grid/bin/osysmond.bin
+grid      3950     1  0 16:34 ?        00:00:00 asm_smon_+ASM1
+oracle    8080     1  0 16:59 ?        00:00:00 ora_smon_racjiqun1
+root      9816  9561  0 17:13 pts/3    00:00:00 grep smon
+
+
+[root@rac2 ~]# ps -ef|grep smon
+root      3097     1  0 16:32 ?        00:00:05 /oracle/gridjia/grid/bin/osysmond.bin
+grid      3875     1  0 16:34 ?        00:00:00 asm_smon_+ASM2
+oracle    7301     1  0 16:55 ?        00:00:00 ora_smon_racjiqun2
+root      9976  9923  0 17:14 pts/2    00:00:00 grep smon
+</code></pre><h3 id="&#x67E5;&#x770B;&#x6570;&#x636E;&#x5E93;&#x7684;&#x4FE1;&#x606F;">&#x67E5;&#x770B;&#x6570;&#x636E;&#x5E93;&#x7684;&#x4FE1;&#x606F;</h3>
+<pre class="language-"><code>[grid@rac1 ~]$ srvctl config database -d racjiqun
+Database unique name: racjiqun
+Database name: racjiqun
+Oracle home: /oracle/app/oracle/11.2.4/db_1
+Oracle user: oracle
+Spfile: +DATA/racjiqun/spfileracjiqun.ora
+Domain:
+Start options: open
+Stop options: immediate
+Database role: PRIMARY
+Management policy: AUTOMATIC
+Server pools: racjiqun
+Database instances: racjiqun1,racjiqun2
+Disk Groups: DATA
+Mount point paths:
+Services:
+Type: RAC
+Database is administrator managed
+
+[grid@rac1 ~]$ srvctl status database -d racjiqun
+Instance racjiqun1 is running on node rac1
+Instance racjiqun2 is running on node rac2
+</code></pre><h3 id="&#x5173;&#x95ED;&#x6570;&#x636E;&#x5E93;">&#x5173;&#x95ED;&#x6570;&#x636E;&#x5E93;</h3>
+<pre class="language-"><code>[grid@rac1 ~]$ srvctl stop database -d racjiqun
+[grid@rac1 ~]$ srvctl status database -d racjiqun
+Instance racjiqun1 is not running on node rac1
+Instance racjiqun2 is not running on node rac2
+</code></pre><h3 id="&#x5173;&#x95ED;&#x5B9E;&#x4F8B;">&#x5173;&#x95ED;&#x5B9E;&#x4F8B;</h3>
+<pre class="language-"><code>[grid@rac2 ~]$ srvctl  stop instance -d racjiqun -i racjiqun1 -o immediate
+[grid@rac2 ~]$ srvctl status database -d racjiqun
+Instance racjiqun1 is not running on node rac1
+Instance racjiqun2 is running on node rac2
+</code></pre><h3 id="&#x5173;&#x95ED;&#x76D1;&#x542C;">&#x5173;&#x95ED;&#x76D1;&#x542C;</h3>
+<pre class="language-"><code>[grid@rac2 ~]$ srvctl stop listener
+[grid@rac2 ~]$ srvctl status listener
+Listener LISTENER is enabled
+Listener LISTENER is not running
+</code></pre><h3 id="&#x67E5;&#x770B;db&#x7684;&#x72B6;&#x6001;10g&#x4E5F;&#x7528;&#x8FD9;&#x4E2A;">&#x67E5;&#x770B;db&#x7684;&#x72B6;&#x6001;(10g&#x4E5F;&#x7528;&#x8FD9;&#x4E2A;)</h3>
+<pre class="language-"><code>[grid@rac1 ~]$ crs_stat ora.racjiqun.db
+NAME=ora.racjiqun.db
+TYPE=ora.database.type
+TARGET=ONLINE
+STATE=ONLINE on rac1
+</code></pre><h3 id="&#x67E5;&#x770B;scan&#x7684;&#x76F8;&#x5173;&#x4FE1;&#x606F;">&#x67E5;&#x770B;scan&#x7684;&#x76F8;&#x5173;&#x4FE1;&#x606F;</h3>
+<pre class="language-"><code>[grid@rac1 ~]$ srvctl config scan
+SCAN name: rac-scan, Network: 1/192.168.10.0/255.255.255.0/eth0
+SCAN VIP name: scan1, IP: /rac-scan/192.168.10.200
+
+[grid@rac1 ~]$ srvctl status scan
+SCAN VIP scan1 is enabled
+SCAN VIP scan1 is running on node rac1
+
+[grid@rac1 ~]$ srvctl  status scan_listener
+SCAN Listener LISTENER_SCAN1 is enabled
+SCAN listener LISTENER_SCAN1 is running on node rac1
+</code></pre><h3 id="&#x67E5;&#x770B;vip&#x7684;&#x4FE1;&#x606F;">&#x67E5;&#x770B;vip&#x7684;&#x4FE1;&#x606F;</h3>
+<pre class="language-"><code>[grid@rac1 ~]$ srvctl config vip -n rac1
+VIP exists: /rac1-vip/192.168.10.110/192.168.10.0/255.255.255.0/eth0, hosting node rac1
+</code></pre><h3 id="&#x67E5;&#x770B;&#x76D1;&#x542C;&#x4FE1;&#x606F;">&#x67E5;&#x770B;&#x76D1;&#x542C;&#x4FE1;&#x606F;</h3>
+<pre class="language-"><code>[grid@rac1 ~]$ srvctl config listener -a   &#x672C;&#x5730;&#x76D1;&#x542C;
+Name: LISTENER
+Network: 1, Owner: grid
+Home: <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>CRS</span> <span class="token attr-name">home</span><span class="token punctuation">&gt;</span></span>
+  /oracle/gridhome/grid on node(s) rac1,rac2
+End points: TCP:1521
+
+[grid@rac1 ~]$ srvctl status listener
+Listener LISTENER is enabled
+Listener LISTENER is running on node(s): rac2,rac1
+</code></pre><h3 id="&#x67E5;&#x770B;asm&#x72B6;&#x6001;">&#x67E5;&#x770B;asm&#x72B6;&#x6001;</h3>
+<pre class="language-"><code>[grid@rac1 ~]$ srvctl status asm -a
+ASM is running on rac2,rac1
+ASM is enabled.
+</code></pre><h3 id="&#x67E5;&#x770B;&#x78C1;&#x76D8;&#x7EC4;&#x4FE1;&#x606F;">&#x67E5;&#x770B;&#x78C1;&#x76D8;&#x7EC4;&#x4FE1;&#x606F;</h3>
+<pre class="language-"><code>[grid@rac1 ~]$  srvctl status diskgroup -g DATA
+Disk Group DATA is running on rac2,rac1
+</code></pre><h3 id="&#x67E5;&#x770B;&#x91CD;&#x8981;&#x7684;&#x540E;&#x53F0;&#x8FDB;&#x7A0B;">&#x67E5;&#x770B;&#x91CD;&#x8981;&#x7684;&#x540E;&#x53F0;&#x8FDB;&#x7A0B;</h3>
+<pre class="language-"><code>[grid@rac1 ~]$ crsctl status res -t -init
+--------------------------------------------------------------------------------
+NAME           TARGET  STATE        SERVER                   STATE_DETAILS
+--------------------------------------------------------------------------------
+Cluster Resources
+--------------------------------------------------------------------------------
+ora.asm
+      1        ONLINE  ONLINE       rac1                     Started
+ora.cluster_interconnect.haip
+      1        ONLINE  ONLINE       rac1
+ora.crf
+      1        ONLINE  ONLINE       rac1
+ora.crsd
+      1        ONLINE  ONLINE       rac1
+ora.cssd
+      1        ONLINE  ONLINE       rac1
+ora.cssdmonitor
+      1        ONLINE  ONLINE       rac1
+ora.ctssd
+      1        ONLINE  ONLINE       rac1                     ACTIVE:0
+ora.diskmon
+      1        OFFLINE OFFLINE
+ora.drivers.acfs
+      1        ONLINE  ONLINE       rac1
+ora.evmd
+      1        ONLINE  ONLINE       rac1
+ora.gipcd
+      1        ONLINE  ONLINE       rac1
+ora.gpnpd
+      1        ONLINE  ONLINE       rac1
+ora.mdnsd
+      1        ONLINE  ONLINE       rac1
+</code></pre><pre class="language-"><code>[grid@rac1 ~]$ crs_stat -t -v
+
+
+Name           Type           R/RA   F/FT   Target    State     Host
+----------------------------------------------------------------------
+ora.DATA.dg    ora....up.type 0/5    0/     ONLINE    ONLINE    rac1
+ora....ER.lsnr ora....er.type 0/5    0/         ONLINE    ONLINE    rac1
+ora....N1.lsnr ora....er.type 0/5    0/0       ONLINE    ONLINE    rac2
+ora.OCRVT.dg   ora....up.type 0/5    0/     ONLINE    ONLINE    rac1
+ora.asm        ora.asm.type   0/5    0/     ONLINE    ONLINE    rac1
+ora.cvu        ora.cvu.type   0/5    0/0     ONLINE    ONLINE    rac2
+ora.gsd        ora.gsd.type   0/5    0/      OFFLINE   OFFLINE
+ora....network ora....rk.type 0/5    0/      ONLINE    ONLINE    rac1
+ora.oc4j       ora.oc4j.type  0/1    0/2     ONLINE    ONLINE    rac2
+ora.ons        ora.ons.type   0/3    0/      ONLINE    ONLINE    rac1
+ora....SM1.asm application    0/5    0/0    ONLINE    ONLINE    rac1
+ora....C1.lsnr application    0/5    0/0      ONLINE    ONLINE    rac1
+ora.rac1.gsd   application    0/5    0/0    OFFLINE   OFFLINE
+ora.rac1.ons   application    0/3    0/0    ONLINE    ONLINE    rac1
+ora.rac1.vip   ora....t1.type 0/0    0/0     ONLINE    ONLINE    rac1
+ora....SM2.asm application    0/5    0/0    ONLINE    ONLINE    rac2
+ora....C2.lsnr application    0/5    0/0     ONLINE    ONLINE    rac2
+ora.rac2.gsd   application    0/5    0/0    OFFLINE   OFFLINE
+ora.rac2.ons   application    0/3    0/0    ONLINE    ONLINE    rac2
+ora.rac2.vip   ora....t1.type 0/0    0/0    ONLINE    ONLINE    rac2
+ora....iqun.db ora....se.type 0/2    0/1    ONLINE    ONLINE    rac1
+ora....ry.acfs ora....fs.type 0/5    0/      ONLINE    ONLINE    rac1
+ora.scan1.vip  ora....ip.type 0/0    0/0    ONLINE    ONLINE    rac2
+</code></pre><h3 id="crsstat">crs_stat</h3>
+<ul>
+<li>crs_stat&#x8FD9;&#x4E2A;&#x547D;&#x4EE4;&#x7528;&#x4E8E;&#x67E5;&#x770B;CRS&#x7EF4;&#x62A4;&#x7684;&#x6240;&#x6709;&#x8D44;&#x6E90;&#x7684;&#x8FD0;&#x884C;&#x72B6;&#x6001;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x5E26;&#x4EFB;&#x4F55;&#x53C2;&#x6570;&#x65F6;&#xFF0C;&#x663E;&#x793A;&#x6240;&#x6709;&#x8D44;&#x6E90;&#x7684;&#x6982;&#x8981;&#x4FE1;&#x606F;&#x3002;&#x6BCF;&#x4E2A;&#x8D44;&#x6E90;&#x663E;&#x793A;&#x662F;&#x5404;&#x4E2A;&#x5C5E;&#x6027;&#xFF1A;&#x8D44;&#x6E90;&#x540D;&#x79F0;&#xFF0C;&#x7C7B;&#x578B;&#xFF0C;&#x76EE;&#x5F55;&#xFF0C;&#x8D44;&#x6E90;&#x8FD0;&#x884C;&#x72B6;&#x6001;&#x7B49;&#x3002;</li>
+<li>&#x4E5F;&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x8D44;&#x6E90;&#x540D;&#xFF0C;&#x67E5;&#x770B;&#x6307;&#x5B9A;&#x8D44;&#x6E90;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x5E76;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;-V&#x548C;-P&#x9009;&#x9879;&#xFF0C;&#x4EE5;&#x67E5;&#x770B;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;&#xFF0C;&#x5176;&#x4E2D;-p&#x53C2;&#x6570;&#x663E;&#x793A;&#x7684;&#x5185;&#x5BB9;&#x6BD4;-V&#x66F4;&#x8BE6;&#x7EC6;&#x3002;</li>
+</ul>
+<pre class="language-"><code>[grid@rac1 ~]$ crs_stat -v ora.racjiqun.db
+NAME=ora.racjiqun.db
+TYPE=ora.database.type
+GEN_START_OPTIONS@SERVERNAME(rac1)=open
+GEN_START_OPTIONS@SERVERNAME(rac2)=open
+GEN_USR_ORA_INST_NAME@SERVERNAME(rac1)=racjiqun1
+GEN_USR_ORA_INST_NAME@SERVERNAME(rac2)=racjiqun2
+RESTART_ATTEMPTS=2
+RESTART_COUNT=0
+USR_ORA_INST_NAME@SERVERNAME(rac1)=racjiqun1
+USR_ORA_INST_NAME@SERVERNAME(rac2)=racjiqun2
+FAILURE_THRESHOLD=1
+FAILURE_COUNT=0
+TARGET=ONLINE
+STATE=ONLINE on rac1
+
+
+[grid@rac1 ~]$ crs_stat -p ora.racjiqun.db
+NAME=ora.racjiqun.db
+TYPE=ora.database.type
+ACTION_SCRIPT=
+ACTIVE_PLACEMENT=1
+AUTO_START=restore
+CHECK_INTERVAL=1
+DESCRIPTION=Oracle Database resource
+FAILOVER_DELAY=0
+FAILURE_INTERVAL=60
+FAILURE_THRESHOLD=1
+GEN_START_OPTIONS@SERVERNAME(rac1)=open
+GEN_START_OPTIONS@SERVERNAME(rac2)=open
+GEN_USR_ORA_INST_NAME@SERVERNAME(rac1)=racjiqun1
+GEN_USR_ORA_INST_NAME@SERVERNAME(rac2)=racjiqun2
+HOSTING_MEMBERS=
+PLACEMENT=restricted
+RESTART_ATTEMPTS=2
+SCRIPT_TIMEOUT=60
+START_TIMEOUT=600
+STOP_TIMEOUT=600
+UPTIME_THRESHOLD=1h
+USR_ORA_INST_NAME@SERVERNAME(rac1)=racjiqun1
+USR_ORA_INST_NAME@SERVERNAME(rac2)=racjiqun2
+</code></pre><h3 id="&#x67E5;&#x8BE2;&#x8F6F;&#x4EF6;&#x7684;&#x7248;&#x672C;">&#x67E5;&#x8BE2;&#x8F6F;&#x4EF6;&#x7684;&#x7248;&#x672C;</h3>
+<pre class="language-"><code>[grid@rac1 ~]$ crsctl query crs activeversion
+Oracle Clusterware active version on the cluster is [11.2.0.4.0]
+
+[grid@rac1 ~]$ crsctl query crs releaseversion
+Oracle High Availability Services release version on the local node is [11.2.0.4.0]
+</code></pre><footer class="page-footer"><span class="copyright">Copyright &#xA9; suredandan 2018 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">UpdateTime: 
+2019-01-10 14:53:35
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="9.rac-commnd-intro.html" class="navigation navigation-prev " aria-label="Previous page: 11gRAC常用命令">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="34.11gRAC的监听介绍.html" class="navigation navigation-next " aria-label="Next page: 11gRAC的监听介绍">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"11gRAC对比10gRAC","level":"1.3.9","depth":2,"next":{"title":"11gRAC的监听介绍","level":"1.3.10","depth":2,"path":"rac/34.11gRAC的监听介绍.md","ref":"rac/34.11gRAC的监听介绍.md","articles":[]},"previous":{"title":"11gRAC常用命令","level":"1.3.8","depth":2,"path":"rac/9.rac-commnd-intro.md","ref":"rac/9.rac-commnd-intro.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","prism-themes","-highlight","codesnippet","splitter","simple-page-toc","page-toc-button","back-to-top-button","-lunr","-search","search-plus","favicon@^0.0.2","tbfed-pagefooter@^0.0.1","theme-default","sitemap-general"],"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright © suredandan 2018","modify_label":"UpdateTime: ","modify_format":"YYYY-MM-DD HH:mm:ss"},"prism":{"css":["prismjs/themes/prism-solarizedlight.css"]},"simple-page-toc":{"maxDepth":3,"skipFirstH1":true},"splitter":{},"codesnippet":{},"sitemap-general":{"prefix":"http://www.googlebaba.io/oracle/"},"fontsettings":{"theme":"white","family":"sans","size":2},"favicon":{"shortcut":"favicon.ico","bookmark":"favicon.ico"},"page-toc-button":{},"back-to-top-button":{},"prism-themes":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"showLevel":true,"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"}},"search-plus":{},"image-captions":{"caption":"_CAPTION_"}},"theme":"default","author":"suredandan","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"中年人的Oracle枸杞","language":"zh-hans","gitbook":"*","description":"记录日常的一些Oracle实施文档"},"file":{"path":"rac/10.11gRAC-10gRAC.md","mtime":"2019-01-10T06:53:35.939Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-06-10T14:25:54.612Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-page-toc-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

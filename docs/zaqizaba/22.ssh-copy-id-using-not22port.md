@@ -1,0 +1,9 @@
+ yum -y install openssh-clients
+
+# ssh-copy-id -i ~/.ssh/id_rsa.pub user@server
+再也不用记如何拼写authorized_keys这个文件名了，是不是很爽，可惜别高兴太早了，ssh-copy-id有一个很要命的问题，那就是缺省它仅仅支持SSH运行在22端口的情况，不过实际上出于安全的需要，我们往往都会更改服务器的SSH端口，比如说改成10022端口，这时候你运行ssh-copy-id就会报错了，直接修改ssh-copy-id脚本当然可以修正这个问题，但是那样显得太生硬了，实际上还有更好的办法：
+# vi ~/.ssh/config
+加上内容：
+Host server
+Hostname ip
+Port 10022
